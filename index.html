@@ -114,6 +114,47 @@
             
             
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/">
+          	  <h2 class="post-title">Errors and exceptions in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on November 24, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>There are two kinds of errors:</p>
+
+<ul>
+<li>Syntax errors, where the program contains invalid syntax</li>
+<li>Exceptions, errors that occur during runtime, though the syntax is valid</li>
+</ul>
+
+<p>The list of built-in exceptions can be found <a href="https://docs.python.org/3/library/exceptions.html#bltin-exceptions">here</a>.</p>
+
+<p>Syntax errors can be avoided by writing valid code and exceptions can be handled using <code>try</code> and <code>except</code>. An example of handling an exception:</p>
+
+<pre><code>def division(num1, num2):
+    &quot;&quot;&quot;Return num1/num2&quot;&quot;&quot;
+    return num1/num2
+
+try:
+    print(division(10,0))
+except ZeroDivisionError:
+    print(&quot;You can't divide by zero&quot;)
+#output
+You can't divide by zero
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/">
           	  <h2 class="post-title">File IO and JSON in Python 3</h2>
 
@@ -240,50 +281,6 @@ code that will be executed when the package is first imported, typically initial
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/">
-          	  <h2 class="post-title">Functions in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 13, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
-example:</p>
-
-<pre><code>def hello_function():
-    '''This is where the function documentation goes'''
-    print('Hello from function')
-
-hello_function()
-print(hello_function)
-#output
-Hello from function
-&lt;function hello_function at 0x7f34bc7db378&gt;
-</code></pre>
-
-<ul>
-<li>The <code>def</code> keyword is used to define a function.</li>
-<li>It is followed by the function name, argument list(if any), and a
-colon <code>:</code>.</li>
-<li>The function body is indented by 4 spaces.</li>
-<li>The first line of a function body is a
-<a href="https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings">docstring</a>,
-which is documentation for the function. It&rsquo;s a good practice to always include the docstring.</li>
-<li>The statements that constitute the function are placed after the docstring.</li>
-<li>A function is an object, notice the output of <code>print(hello_function)</code>.</li>
-</ul>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Errors and exceptions in Python 3</title>
+
+  <meta name="author" content="" />
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Errors and exceptions in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/11/errors-and-exceptions-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Errors and exceptions in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on November 24, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>There are two kinds of errors:</p>
+
+<ul>
+<li>Syntax errors, where the program contains invalid syntax</li>
+<li>Exceptions, errors that occur during runtime, though the syntax is valid</li>
+</ul>
+
+<p>The list of built-in exceptions can be found <a href="https://docs.python.org/3/library/exceptions.html#bltin-exceptions">here</a>.</p>
+
+<p>Syntax errors can be avoided by writing valid code and exceptions can be handled using <code>try</code> and <code>except</code>. An example of handling an exception:</p>
+
+<pre><code>def division(num1, num2):
+    &quot;&quot;&quot;Return num1/num2&quot;&quot;&quot;
+    return num1/num2
+
+try:
+    print(division(10,0))
+except ZeroDivisionError:
+    print(&quot;You can't divide by zero&quot;)
+#output
+You can't divide by zero
+</code></pre>
+
+<p></p>
+
+<p>How <code>try</code> and <code>except</code> statements work:</p>
+
+<ul>
+<li>The code inside the <code>try</code> block is executed</li>
+<li>If no exception occurs, the <code>except</code> block is skipped</li>
+<li>If an exception occurs, execution of remaining <code>try</code> block is skipped and the <code>except</code> block matching the raised exception is executed. If the exception has not been handled, it is passed to an outer <code>try</code> block. If there is no outer <code>try</code> block, it is an unhandled exception and execution stops.</li>
+</ul>
+
+<p>In the above example, note that I am not handling the exception inside the <code>division</code> function. Instead I am handling the exception when the function is called.</p>
+
+<p>An <code>except</code> clause can handle multiple exceptions using the following syntax:</p>
+
+<pre><code>except Exception1, Exception2 :
+    #code to handle Exception1 and Exception2
+</code></pre>
+
+<p>An exception can be raised as follows:</p>
+
+<pre><code>raise ExceptionName(args)
+</code></pre>
+
+<p>The arguments are optional. If an exception class is present, it is instantiated by calling its constructor without arguments.</p>
+
+<p>A class in an except clause is compatible with an exception if it is the same class or a base class thereof. The following example demonstrates this concept:</p>
+
+<pre><code>class Base(Exception):
+    &quot;&quot;&quot;Base class&quot;&quot;&quot;
+    pass
+
+class Derived(Base):
+    &quot;&quot;&quot;Inherits from Base class&quot;&quot;&quot;
+    pass
+
+for to_raise in [Base,Derived]:
+    try:
+        raise to_raise()
+    except Derived:
+        print(&quot;Derived class&quot;)
+    except Base:
+        print(&quot;Base class&quot;)
+
+#output
+Base class
+Derived class
+
+for to_raise in [Base,Derived]:
+    try:
+        raise to_raise()
+    except Base:
+        print(&quot;Base class&quot;)
+    except Derived:
+        print(&quot;Derived class&quot;)
+
+#output
+Base class
+Base class
+</code></pre>
+
+<p>It is possible to catch wildcard exceptions as follows:</p>
+
+<pre><code>try:
+    raise Exception(&quot;An exception occurred&quot;)
+except:
+    print(&quot;All exceptions are caught here&quot;)
+#output
+All exceptions are caught here
+</code></pre>
+
+<p>So every exception that is raised inside the <code>try</code> block is caught by the wildcard <code>except</code> by omitting the exception names. This should be avoided since it can hide any real programming errors.</p>
+
+<p>An optional <code>else</code> clause is available, which executes the code inside when no exception is raised. Example:</p>
+
+<pre><code>try:
+    #some code
+except ExceptionName:
+    #handle exception
+else:
+    #executed when exception is not raised inside try
+</code></pre>
+
+<p>When an exception is raised, it is possible to have data associated with the exception. This is useful for debugging purposes to understand under what circumstances the exception was raised. The arguments passed while raising an exception depend on the type of exception. The following is an example:</p>
+
+<pre><code>try:
+    raise Exception('arg1', 'arg2')
+except Exception as inst:
+    print(type(inst))
+    print(inst.args)
+    print(inst)
+
+    x,y = inst.args #unpacking arguments
+    print(&quot;x = {} y = {}&quot;.format(x,y))
+#output
+&lt;class 'Exception'&gt;
+('arg1', 'arg2')
+('arg1', 'arg2')
+x = arg1 y = arg2
+</code></pre>
+
+<p>It is possible to have user defined exceptions in Python by creating a new class. The new class has to be derived from The <code>Exception</code> class either directly or indirectly. Though it is possible for exception classes to do anything a normal class can do, they are usually kept simple by only having a few attributes that contain information about the exception.</p>
+
+<p>If a module can raise different custom exceptions, it is a good practice to have a base class that inherits from <code>Exception</code> and other classes that raise exceptions inherit from the base class. The following is a simple example:</p>
+
+<pre><code>class Error(Exception):
+    &quot;&quot;&quot;Base class for all exceptions in the module&quot;&quot;&quot;
+    name = &quot;exceptions.py&quot;
+
+class FirstError(Error):
+    &quot;&quot;&quot;Specific exception class inherits from Error&quot;&quot;&quot;
+    
+    def __init__(self,message):
+        self.message = message
+
+try:
+    raise FirstError(&quot;First custom exception&quot;)
+except FirstError as custom_exception:
+    print(&quot;FirstError has been raise with message: &quot;,custom_exception.message, &quot;\ncurrent module: &quot;, custom_exception.name)
+
+#output
+FirstError has been raise with message:  First custom exception
+current module:  exceptions.py
+</code></pre>
+
+<p>It&rsquo;s standard practice to have all exception classes end with Error.</p>
+
+<p>A <code>finally</code> clause is available which can be used to define clean up actions. It is always executed, whether an exception occurred or not. The following is an example:</p>
+
+<pre><code>def proper_divide(x,y):
+    &quot;&quot;&quot;Returns x/y and handles exceptions&quot;&quot;&quot;
+    try:
+        result = x/y
+    except ZeroDivisionError:
+        print(&quot;Division by zero handled&quot;)
+    else:
+        print(&quot;Result is &quot;, result)
+    finally:
+        print(&quot;This is always executed&quot;)
+
+proper_divide(10,5)
+#output
+Result is  2.0
+This is always executed
+proper_divide(10,0)
+#output
+Division by zero handled
+This is always executed
+</code></pre>
+
+<p>The above example also shows how to use <code>try</code>, <code>except</code>, <code>else</code> and <code>finally</code> together.</p>
+
+<p>Code for today&rsquo;s plog can be found <a href="https://github.com/ploggingdev/python_learn/blob/master/exceptions.py">here</a>.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/errors.html">Official tutorial</a></li>
+<li><a href="https://docs.python.org/3/library/exceptions.html#bltin-exceptions">Built-in exceptions</a></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/" data-toggle="tooltip" data-placement="top" title="File IO and JSON in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/errors-and-exceptions-in-python-3\/';
+    var disqus_title = 'Errors and exceptions in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/errors-and-exceptions-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

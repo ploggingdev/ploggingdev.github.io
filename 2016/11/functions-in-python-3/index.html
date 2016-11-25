@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Functions in Python 3</title>
+
+  <meta name="author" content="" />
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Functions in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/11/functions-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Functions in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on November 13, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
+example:</p>
+
+<pre><code>def hello_function():
+    '''This is where the function documentation goes'''
+    print('Hello from function')
+
+hello_function()
+print(hello_function)
+#output
+Hello from function
+&lt;function hello_function at 0x7f34bc7db378&gt;
+</code></pre>
+
+<ul>
+<li>The <code>def</code> keyword is used to define a function.</li>
+<li>It is followed by the function name, argument list(if any), and a
+colon <code>:</code>.</li>
+<li>The function body is indented by 4 spaces.</li>
+<li>The first line of a function body is a
+<a href="https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings">docstring</a>,
+which is documentation for the function. It&rsquo;s a good practice to always include the docstring.</li>
+<li>The statements that constitute the function are placed after the docstring.</li>
+<li>A function is an object, notice the output of <code>print(hello_function)</code>.</li>
+</ul>
+
+<p></p>
+
+<p>A function can return a value after it finishes execution. If a return value is not specified, the
+default value is <code>None</code>. Example:</p>
+
+<pre><code>def function_with_return():
+    '''This function returns a number'''
+    return 42
+return_value = function_with_return()
+print(return_value)
+#output
+42
+</code></pre>
+
+<p>The <code>return</code> keyword is used to return a variable or value.</p>
+
+<p>A function can accept arguments. Example:</p>
+
+<pre><code>def function_args(arg1):
+    '''Prints the argument it recieves'''
+    print(arg1)
+function_args('My argument')
+#output
+My argument
+</code></pre>
+
+<p>It is possible to have default arguments. When an argument is not provided, a default value is used.
+Example :</p>
+
+<pre><code>def function_default_args(arg1=42):
+    '''A function with a default argument'''
+    print(arg1)
+function_default_args(34)
+function_default_args()
+#output
+34
+42
+</code></pre>
+
+<p>Keyword arguments are specified by explicitly stating which argument a value belongs to. Very poor
+explanation, let the code speak:</p>
+
+<pre><code>def function_kwargs(name='no name', age=42):
+    '''Keyword arguments demo'''
+    print(name, ' ', age)
+function_kwargs(age=34,name='my name')
+function_kwargs(name='my name',age=34)
+#output
+my name   34
+my name   34
+</code></pre>
+
+<p>It is possible to mix keyword and positional arguments. Keyword arguments should always come after
+positional arguments. The
+<a href="https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments">official ducumentation</a> explains
+this concept well.</p>
+
+<p>Arbitrary argument lists are those whose content length can vary. Example:</p>
+
+<pre><code>def function_variable_args(*args):
+    '''This function prints a variable number of arguments'''
+    print(' '.join(*args))
+variable_args1 = 'python', 'ruby', 'php'
+function_variable_args(variable_args1)
+variable_args2 = 'python', 'ruby', 'php', 'java'
+function_variable_args(variable_args2)
+#output
+python ruby php
+python ruby php java
+</code></pre>
+
+<p>I don&rsquo;t understand arbitrary argument lists well. The same result can be achieved by using a normal tuple
+without the <code>*args</code>. I&rsquo;ll come back to this later.</p>
+
+<p>The official documentation also contains tl;dr about the coding style in Python. Link
+<a href="https://docs.python.org/3/tutorial/controlflow.html#intermezzo-coding-style">here</a>.</p>
+
+<p>To understand how arguments are passed to functions and how arguments being mutable or immutable
+affects the values in the outer scope, refer
+<a href="http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference">here</a>.</p>
+
+<p>Code for today&rsquo;s plog is <a href="https://github.com/ploggingdev/python_learn/blob/master/functions.py">here</a>.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Official tutorial</a></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/" data-toggle="tooltip" data-placement="top" title="Control flow tools in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/" data-toggle="tooltip" data-placement="top" title="Modules and packages in Python 3">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/functions-in-python-3\/';
+    var disqus_title = 'Functions in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/functions-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

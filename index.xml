@@ -1,0 +1,1653 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Plogging Dev</title>
+    <link>https://www.ploggingdev.com/index.xml</link>
+    <description>Recent content on Plogging Dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>ploggingdev@gmail.com</managingEditor>
+    <webMaster>ploggingdev@gmail.com</webMaster>
+    <lastBuildDate>Tue, 22 Nov 2016 17:20:29 +0530</lastBuildDate>
+    <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>File IO and JSON in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/</link>
+      <pubDate>Tue, 22 Nov 2016 17:20:29 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/</guid>
+      <description>&lt;p&gt;Before discussing file IO and json, let&amp;rsquo;s talk about accepting input from the user using &lt;code&gt;input()&lt;/code&gt;. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;name = input(&amp;quot;What&#39;s your name?\n&amp;quot;)
+age = int(input(&amp;quot;Age?\n&amp;quot;))
+print(&amp;quot;Name : {}  Age : {}&amp;quot;.format(name,age))
+#output
+What&#39;s your name?
+plog
+Age?
+42
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reading and writing files involves the following three steps:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Open the file using &lt;code&gt;open(filename, mode)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Read or write from or to the file using &lt;code&gt;read()&lt;/code&gt; or &lt;code&gt;write()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Close the file using &lt;code&gt;close()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;A file can be opened in the following modes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;r&lt;/code&gt; for read only. This is the default mode if mode is not specified&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;w&lt;/code&gt; for write only. This mode overwrites any existing content&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r+&lt;/code&gt; for read and write&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a&lt;/code&gt; for appending content to a file&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def print_file(filename):
+    &amp;quot;&amp;quot;&amp;quot;Prints the contents of a file&amp;quot;&amp;quot;&amp;quot;
+    f = open(filename)
+    print(f.read())
+    f.close()
+
+filename = &amp;quot;temp.txt&amp;quot;
+
+#write to a file
+temp_file = open(filename,&#39;w&#39;)
+temp_file.write(&#39;First line.\nSecond line.\n&#39;)
+temp_file.close()
+
+print_file(filename)
+
+#append to file
+temp_file = open(&#39;temp.txt&#39;,&#39;a&#39;)
+temp_file.write(&#39;Third line&#39;)
+temp_file.close()
+
+print_file(filename)
+#output
+First line.
+Second line.
+
+First line.
+Second line.
+Third line
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;os&lt;/code&gt; module is used to interact with the operating system.&lt;/p&gt;
+
+&lt;p&gt;The function, &lt;code&gt;os.path.join()&lt;/code&gt; is used to generate a string to represent a path. The generated path is dependent on the OS it is being run on. Eg- Windows uses backslash in paths while *nix OSes use a forward slash.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(os.path.join(&#39;home&#39;,&#39;plog&#39;,&#39;Desktop&#39;))
+#output
+home/plog/desktop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;os.getcwd()&lt;/code&gt; is used to retrieve the current working directory.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(os.getcwd())
+/home/plog/Desktop/python_learn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;os.chdir(path)&lt;/code&gt; is used to change directory.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;os.chdir(&#39;modules&#39;)
+print(os.getcwd())
+/home/plog/Desktop/python_learn/modules
+os.chdir(&#39;../&#39;)
+print(os.getcwd())
+/home/plog/Desktop/python_learn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To specify a path, relative or absolute paths can be used. &lt;code&gt;.&lt;/code&gt; specifies the current directory and &lt;code&gt;..&lt;/code&gt; specifies the parent directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;os.mkdir(name)&lt;/code&gt; is used to create a directory. &lt;code&gt;os.path.exists(path)&lt;/code&gt; is used to check if the path exists to avoid to decide whether to create the directory or not.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if not os.path.exists(&#39;./files_demo&#39;):
+    os.mkdir(&#39;./files_demo&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;os.path.getsize(path)&lt;/code&gt; is used to find the size of the file in the specified path.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;os.listdir(path)&lt;/code&gt; lists all the folders and subfolders in the path specified.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;os.path.isdir(path)&lt;/code&gt; and &lt;code&gt;os.path.isfile(path)&lt;/code&gt; are used to verify if the specified paths are a directory and a file respectively. It returns &lt;code&gt;True&lt;/code&gt; or &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(os.path.getsize(&#39;./temp.txt&#39;))
+print(os.listdir(&#39;./&#39;))
+
+print(os.path.isdir(&#39;./files_demo&#39;))
+print(os.path.isfile(&#39;./temp.txt&#39;))
+#output
+35
+[&#39;.git&#39;, &#39;requirements.txt&#39;, &#39;io.py&#39;, &#39;files_demo&#39;, &#39;strings.py&#39;, &#39;range.py&#39;, &#39;lists.py&#39;, &#39;LICENSE&#39;, &#39;datat
+ypes.py&#39;, &#39;tuples.py&#39;, &#39;control_flow.py&#39;, &#39;hello.py&#39;, &#39;sets.py&#39;, &#39;dictionaries.py&#39;, &#39;functions.py&#39;, &#39;.gitig
+nore&#39;, &#39;module_demo.py&#39;, &#39;classes.py&#39;, &#39;temp.txt&#39;, &#39;README.md&#39;, &#39;modules&#39;]
+True
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;shelve&lt;/code&gt; module is used to save variables to a file and retrieve them. It stores the contents in binary format.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;shelf = shelve.open(&#39;shelve_test&#39;)
+langs = [&#39;python&#39;, &#39;java&#39;, &#39;php&#39;]
+shelf[&#39;langs&#39;] = langs
+shelf.close()
+
+shelf = shelve.open(&#39;shelve_test&#39;)
+print(shelf[&#39;langs&#39;])
+shelf.close()
+#output
+[&#39;python&#39;, &#39;java&#39;, &#39;php&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;shutil&lt;/code&gt; is a module that lets us move, copy, rename and delete files and folders.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#copy to directory
+shutil.copy(&#39;./temp.txt&#39;,&#39;./files_demo&#39;)
+#copy and entire folder recursively
+shutil.copytree(&#39;./modules&#39;,&#39;./modules_backup&#39;)
+#move a file
+shutil.move(&#39;./temp.txt&#39;,&#39;./files_demo/temp_backup.txt&#39;)
+
+if not os.path.exists(&#39;./files_demo_2&#39;):
+    os.mkdir(&#39;./files_demo_2&#39;)
+
+#move a folder
+shutil.move(&#39;./files_demo_2&#39;,&#39;files_demo&#39;)
+shutil.move(&#39;./shelve_test&#39;,&#39;./files_demo/files_demo_2&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Deletion of files and folders can be done using the &lt;code&gt;os&lt;/code&gt; and &lt;code&gt;shutil&lt;/code&gt; modules:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;os.unlink(path)&lt;/code&gt; deletes a file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;os.rmdir(path)&lt;/code&gt; deletes an empty folder&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;shutil.rmtree(path)&lt;/code&gt; will delete a directory along with all files and subfolders&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Since deletion of files and folders is a risky operation, the above functions can be replaced by the &lt;code&gt;send2trash&lt;/code&gt; module. The mentioned module moves the files and folders to be deleted into the trash so it gives us the chance to restore files and folders in case something unexpected happens.&lt;/p&gt;
+
+&lt;p&gt;Install the &lt;code&gt;send2trash&lt;/code&gt; module using:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install send2trash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure to update the &lt;code&gt;requirements.txt&lt;/code&gt; using&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip freeze &amp;gt; requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The following example shows the usage of &lt;code&gt;send2trash&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;send2trash.send2trash(&#39;./files_demo&#39;)
+send2trash.send2trash(&#39;./modules_backup&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A commonly used operation is to traverse a folder and all its files and subfolders recursively. This can be accomplished using &lt;code&gt;os.walk(path)&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for folderName, subfolders, filenames in os.walk(&#39;./&#39;):
+    print(&#39;The current folder is &#39; + folderName)
+
+    for subfolder in subfolders:
+        print(&#39;SUBFOLDER OF &#39; + folderName + &#39;: &#39; + subfolder)
+    for filename in filenames:
+        print(&#39;FILE INSIDE &#39; + folderName + &#39;: &#39;+ filename)
+
+    print(&#39;&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above code prints all the folders, subfolders and files in the current directory. I did not paste the output, since it includes the contents of &lt;code&gt;.git&lt;/code&gt; which will unnecessarily clutter this plog.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;json&lt;/code&gt; module enables us to convert strings to json and vice-versa.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;json_string = &#39;{&amp;quot;first_name&amp;quot;: &amp;quot;Guido&amp;quot;, &amp;quot;last_name&amp;quot;:&amp;quot;Rossum&amp;quot;}&#39;
+parsed_json = json.loads(json_string)
+print(parsed_json[&#39;first_name&#39;])
+print(json.dumps(parsed_json))
+#output
+Guido
+{&amp;quot;last_name&amp;quot;: &amp;quot;Rossum&amp;quot;, &amp;quot;first_name&amp;quot;: &amp;quot;Guido&amp;quot;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;json.load()&lt;/code&gt; and &lt;code&gt;json.dump()&lt;/code&gt; also exist, which accept files instead of strings as arguments.&lt;/p&gt;
+
+&lt;p&gt;The reason &lt;code&gt;shelve&lt;/code&gt; is preferred over serializing and deserializing objects as json is because of performance. Serializing and deserializing json is an expensive operation for custom objects. Json can be used for dictionaries and lists.&lt;/p&gt;
+
+&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/io.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/inputoutput.html&#34;&gt;Official docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://automatetheboringstuff.com/chapter8/&#34;&gt;Automate the boring stuff chapter 8&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://automatetheboringstuff.com/chapter9/&#34;&gt;Automate the boring stuff chapter 9&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.python-guide.org/en/latest/scenarios/json/&#34;&gt;Hitchhiker&amp;rsquo;s guide to python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Virtual environments and package management in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/</link>
+      <pubDate>Mon, 21 Nov 2016 21:46:23 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/</guid>
+      <description>&lt;p&gt;A virtual environment is a directory containing a Python installation and any additional packages. Since a virtual environment is isolated, any changes made will not affect the global installation of Python. It also enables the usage of different versions of the same package in multiple virtual environments.&lt;/p&gt;
+
+&lt;p&gt;To create a virtual environment, the &lt;code&gt;venv&lt;/code&gt; module will be used. The &lt;code&gt;virtualenv&lt;/code&gt; module also can be used, but &lt;code&gt;venv&lt;/code&gt; is the officially recommended solution so that&amp;rsquo;s what I will be using. The current Python 3 documentation recommends the usage of &lt;code&gt;pyvenv&lt;/code&gt;, which is a wrapper around &lt;code&gt;venv&lt;/code&gt;. Since &lt;code&gt;pyvenv&lt;/code&gt; will be deprecated soon, avoid using &lt;code&gt;pyvenv&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Installation of &lt;code&gt;venv&lt;/code&gt; on Ubuntu 16.04:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt install python3-venv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To create a new virtual environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;python3 -m venv python_learn_venv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;To activate the newly created virtual environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;source python_learn_venv/bin/activate
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The terminal will reflect that a virtual environment has been activated by displaying it&amp;rsquo;s name.&lt;/p&gt;
+
+&lt;p&gt;To deactivate a virtual environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;deactivate
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After activating a virtual environment, packages can be managed using a tool called &lt;code&gt;pip&lt;/code&gt;. The tool lets you install, upgrade, remove and search for packages.&lt;/p&gt;
+
+&lt;p&gt;To search for a package:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip search package_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To install a package:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install package_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To uninstall a package:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip uninstall package_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To upgrade a package to the latest version:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install --upgrade package_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To view information about a particular package:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip show package_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To view the list of packages installed in the current virtual environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip freeze
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;pip list&lt;/code&gt; can be used, but &lt;code&gt;pip freeze&lt;/code&gt; is preferred, since the output is in the format that &lt;code&gt;pip install&lt;/code&gt; expects.&lt;/p&gt;
+
+&lt;p&gt;To keep track of the packages installed in your virtual environment, save the contents of &lt;code&gt;pip freeze&lt;/code&gt; to a file called &lt;code&gt;requirements.txt&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip freeze &amp;gt; requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;requirements.txt&lt;/code&gt; can be commited to version control.&lt;/p&gt;
+
+&lt;p&gt;To install packages from requirements.txt`:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A note about &lt;code&gt;pip&lt;/code&gt; and &lt;code&gt;pip3&lt;/code&gt;: when a virtual environment has been created with Python 3 and is active, &lt;code&gt;pip&lt;/code&gt; refers to &lt;code&gt;pip3&lt;/code&gt;. When a virtual environment is not activated, &lt;code&gt;pip&lt;/code&gt; will refer to &lt;code&gt;pip2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;An example of &lt;code&gt;requirements.txt&lt;/code&gt; is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/requirements.txt&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/venv.html&#34;&gt;Official docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://superuser.com/questions/1039369/how-to-create-a-python3-virtual-environment-as-of-2016&#34;&gt;Superuser&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/learnpython/comments/4hsudz/pyvenv_vs_virtualenv/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Classes and inheritance in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</link>
+      <pubDate>Sat, 19 Nov 2016 07:38:24 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</guid>
+      <description>&lt;p&gt;From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).&lt;/p&gt;
+
+&lt;p&gt;Features of classes in Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Multiple inheritance permitted&lt;/li&gt;
+&lt;li&gt;Derived class can override base class methods&lt;/li&gt;
+&lt;li&gt;Base class methods can be called using &lt;code&gt;super().method_name()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Class members are dynamic, can be modified at runtime&lt;/li&gt;
+&lt;li&gt;Class members are public, methods are virtual (can be overridden)&lt;/li&gt;
+&lt;li&gt;The first parameter in a method is a reference to the calling object, usually &lt;code&gt;self&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Operator overloading is supported&lt;/li&gt;
+&lt;li&gt;Aliasing of objects is supported&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Classes are defined as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class ClassName:
+    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
+    statement_1
+    .
+    .
+    .
+    statement_n
+
+#create an instance of the class
+var = ClassName()
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Class variables are common to all instances and are often used to represent immutable data. An example is the &lt;code&gt;details&lt;/code&gt; variable in the below example.&lt;/p&gt;
+
+&lt;p&gt;An instance variable is unique to every instance of the class ie object. Examples are &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; variables in the following class.&lt;/p&gt;
+
+&lt;p&gt;To initialize an object, the &lt;code&gt;__init__(self)&lt;/code&gt; method is used. It&amp;rsquo;s like a constructor, thinking in terms of Java.&lt;/p&gt;
+
+&lt;p&gt;To specify how the contents of an object should be printed, the &lt;code&gt;__str__(self)&lt;/code&gt; method is used. When an object is printed using &lt;code&gt;print(object_variable)&lt;/code&gt;, the &lt;code&gt;__str__(self)&lt;/code&gt; method is called.&lt;/p&gt;
+
+&lt;p&gt;To format strings the &lt;code&gt;string.format()&lt;/code&gt; will be used. The &lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Difference between a function and a method: a function is a named grouping of statements while a method is a function that is associated with a specific class.&lt;/p&gt;
+
+&lt;p&gt;To define a method, it has to be defined inside a class and is called using &lt;code&gt;object.method()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Functions are of two types: pure and modifiers. Pure functions don&amp;rsquo;t modify the data it receives and is the model followed in functional programming. Modifier functions, as the name suggests, modify the data it receives. The cool thing about Python is that it allows different programming paradigms such as functional programming and object oriented programming, and you are free to use whichever programming paradigm suits you.&lt;/p&gt;
+
+&lt;p&gt;Operator overloading is possible in Python by overriding certain methods. Eg- override &lt;code&gt;__add__()&lt;/code&gt; to allow using the &lt;code&gt;+&lt;/code&gt; operator on instances of the class. To learn more refer &lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Objects can be copied using &lt;code&gt;copy.copy()&lt;/code&gt;. A new object is created with the same contents as the original object.&lt;/p&gt;
+
+&lt;p&gt;All these concepts are demonstrated in the following example.&lt;/p&gt;
+
+&lt;p&gt;Point class example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import copy
+
+class Point:
+    &amp;quot;&amp;quot;&amp;quot;A class to represent a point&amp;quot;&amp;quot;&amp;quot;
+
+    details = &amp;quot;Represent points&amp;quot;
+
+    def __init__(self,x=0,y=0):
+        self.x=x
+        self.y=y
+    
+    def __str__(self):
+        return &amp;quot;x={} y={}&amp;quot;.format(self.x,self.y)
+
+    def get_sum(self):
+        &amp;quot;&amp;quot;&amp;quot;Return sum of x and y components&amp;quot;&amp;quot;&amp;quot;
+        return self.x + self.y
+    
+    def add_point(self,to_add):
+        &amp;quot;&amp;quot;&amp;quot;Update self by add x and y component of new_point&amp;quot;&amp;quot;&amp;quot;
+        self.x += to_add.x
+        self.y += to_add.y
+
+    def __add__(self,new_point):
+        self.x += new_point.x
+        self.y += new_point.y
+        return self
+
+def print_point(point):
+    &amp;quot;&amp;quot;&amp;quot;print contents of given point&amp;quot;&amp;quot;&amp;quot;
+    print(&amp;quot;x={} y={}&amp;quot;.format(point.x,point.y))
+
+point = Point(10,20)
+print(point)
+
+print(point.details)
+print(point.get_sum())
+
+new_point = Point(2,4)
+print(new_point)
+
+point.add_point(new_point)
+print(point)
+
+print_point(new_point)
+
+copied_point = copy.copy(point)
+copied_point.x = 5
+copied_point.y = 5
+print(point)
+print(copied_point)
+
+print(copied_point + new_point)
+#output
+x=10 y=20
+Represent points
+30
+x=2 y=4
+x=12 y=24
+x=2 y=4
+x=12 y=24
+x=5 y=5
+x=7 y=9
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A note about namespaces and scopes: a namespace is a mapping of names to objects. Eg- global namespace, module namespace, function namespace. A scope is a textual region where the namespace is accessible.&lt;/p&gt;
+
+&lt;p&gt;During execution, there are at least three nested scopes whose namespaces are directly accessible:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Innermost scope, an &lt;code&gt;if&lt;/code&gt; block or a loop&lt;/li&gt;
+&lt;li&gt;Enclosing function scope&lt;/li&gt;
+&lt;li&gt;Module scope&lt;/li&gt;
+&lt;li&gt;Global scope&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Variables can be declared as &lt;code&gt;nonlocal&lt;/code&gt; or &lt;code&gt;global&lt;/code&gt;. If they are not specified, he defualt is the current scope (need to check). A &lt;code&gt;nonlocal&lt;/code&gt; statement is used to indicate a variable has to be rebound in the enclosing scope. A &lt;code&gt;global&lt;/code&gt; statement indicates that a variable has to be rebound in the global scope. Note that this is applicable only for rebinding variables, not for modifying mutable data types. To learn more refer &lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Inheritance is supported. Syntax is as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class BaseClass:
+    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
+    statement_1
+    .
+    .
+    .
+    statement_n
+
+class DerivedClass(BaseClass):
+    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
+    statement_1
+    .
+    .
+    .
+    statement_n
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Multiple inheritance is supprted using &lt;code&gt;class Derived(Base1,Base2):&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;It should be noted that multiple inheritance can introduce a situation where multiple base classes inherit from the same base class. To learn more about how method resolution works refer &lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#multiple-inheritance&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A simple example of inheritance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Vehicle(object):
+    &amp;quot;&amp;quot;&amp;quot;Represents a vehicle&amp;quot;&amp;quot;&amp;quot;
+
+    def __init__(self,engine_power=100):
+        self.engine_power = engine_power
+    
+    def __str__(self):
+        return &amp;quot;Engine power : {}HP&amp;quot;.format(self.engine_power)
+    
+    def print_name(self):
+        print(&amp;quot;From vehicle&amp;quot;)
+    
+class Car(Vehicle):
+    &amp;quot;&amp;quot;&amp;quot;Represents a car&amp;quot;&amp;quot;&amp;quot;
+
+    def __init__(self,wheels=4):
+        super().__init__()
+        self.wheels = wheels
+    
+    def __str__(self):
+        return &amp;quot;Engine power : {}HP , Wheels = {}&amp;quot;.format(self.engine_power,self.wheels)
+    
+    def print_name(self):
+        print(&amp;quot;From vehicle&amp;quot;)
+
+car = Car()
+print(car)
+car.print_name()
+#output
+Engine power : 100HP , Wheels = 4
+From vehicle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/classes.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Class_(computer_programming)&#34;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;String formatting&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modules and packages in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</link>
+      <pubDate>Wed, 16 Nov 2016 14:13:24 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</guid>
+      <description>&lt;p&gt;A module is a file that contains Python definitions and statements with a &lt;code&gt;.py&lt;/code&gt; extension. So technically,
+all the code that I posted so far has been in the form of modules. Modules are a way to organize code
+in Python so that closely related functions and definitions are grouped together into a module.
+It makes code reusable.&lt;/p&gt;
+
+&lt;p&gt;A related concept is packages. Packages are just a way to organize modules into a namespace. A package
+can be thought of as a directory that contains modules and subpackages. For Python to treat a directory as
+a package, a file named &lt;code&gt;__init__.py&lt;/code&gt; is required in the directory. The &lt;code&gt;__init__.py&lt;/code&gt; can also contain
+code that will be executed when the package is first imported, typically initialization code.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The following example clarifies these concepts:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A file named &lt;code&gt;module_demo.py&lt;/code&gt; is created.&lt;/li&gt;
+&lt;li&gt;A directory named &lt;code&gt;modules&lt;/code&gt; is created.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;modules&lt;/code&gt; directory contains an empty &lt;code&gt;__init__.py&lt;/code&gt; to signify that it is a package.&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;modules&lt;/code&gt; package, a &lt;code&gt;useless_print.py&lt;/code&gt; file is created, which is a module.&lt;/li&gt;
+&lt;li&gt;To demonstrate submodules, a &lt;code&gt;submodule&lt;/code&gt; directory is created inside &lt;code&gt;modules&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Inside &lt;code&gt;submodule&lt;/code&gt;, an &lt;code&gt;__init__.py&lt;/code&gt; file is created to signify that it is a package.&lt;/li&gt;
+&lt;li&gt;Inside &lt;code&gt;submodule&lt;/code&gt;, a module named &lt;code&gt;another_print.py&lt;/code&gt; is created.&lt;/li&gt;
+&lt;li&gt;The functions &lt;code&gt;useless_print&lt;/code&gt; and &lt;code&gt;another_print&lt;/code&gt; from the modules by the same name are imported
+into &lt;code&gt;module_demo.py&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The imported functions are invoked from &lt;code&gt;module_demo.py&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;text
+some more text
+some more text
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source code can be found in the &lt;a href=&#34;https://github.com/ploggingdev/python_learn&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A few notes about modules and packages in Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Be explicit: import only what is required.&lt;/li&gt;
+&lt;li&gt;Avoid &lt;code&gt;from modules import *&lt;/code&gt;. It clutters the namespace and can result in namespace clashes.&lt;/li&gt;
+&lt;li&gt;Modules can be run as scripts by checking for &lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Avoiding nesting modules as far as possible, prefer a flat structure. For the purpose of demonstration,
+I nested a module two levels deep.&lt;/li&gt;
+&lt;li&gt;Intra package references &lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html#intra-package-references&#34;&gt;info&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/Python/comments/1bbbwk/whats_your_opinion_on_what_to_include_in_init_py/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Functions in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/functions-in-python-3/</link>
+      <pubDate>Sun, 13 Nov 2016 10:30:06 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/functions-in-python-3/</guid>
+      <description>&lt;p&gt;A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
+example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def hello_function():
+    &#39;&#39;&#39;This is where the function documentation goes&#39;&#39;&#39;
+    print(&#39;Hello from function&#39;)
+
+hello_function()
+print(hello_function)
+#output
+Hello from function
+&amp;lt;function hello_function at 0x7f34bc7db378&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;def&lt;/code&gt; keyword is used to define a function.&lt;/li&gt;
+&lt;li&gt;It is followed by the function name, argument list(if any), and a
+colon &lt;code&gt;:&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The function body is indented by 4 spaces.&lt;/li&gt;
+&lt;li&gt;The first line of a function body is a
+&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings&#34;&gt;docstring&lt;/a&gt;,
+which is documentation for the function. It&amp;rsquo;s a good practice to always include the docstring.&lt;/li&gt;
+&lt;li&gt;The statements that constitute the function are placed after the docstring.&lt;/li&gt;
+&lt;li&gt;A function is an object, notice the output of &lt;code&gt;print(hello_function)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;A function can return a value after it finishes execution. If a return value is not specified, the
+default value is &lt;code&gt;None&lt;/code&gt;. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def function_with_return():
+    &#39;&#39;&#39;This function returns a number&#39;&#39;&#39;
+    return 42
+return_value = function_with_return()
+print(return_value)
+#output
+42
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;return&lt;/code&gt; keyword is used to return a variable or value.&lt;/p&gt;
+
+&lt;p&gt;A function can accept arguments. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def function_args(arg1):
+    &#39;&#39;&#39;Prints the argument it recieves&#39;&#39;&#39;
+    print(arg1)
+function_args(&#39;My argument&#39;)
+#output
+My argument
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is possible to have default arguments. When an argument is not provided, a default value is used.
+Example :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def function_default_args(arg1=42):
+    &#39;&#39;&#39;A function with a default argument&#39;&#39;&#39;
+    print(arg1)
+function_default_args(34)
+function_default_args()
+#output
+34
+42
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Keyword arguments are specified by explicitly stating which argument a value belongs to. Very poor
+explanation, let the code speak:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def function_kwargs(name=&#39;no name&#39;, age=42):
+    &#39;&#39;&#39;Keyword arguments demo&#39;&#39;&#39;
+    print(name, &#39; &#39;, age)
+function_kwargs(age=34,name=&#39;my name&#39;)
+function_kwargs(name=&#39;my name&#39;,age=34)
+#output
+my name   34
+my name   34
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is possible to mix keyword and positional arguments. Keyword arguments should always come after
+positional arguments. The
+&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments&#34;&gt;official ducumentation&lt;/a&gt; explains
+this concept well.&lt;/p&gt;
+
+&lt;p&gt;Arbitrary argument lists are those whose content length can vary. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def function_variable_args(*args):
+    &#39;&#39;&#39;This function prints a variable number of arguments&#39;&#39;&#39;
+    print(&#39; &#39;.join(*args))
+variable_args1 = &#39;python&#39;, &#39;ruby&#39;, &#39;php&#39;
+function_variable_args(variable_args1)
+variable_args2 = &#39;python&#39;, &#39;ruby&#39;, &#39;php&#39;, &#39;java&#39;
+function_variable_args(variable_args2)
+#output
+python ruby php
+python ruby php java
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I don&amp;rsquo;t understand arbitrary argument lists well. The same result can be achieved by using a normal tuple
+without the &lt;code&gt;*args&lt;/code&gt;. I&amp;rsquo;ll come back to this later.&lt;/p&gt;
+
+&lt;p&gt;The official documentation also contains tl;dr about the coding style in Python. Link
+&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#intermezzo-coding-style&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To understand how arguments are passed to functions and how arguments being mutable or immutable
+affects the values in the outer scope, refer
+&lt;a href=&#34;http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/functions.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#defining-functions&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Control flow tools in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</link>
+      <pubDate>Sat, 12 Nov 2016 11:28:34 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</guid>
+      <description>&lt;p&gt;Before I start with control flow tools, here are a few definitions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Value:&lt;/strong&gt; Basic units of data. Eg- &lt;code&gt;10&lt;/code&gt;,&lt;code&gt;&#39;string&#39;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Variable:&lt;/strong&gt; A name that refers to a value. Eg- &lt;code&gt;var=10&lt;/code&gt;, &lt;code&gt;var&lt;/code&gt; is the variable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statement:&lt;/strong&gt; A section of code that represents a command or action.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operator:&lt;/strong&gt; A symbol that performs operations on operands. Eg- &lt;code&gt;*&lt;/code&gt; is for multiplication&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expression&lt;/strong&gt; A combination of variables, operators, and values to perform a task.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To learn about operators in Python refer
+&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some of the control flow tools are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;if&lt;/code&gt; statement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;while&lt;/code&gt; statement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;for&lt;/code&gt; statement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;break&lt;/code&gt;, &lt;code&gt;continue&lt;/code&gt; and &lt;code&gt;pass&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt; statements are used for conditional decision making. Executution starts from &lt;code&gt;if&lt;/code&gt; then &lt;code&gt;elif&lt;/code&gt; and
+finally &lt;code&gt;else&lt;/code&gt; statements. The first condition that matches (evaluates to &lt;code&gt;True&lt;/code&gt;) is executed and the
+remaining conditions are skipped. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;num=42
+if num&amp;gt;0:
+    print(&#39;postive number&#39;)
+elif num==0:
+    print(&#39;Zero&#39;)
+else:
+    print(&#39;negative number&#39;)
+#output
+postive number
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;while&lt;/code&gt; statement is used for iteration. It consists of a condition, which evaluates to either &lt;code&gt;True&lt;/code&gt;
+or &lt;code&gt;False&lt;/code&gt;. The code inside the &lt;code&gt;while&lt;/code&gt; loop is executed as long as the condition evaluates to &lt;code&gt;True&lt;/code&gt;.
+Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;while example&#39;)
+counter=10
+while counter&amp;gt;0:
+    print(counter)
+    counter-=1
+print(&#39;Blast off&#39;)
+#output
+while example
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+Blast off
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A &lt;code&gt;for&lt;/code&gt; loop is used to iterate over the items of any sequence such as lists, strings. Examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;for example 1&#39;)
+values=[11,12,34,46]
+for i in values:
+    print(i)
+
+print(&#39;for example 2&#39;)
+for i in range(6):
+    print(i)
+#output
+for example 1
+11
+12
+34
+46
+for example 2
+0
+1
+2
+3
+4
+5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A &lt;code&gt;continue&lt;/code&gt; statement is used to skip the current iteration of either a &lt;code&gt;while&lt;/code&gt; or &lt;code&gt;for&lt;/code&gt; loop. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;continue example&#39;)
+for i in range(10):
+    if(i%2==0):
+        continue
+    print(i)
+#output
+continue example
+1
+3
+5
+7
+9
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the above example, even numbers are not printed.&lt;/p&gt;
+
+&lt;p&gt;A &lt;code&gt;break&lt;/code&gt; statement is used to stop the execution of the loop that it is encountered in. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;break example&#39;)
+for i in range(10):
+    if(i==6):
+        break
+    print(i)
+#output
+break example
+0
+1
+2
+3
+4
+5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When &lt;code&gt;6&lt;/code&gt; is encountered, execution of the &lt;code&gt;for&lt;/code&gt; loop is stopped. Note that in the case of nested &lt;code&gt;for&lt;/code&gt;
+loops, only the execution of the loop that &lt;code&gt;break&lt;/code&gt; is encountered in is stopped, but not the loops at a
+higher level.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;pass&lt;/code&gt; statement does not do anything. It is generally used in situations where code is expected to
+be present, but there is nothing meaningful that can be placed. The following example demonstrates the
+usage of &lt;code&gt;pass&lt;/code&gt;, though it is not a good example of where to use &lt;code&gt;pass&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;pass example&#39;)
+for i in range(10):
+    pass
+    print(i)
+    pass
+#output
+pass example
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;Tutorials Point&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog is
+&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/control_flow.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Dictionaries in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/</link>
+      <pubDate>Fri, 11 Nov 2016 13:27:42 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/</guid>
+      <description>&lt;p&gt;A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
+strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
+associative arrays from other programming languages.&lt;/p&gt;
+
+&lt;p&gt;A dictionary can be created in multiple ways, using &lt;code&gt;{}&lt;/code&gt; or the &lt;code&gt;dict()&lt;/code&gt; function. The following are
+some examples of ways to create dictionaries:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;a=dict(one=1,two=2)
+b={&#39;one&#39;:1,&#39;two&#39;:2}
+c=dict(zip([&#39;one&#39;,&#39;two&#39;],[1,2]))
+d=dict([(&#39;one&#39;,1),(&#39;two&#39;,2)])
+e=dict({&#39;one&#39;:1,&#39;two&#39;:2})
+print(a==b==c==d==e)
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see, all the variables hold the same dictionary. To create an empty dictionary, use &lt;code&gt;{}&lt;/code&gt; or
+ &lt;code&gt;dict()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I will be using the syntax used to initialize variable &lt;code&gt;b&lt;/code&gt;, as it feels most natural to me.
+It&amp;rsquo;s a personal preference, use whichever syntax you are comfortable with.&lt;/p&gt;
+
+&lt;p&gt;There are multiple functions and methods that can be used to perform operations on dictionaries, some of
+whose usage is shown in the following examples.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The operations are fairly straight forward to understand, so I won&amp;rsquo;t explain them in detail.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;Dictionary contents &#39;,a)
+Dictionary contents  {&#39;two&#39;: 2, &#39;one&#39;: 1}
+
+print(&#39;len(a) &#39;,len(a))
+len(a)  2
+
+print(&#39;a[\&#39;one\&#39;] &#39;,a[&#39;one&#39;])
+a[&#39;one&#39;]  1
+
+#changing value associated with &#39;one&#39; key
+a[&#39;one&#39;]=11
+print(&#39;Dictionary contents after a[\&#39;one\&#39;]=11 &#39;,a)
+Dictionary contents after a[&#39;one&#39;]=11  {&#39;two&#39;: 2, &#39;one&#39;: 11}
+
+a[&#39;one&#39;]=1
+print(&#39;a[\&#39;one\&#39;]=1 &#39;,&#39;one&#39; in a)
+a[&#39;one&#39;]=1  True
+
+#in operator cannot be used to check the existence of values
+print(&#39;1 in a &#39;,1 in a)
+1 in a  False
+
+#providing a default value if requested key does not exist
+print(&#39;a.get(\&#39;three\&#39;,3) &#39;,a.get(&#39;three&#39;,3))
+a.get(&#39;three&#39;,3)  3
+
+print(&#39;a.keys() &#39;,a.keys())
+a.keys()  dict_keys([&#39;two&#39;, &#39;one&#39;])
+
+print(&#39;a.values() &#39;,a.values())
+a.values()  dict_values([2, 1])
+
+print(&#39;a.pop(\&#39;one\&#39;) &#39;,a.pop(&#39;one&#39;))
+a.pop(&#39;one&#39;)  1
+
+print(&#39;Dictionary contents &#39;,a)
+Dictionary contents  {&#39;two&#39;: 2}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can read more about operations on dictionaries
+&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#mapping-types-dict&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The objects returned by &lt;code&gt;dict.keys()&lt;/code&gt;, &lt;code&gt;dict.values()&lt;/code&gt; and &lt;code&gt;dict.items()&lt;/code&gt; are &lt;em&gt;view&lt;/em&gt; objects. When the
+contents of the dictionary changes, the changes are reflected in the &lt;em&gt;view&lt;/em&gt; objects. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;Dictionary contents &#39;,a)
+Dictionary contents  {&#39;two&#39;: 2}
+
+vals=a.values()
+print(vals)
+dict_values([2])
+
+a[&#39;two&#39;]=22
+print(vals)
+dict_values([22])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#dictionaries&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#mapping-types-dict&#34;&gt;Official library reference&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/dictionaries.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Sets in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/sets-in-python-3/</link>
+      <pubDate>Thu, 10 Nov 2016 09:21:40 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/sets-in-python-3/</guid>
+      <description>&lt;p&gt;A set is an unordered collection with no duplicate elements. Sets are used for membership testing, removing
+duplicate entries and performing set operations such as intersection, union and difference.&lt;/p&gt;
+
+&lt;p&gt;There are two built-in set types: set and frozenset. The set type is mutable and the frozenset type is
+immutable.&lt;/p&gt;
+
+&lt;p&gt;Set construction:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set()&lt;/code&gt; for empty set. &lt;strong&gt;Note:&lt;/strong&gt; {} cannot be used&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set(values)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{value1,valuen}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Construction of frozenset is very similar and uses &lt;code&gt;frozenset()&lt;/code&gt; instead of &lt;code&gt;set()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Set examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;myset1=set()
+print(myset1)
+set()
+
+myset2=set(&#39;aaabbcc&#39;)
+print(myset2)
+{&#39;b&#39;, &#39;a&#39;, &#39;c&#39;}
+
+myset3={&#39;python&#39;,&#39;java&#39;,&#39;c#&#39;,&#39;php&#39;}
+print(myset3)
+{&#39;c#&#39;, &#39;php&#39;, &#39;java&#39;, &#39;python&#39;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Operators that can be used on sets and frozensets with example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#membership testing
+print(&#39;python&#39; in myset3)
+True
+
+#find length
+print(len(myset3))
+4
+
+myset4={&#39;python&#39;,&#39;c++&#39;}
+
+#intersection
+print(myset3.intersection(myset4))
+{&#39;python&#39;}
+
+#difference
+print(myset3.difference(myset4))
+{&#39;c#&#39;, &#39;php&#39;, &#39;java&#39;}
+
+#union
+print(myset3.union(myset4))
+{&#39;php&#39;, &#39;python&#39;, &#39;c#&#39;, &#39;java&#39;, &#39;c++&#39;}
+
+#add element to set
+myset4.add(&#39;lisp&#39;)
+print(myset4)
+{&#39;c++&#39;, &#39;python&#39;, &#39;lisp&#39;}
+
+#remove lement from set
+myset4.remove(&#39;c++&#39;)
+print(myset4)
+{&#39;python&#39;, &#39;lisp&#39;}
+
+#equality testing
+print(myset3==myset4)
+False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Operations that involve modification of set data such as &lt;code&gt;add()&lt;/code&gt; and &lt;code&gt;remove()&lt;/code&gt; cannot be used on frozensets.&lt;/p&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/sets.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#sets&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset&#34;&gt;Official library reference&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ranges in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</link>
+      <pubDate>Wed, 09 Nov 2016 14:00:07 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</guid>
+      <description>&lt;p&gt;The range is an immutable sequence of numbers. The main advantage of using the range type is that the
+memory occupied is fixed irrespective of the size of the range. This is because the actual contents of
+the range are not stored, instead they are computed at runtime.&lt;/p&gt;
+
+&lt;p&gt;Ranges can be created using:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;range(stop)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;range(start,stop)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;range(start,stop,step)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Only the 1st and 3rd are constructors. In &lt;code&gt;range(start,stop,step)&lt;/code&gt;, step is an optional
+parameter. When step is not specified, what we end up with is &lt;code&gt;range(start,stop)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quick notes about the arguments passed to &lt;code&gt;range()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;start&lt;/code&gt; is not specified, the default value is 0.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;step&lt;/code&gt; is not specified, the default value is 1.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value cannot be zero, a runtime error will be thrown.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value &lt;em&gt;can&lt;/em&gt; be negative.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Stop&lt;/code&gt; is always required to be specified.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;To check the values of a range, convert the range to a list and print the list. Printing a range
+directly using &lt;code&gt;print(range_var)&lt;/code&gt; will not display the values in the range, since the values are not stored.&lt;/p&gt;
+
+&lt;p&gt;Some examples to demonstrate the usage of ranges:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#range(stop)
+r1=range(10)
+print(list(r1))
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+#range(start,stop)
+r2=range(2,10)
+print(list(r2))
+[2, 3, 4, 5, 6, 7, 8, 9]
+
+#range(start,stop,step)
+r3=range(10,20,2)
+print(list(r3))
+[10, 12, 14, 16, 18]
+
+#negative step value
+r4=range(30,10,-5)
+print(list(r4))
+[30, 25, 20, 15]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To check if a value is present in a range, the &lt;code&gt;in&lt;/code&gt; operator can be used.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r5=range(10,20)
+print(15 in r5)
+True
+
+print(25 in r5)
+False 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The comparison operators &lt;code&gt;==&lt;/code&gt; and &lt;code&gt;!=&lt;/code&gt; can be used to compare the values of different ranges.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(range(0,4,2)==range(0,3,2))
+True
+
+print(range(10)!=range(20))
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/range.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tuples in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</link>
+      <pubDate>Tue, 08 Nov 2016 10:48:13 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</guid>
+      <description>&lt;p&gt;Tuples are immutable sequences of values. The values can be heterogeneous.
+The values in a tuple are indexed by integers.&lt;/p&gt;
+
+&lt;p&gt;Tuple construction:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;()&lt;/code&gt; for empty tuple&lt;/li&gt;
+&lt;li&gt;Single value in a tuple requires a trailing comma: &lt;code&gt;1,&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Comma separated values: &lt;code&gt;1,2,3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;using &lt;code&gt;tuple()&lt;/code&gt; function&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;p&gt;Empty tuple.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t0=() 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Single value in a tuple(singleton). Notice the trailing comma.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t1=&#39;a&#39;,
+print(t1)
+(&#39;a&#39;,) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Comma separated values.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t2=1,2,3
+print(t2)
+(1, 2, 3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;code&gt;tuple()&lt;/code&gt; function. Note that it accepts only one argument.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t3=tuple()
+print(t3)
+()
+
+#trailing comma not required
+t4=tuple(&#39;a&#39;)
+print(t4)
+(&#39;a&#39;,)
+
+t5=tuple(&#39;abcd&#39;)
+print(t5)
+(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)
+
+t6=tuple(1234)
+TypeError: &#39;int&#39; object is not iterable
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;tuple()&lt;/code&gt; function does not accept integers as they are not iterable. To understand what iterables are,
+refer to the official &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#iterator-types&#34;&gt;docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Tuples are immutable:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t2[0]=456
+TypeError: &#39;tuple&#39; object does not support item assignment
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Tuple packing is the process of packing values into a tuple.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t7=123,&#39;abc&#39;,345
+print(t7)
+(123, &#39;abc&#39;, 345) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Tuple unpacking is the opposite.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var1,var2,var3=t7
+print(var1)
+123
+print(var2)
+abc
+print(var3) 
+345
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source code for today&amp;rsquo;s plog is available
+&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/tuples.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Lists in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/lists-in-python-3/</link>
+      <pubDate>Mon, 07 Nov 2016 10:03:00 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/lists-in-python-3/</guid>
+      <description>&lt;p&gt;Lists are mutable sequences that are often used to store homogeneous items.&lt;/p&gt;
+
+&lt;p&gt;The items of a list are enclosed in square brackets. Eg: &lt;code&gt;[1,2,3]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The contents of a list can be printed using the &lt;code&gt;print()&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;mylist=[1,2,3]
+print(mylist)
+[1,2,3] 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The following example demonstrates that lists are mutable(can be changed).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mylist[0]=99
+print(mylist)
+[99,2,3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Lists can be thought of as arrays in some ways, though it is not technically accurate. Mapping between
+ indices and list items work similar to those of arrays. The mapping between indices and list items in
+action:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(mylist[0])
+99
+print(mylist[1])
+2
+print(mylist[2])
+3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;in&lt;/code&gt; operator can be used to check if a certain item is present in a list.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;99 in mylist
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List operations:&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;+&lt;/code&gt; operator concatenates two lists.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;list1=[1,2]
+list2=[3,4]
+print(list1+list2)
+[1,2,3,4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;*&lt;/code&gt; operator can be used to repeat a list.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(list1*3)
+[1,2,1,2,1,2]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The slice operator &lt;code&gt;:&lt;/code&gt; works as follows: it accepts three parameters: start,end and
+increment(default is 1, and can be omitted) . The following example demonstrates the behavior:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;list3=[1,2,3,4,5]
+print(list3[2:5] #inclusive of start and excludes end
+[3,4,5]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are many list methods such as &lt;code&gt;append()&lt;/code&gt;,&lt;code&gt;pop()&lt;/code&gt;,&lt;code&gt;reverse()&lt;/code&gt;. The details can be found
+&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#more-on-lists&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I will briefly mention list traversal, which uses &lt;code&gt;for&lt;/code&gt; loops. I will cover &lt;code&gt;for&lt;/code&gt; loops in detail in an
+upcoming blog.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;list4=[8,9,10]
+for num in list4:
+    print(num)
+8
+9
+10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the indices of the elements are required:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for i in range(len(list4)):
+    print(&#39;Index : &#39;,i,&#39; ,value : &#39;,list4[i])
+Index :  0  Value :  8
+Index :  1  Value :  9
+Index :  2  Value :  10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;range&lt;/code&gt; data type is used to represent a sequence of numbers, in this case from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;elements-1&lt;/code&gt;.
+I will talk about the &lt;code&gt;range&lt;/code&gt; data type in more detail in an upcoming blog.&lt;/p&gt;
+
+&lt;p&gt;A few notes about lists:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;They are mutable, so be careful when making changes in-place without saving the original contents&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;len()&lt;/code&gt; function can be used on lists to find the length&lt;/li&gt;
+&lt;li&gt;Strings can be converted to lists using &lt;code&gt;list(string_variable)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The source code for today&amp;rsquo;s plog can be viewed
+&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/lists.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Strings in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/strings-in-python-3/</link>
+      <pubDate>Sun, 06 Nov 2016 07:35:00 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/strings-in-python-3/</guid>
+      <description>&lt;p&gt;Strings are sequences of characters.&lt;/p&gt;
+
+&lt;p&gt;Strings can be written in the following ways:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;lsquo;single quotes&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;double quotes&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;rdquo;&amp;lsquo;multi line&amp;rdquo;&amp;rsquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Escape sequences are used to display characters with a special meaning such as &lt;code&gt;&#39;&lt;/code&gt;, &lt;code&gt;&amp;quot;&lt;/code&gt; , &lt;code&gt;\&lt;/code&gt; within a string.&lt;/p&gt;
+
+&lt;p&gt;Some examples:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;\\&lt;/code&gt; displays &lt;code&gt;\&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\&amp;quot;&lt;/code&gt; displays &lt;code&gt;&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\&#39;&lt;/code&gt; displays &lt;code&gt;&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\n&lt;/code&gt; displays a new line (LF)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Further reading about escape sequences &lt;a href=&#34;https://docs.python.org/3/reference/lexical_analysis.html#strings&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To find the length a string, the &lt;code&gt;len()&lt;/code&gt; function can be used.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;len(&#39;String&#39;)
+6
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To convert other datatypes to a string, the &lt;code&gt;str()&lt;/code&gt; function can be used.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;mystr=str(100)
+type(mystr)
+&amp;lt;class &#39;str&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are built in methods available to perform common operations/transformations in  Python. Some of them can be found &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#string-methods&#34;&gt;here&lt;/a&gt;. I won&amp;rsquo;t show the usage of the functions here though.&lt;/p&gt;
+
+&lt;p&gt;I will talk about slicing strings very briefly. A slice is a segment of the string. The following code demonstrates how to slice a string.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;slice_example=&#39;string contents&#39;
+print(slice_example[3:12])
+ing conte
+print(slice_example[:10])
+string con
+print(slice_example[4:])
+ng contents
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The operator &lt;code&gt;[n:m]&lt;/code&gt; returns the string from the n-th character to the m-th character, including the n-th character and excluding the m-th character. If &lt;code&gt;n&lt;/code&gt; is omitted, it starts from the first character. If &lt;code&gt;m&lt;/code&gt; is omitted, it ends with the last character.&lt;/p&gt;
+
+&lt;p&gt;An important property of strings is that, they are immutable. The following example demonstrates this property.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;s=&#39;abc&#39;
+s[0]=&#39;x&#39;
+TypeError: &#39;str&#39; object does not support item assignment
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To learn more about text processing refer this &lt;a href=&#34;https://docs.python.org/3/library/text.html#textservices&#34;&gt;link&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A quick note about why I am not explaining all the string processing services and string methods: I just need to know, at a high level, what string processing resources exist and where to find them when the need arises. Spending time trying out all the methods and services is not very efficient or interesting. Let me reiterate that I will be learning on the fly.&lt;/p&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog is available &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/strings.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Data types in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</link>
+      <pubDate>Sat, 05 Nov 2016 07:26:45 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</guid>
+      <description>&lt;p&gt;Python is a dynamically typed programming language, so you don&amp;rsquo;t need to explicitly specify the data type of a
+variable before usage. A variable&amp;rsquo;s data type can be changed at runtime and the Python interpreter will not complain.&lt;/p&gt;
+
+&lt;p&gt;An example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;var=10
+print(var)
+10
+var=&#39;string&#39;
+print(var)
+string
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The following are the data types available in Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Boolean - True and False&lt;/li&gt;
+&lt;li&gt;int and float&lt;/li&gt;
+&lt;li&gt;list&lt;/li&gt;
+&lt;li&gt;tuple&lt;/li&gt;
+&lt;li&gt;range&lt;/li&gt;
+&lt;li&gt;string&lt;/li&gt;
+&lt;li&gt;set&lt;/li&gt;
+&lt;li&gt;dictionary&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is not an exhaustive list, just the list of types I am guessing are most relevant to me for Machine learning and building web apps. For the complete list refer this &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#mapping-types-dict&#34;&gt;link&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The following values are considered Falsey:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;False&lt;/li&gt;
+&lt;li&gt;None&lt;/li&gt;
+&lt;li&gt;0&lt;/li&gt;
+&lt;li&gt;{},&amp;ldquo;,(),[]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All other values can be considered truthy.&lt;/p&gt;
+
+&lt;p&gt;What is the difference between true and false vs truthy and falsey?&lt;/p&gt;
+
+&lt;p&gt;True and False are boolean values.
+Truthy and Falsey values are terms to describe how objects will be evaluated as True and False values in the context of &lt;code&gt;if&lt;/code&gt; conditions. A better explanation can be found on &lt;a href=&#34;http://stackoverflow.com/questions/10440792/why-does-false-evaluate-to-false-when-if-not-succeeds&#34;&gt;Stackoverflow&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To quickly check the truthiness or falsiness of objects, use &lt;code&gt;bool(data)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;if not bool(()):
+	print(&#39;() is falsey&#39;)
+if not bool([]):
+	print(&#39;[] is falsey&#39;)
+if not bool({}):
+	print(&#39;{} is falsey&#39;)
+if not bool(&#39;&#39;):
+	print(&#39;\&#39;\&#39; is falsey&#39;)
+if not bool(None):
+	print(&#39;None is falsey&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;() is falsey
+[] is falsey
+{} is falsey
+&#39;&#39; is falsey
+None is falsey
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All other values can be considered truthy.&lt;/p&gt;
+
+&lt;p&gt;To check the datatype of an object, use &lt;code&gt;type(value)&lt;/code&gt;. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;type(0)
+&amp;lt;class &#39;int&#39;&amp;gt;
+type(&#39;text&#39;)
+&amp;lt;class &#39;str&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Moving on to integers and floats.&lt;/p&gt;
+
+&lt;p&gt;Integers are just whole numbers. So you can have positive and negative values but not fractions. Examples: 10,1414,524123,-1414.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;myint=100&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The cool thing about integers in Python is that the maximum value is only limited by the available system memory on the device running the code. Coming from Java, it&amp;rsquo;s a welcome change, especially when dealing with large numbers (I encountered this problem in programming challenges online).&lt;/p&gt;
+
+&lt;p&gt;The standard operators can be used on integers such as *,/,+,-,**.&lt;/p&gt;
+
+&lt;p&gt;(I will blog about operators later).&lt;/p&gt;
+
+&lt;p&gt;Floating point numbers can handle precision after the decimal point. Examples 6.2, 24.3.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;myfloat=24123.324&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Float is implemented using double in C. To check the maximum float value your system supports, type in the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;sys.float_info.max
+1.7976931348623157e+308
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The second line is the result on my system.&lt;/p&gt;
+
+&lt;p&gt;Comments in python start with a #.&lt;/p&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;#single line comment&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Find the code for todays plog &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/datatypes.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The upcoming blogs will explore more built in data types.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Beginning Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/beginning-python-3/</link>
+      <pubDate>Fri, 04 Nov 2016 15:09:38 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/beginning-python-3/</guid>
+      <description>&lt;p&gt;In this series of plogs, I will be sharing my journey of learning Python.&lt;/p&gt;
+
+&lt;p&gt;What are my motivations behind deciding to learn Python?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I plan to build web apps, so I was looking for a language which has a mature ecosystem around it. Coming from a Java and PHP background, Python seemed attractive.&lt;/li&gt;
+&lt;li&gt;A little later, I plan on getting into Machine Learning, and the most popular language in the industry seems to be Python. It&amp;rsquo;s actually Python 2.7 as of writing this, but Python 3 support is growing. Oh, I did not mention it, but this plog series is going to focus on Python 3 only.&lt;/li&gt;
+&lt;li&gt;Python can be used for web scraping with ease, which is of great interest to me.&lt;/li&gt;
+&lt;li&gt;It is respected among the hacker community. Just to be clear, hacker means an expert in their field, not the negative association that is triggered more often than not.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Reading the above list, many languages can technically fit into those criteria, except the Machine Learning part.&lt;/p&gt;
+
+&lt;p&gt;A quick glance of Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;High level&lt;/li&gt;
+&lt;li&gt;Interpreted&lt;/li&gt;
+&lt;li&gt;Dynamic typing system&lt;/li&gt;
+&lt;li&gt;Automatic garbage collection&lt;/li&gt;
+&lt;li&gt;Supports multiple programming paradigms, such as object oriented, functional and imperitive&lt;/li&gt;
+&lt;li&gt;Code readablity, which is a nice change coming from Java and PHP.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I am running Ubuntu 16.04, which has Python 2.7.12 and Python 3.5.2 pre-installed. If you are running a different OS, check this &lt;a href=&#34;https://docs.python.org/3/using/index.html&#34;&gt;link&lt;/a&gt; to setup and use Python.&lt;/p&gt;
+
+&lt;p&gt;The Python interpreter can be started, by typing the following in the terminal:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;python3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Python 3 interpreter is running, where I can type in Python code and have it execute immediately.&lt;/p&gt;
+
+&lt;p&gt;The obligatory Hello World program:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;print(&#39;Hello World&#39;)
+Hello World
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hello world is displayed in the terminal.&lt;/p&gt;
+
+&lt;p&gt;Another way of running programs is by saving the code into a file and running it with python.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;touch hello.py
+gedit hello.py
+#type the program
+python3 hello.py
+#output
+Hello World
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source code is available &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/hello.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Resources:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Python_(programming_language)#Features_and_philosophy&#34;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/&#34;&gt;Python 3 official docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hello World</title>
+      <link>https://www.ploggingdev.com/2016/11/hello-world/</link>
+      <pubDate>Fri, 04 Nov 2016 14:37:53 +0530</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/hello-world/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Hi!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Why is it called Plogging Dev?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Plog is supposed to mean programming blog (it&amp;rsquo;s a real word with a made up meaning). The Dev part is for developer.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What is this blog about?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I will be sharing my programming related blogs here, mostly Python and Django to start with, then blogs about machine learning. You can expect the occasional non-tech blog post, mostly whatever I am interested in.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Are you an expert on Python, Django, or machine learning?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;No, no and no. I plan to learn about the mentioned technologies and blog about my journey as I learn.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Where is your site hosted?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The site is hosted behind Cloudflare, on Github pages with a custom domain.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

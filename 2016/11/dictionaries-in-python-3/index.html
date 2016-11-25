@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Dictionaries in Python 3</title>
+
+  <meta name="author" content="" />
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Dictionaries in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/11/dictionaries-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Dictionaries in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on November 11, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
+strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
+associative arrays from other programming languages.</p>
+
+<p>A dictionary can be created in multiple ways, using <code>{}</code> or the <code>dict()</code> function. The following are
+some examples of ways to create dictionaries:</p>
+
+<pre><code>a=dict(one=1,two=2)
+b={'one':1,'two':2}
+c=dict(zip(['one','two'],[1,2]))
+d=dict([('one',1),('two',2)])
+e=dict({'one':1,'two':2})
+print(a==b==c==d==e)
+True
+</code></pre>
+
+<p>As you can see, all the variables hold the same dictionary. To create an empty dictionary, use <code>{}</code> or
+ <code>dict()</code>.</p>
+
+<p></p>
+
+<p><strong>Note:</strong> I will be using the syntax used to initialize variable <code>b</code>, as it feels most natural to me.
+It&rsquo;s a personal preference, use whichever syntax you are comfortable with.</p>
+
+<p>There are multiple functions and methods that can be used to perform operations on dictionaries, some of
+whose usage is shown in the following examples.</p>
+
+<p><strong>Note:</strong> The operations are fairly straight forward to understand, so I won&rsquo;t explain them in detail.</p>
+
+<pre><code>print('Dictionary contents ',a)
+Dictionary contents  {'two': 2, 'one': 1}
+
+print('len(a) ',len(a))
+len(a)  2
+
+print('a[\'one\'] ',a['one'])
+a['one']  1
+
+#changing value associated with 'one' key
+a['one']=11
+print('Dictionary contents after a[\'one\']=11 ',a)
+Dictionary contents after a['one']=11  {'two': 2, 'one': 11}
+
+a['one']=1
+print('a[\'one\']=1 ','one' in a)
+a['one']=1  True
+
+#in operator cannot be used to check the existence of values
+print('1 in a ',1 in a)
+1 in a  False
+
+#providing a default value if requested key does not exist
+print('a.get(\'three\',3) ',a.get('three',3))
+a.get('three',3)  3
+
+print('a.keys() ',a.keys())
+a.keys()  dict_keys(['two', 'one'])
+
+print('a.values() ',a.values())
+a.values()  dict_values([2, 1])
+
+print('a.pop(\'one\') ',a.pop('one'))
+a.pop('one')  1
+
+print('Dictionary contents ',a)
+Dictionary contents  {'two': 2}
+</code></pre>
+
+<p>You can read more about operations on dictionaries
+<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">here</a>.</p>
+
+<p>The objects returned by <code>dict.keys()</code>, <code>dict.values()</code> and <code>dict.items()</code> are <em>view</em> objects. When the
+contents of the dictionary changes, the changes are reflected in the <em>view</em> objects. Example:</p>
+
+<pre><code>print('Dictionary contents ',a)
+Dictionary contents  {'two': 2}
+
+vals=a.values()
+print(vals)
+dict_values([2])
+
+a['two']=22
+print(vals)
+dict_values([22])
+</code></pre>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">Official tutorial</a></li>
+<li><a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Official library reference</a></li>
+</ul>
+
+<p>The code for today&rsquo;s plog is <a href="https://github.com/ploggingdev/python_learn/blob/master/dictionaries.py">here</a>.</p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/11/sets-in-python-3/" data-toggle="tooltip" data-placement="top" title="Sets in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/" data-toggle="tooltip" data-placement="top" title="Control flow tools in Python 3">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/dictionaries-in-python-3\/';
+    var disqus_title = 'Dictionaries in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/dictionaries-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

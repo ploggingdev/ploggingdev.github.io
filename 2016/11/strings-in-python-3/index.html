@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Strings in Python 3</title>
+
+  <meta name="author" content="" />
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Strings in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/11/strings-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Strings in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on November 6, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Strings are sequences of characters.</p>
+
+<p>Strings can be written in the following ways:</p>
+
+<ul>
+<li>&lsquo;single quotes&rsquo;</li>
+<li>&ldquo;double quotes&rdquo;</li>
+<li>&rdquo;&lsquo;multi line&rdquo;&rsquo;</li>
+</ul>
+
+<p>Escape sequences are used to display characters with a special meaning such as <code>'</code>, <code>&quot;</code> , <code>\</code> within a string.</p>
+
+<p>Some examples:</p>
+
+<ul>
+<li><code>\\</code> displays <code>\</code></li>
+<li><code>\&quot;</code> displays <code>&quot;</code></li>
+<li><code>\'</code> displays <code>'</code></li>
+<li><code>\n</code> displays a new line (LF)</li>
+</ul>
+
+<p></p>
+
+<p>Further reading about escape sequences <a href="https://docs.python.org/3/reference/lexical_analysis.html#strings">here</a>.</p>
+
+<p>To find the length a string, the <code>len()</code> function can be used.</p>
+
+<p>Example:</p>
+
+<pre><code class="language-python3">len('String')
+6
+</code></pre>
+
+<p>To convert other datatypes to a string, the <code>str()</code> function can be used.</p>
+
+<pre><code class="language-python3">mystr=str(100)
+type(mystr)
+&lt;class 'str'&gt;
+</code></pre>
+
+<p>There are built in methods available to perform common operations/transformations in  Python. Some of them can be found <a href="https://docs.python.org/3/library/stdtypes.html#string-methods">here</a>. I won&rsquo;t show the usage of the functions here though.</p>
+
+<p>I will talk about slicing strings very briefly. A slice is a segment of the string. The following code demonstrates how to slice a string.</p>
+
+<pre><code class="language-python3">slice_example='string contents'
+print(slice_example[3:12])
+ing conte
+print(slice_example[:10])
+string con
+print(slice_example[4:])
+ng contents
+</code></pre>
+
+<p>The operator <code>[n:m]</code> returns the string from the n-th character to the m-th character, including the n-th character and excluding the m-th character. If <code>n</code> is omitted, it starts from the first character. If <code>m</code> is omitted, it ends with the last character.</p>
+
+<p>An important property of strings is that, they are immutable. The following example demonstrates this property.</p>
+
+<pre><code class="language-python3">s='abc'
+s[0]='x'
+TypeError: 'str' object does not support item assignment
+</code></pre>
+
+<p>To learn more about text processing refer this <a href="https://docs.python.org/3/library/text.html#textservices">link</a>.</p>
+
+<p>A quick note about why I am not explaining all the string processing services and string methods: I just need to know, at a high level, what string processing resources exist and where to find them when the need arises. Spending time trying out all the methods and services is not very efficient or interesting. Let me reiterate that I will be learning on the fly.</p>
+
+<p>Code for today&rsquo;s plog is available <a href="https://github.com/ploggingdev/python_learn/blob/master/strings.py">here</a>.</p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/11/data-types-in-python-3/" data-toggle="tooltip" data-placement="top" title="Data types in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="https://www.ploggingdev.com/2016/11/lists-in-python-3/" data-toggle="tooltip" data-placement="top" title="Lists in Python 3">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/strings-in-python-3\/';
+    var disqus_title = 'Strings in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/strings-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

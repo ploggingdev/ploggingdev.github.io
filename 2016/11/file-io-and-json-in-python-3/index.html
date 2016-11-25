@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>File IO and JSON in Python 3</title>
+
+  <meta name="author" content="" />
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="File IO and JSON in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/11/file-io-and-json-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>File IO and JSON in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on November 22, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Before discussing file IO and json, let&rsquo;s talk about accepting input from the user using <code>input()</code>. Example:</p>
+
+<pre><code>name = input(&quot;What's your name?\n&quot;)
+age = int(input(&quot;Age?\n&quot;))
+print(&quot;Name : {}  Age : {}&quot;.format(name,age))
+#output
+What's your name?
+plog
+Age?
+42
+</code></pre>
+
+<p>Reading and writing files involves the following three steps:</p>
+
+<ul>
+<li>Open the file using <code>open(filename, mode)</code></li>
+<li>Read or write from or to the file using <code>read()</code> or <code>write()</code></li>
+<li>Close the file using <code>close()</code></li>
+</ul>
+
+<p></p>
+
+<p>A file can be opened in the following modes:</p>
+
+<ul>
+<li><code>r</code> for read only. This is the default mode if mode is not specified</li>
+<li><code>w</code> for write only. This mode overwrites any existing content</li>
+<li><code>r+</code> for read and write</li>
+<li><code>a</code> for appending content to a file</li>
+</ul>
+
+<p>Example:</p>
+
+<pre><code>def print_file(filename):
+    &quot;&quot;&quot;Prints the contents of a file&quot;&quot;&quot;
+    f = open(filename)
+    print(f.read())
+    f.close()
+
+filename = &quot;temp.txt&quot;
+
+#write to a file
+temp_file = open(filename,'w')
+temp_file.write('First line.\nSecond line.\n')
+temp_file.close()
+
+print_file(filename)
+
+#append to file
+temp_file = open('temp.txt','a')
+temp_file.write('Third line')
+temp_file.close()
+
+print_file(filename)
+#output
+First line.
+Second line.
+
+First line.
+Second line.
+Third line
+</code></pre>
+
+<p>The <code>os</code> module is used to interact with the operating system.</p>
+
+<p>The function, <code>os.path.join()</code> is used to generate a string to represent a path. The generated path is dependent on the OS it is being run on. Eg- Windows uses backslash in paths while *nix OSes use a forward slash.</p>
+
+<pre><code>print(os.path.join('home','plog','Desktop'))
+#output
+home/plog/desktop
+</code></pre>
+
+<p><code>os.getcwd()</code> is used to retrieve the current working directory.</p>
+
+<pre><code>print(os.getcwd())
+/home/plog/Desktop/python_learn
+</code></pre>
+
+<p><code>os.chdir(path)</code> is used to change directory.</p>
+
+<pre><code>os.chdir('modules')
+print(os.getcwd())
+/home/plog/Desktop/python_learn/modules
+os.chdir('../')
+print(os.getcwd())
+/home/plog/Desktop/python_learn
+</code></pre>
+
+<p>To specify a path, relative or absolute paths can be used. <code>.</code> specifies the current directory and <code>..</code> specifies the parent directory.</p>
+
+<p><code>os.mkdir(name)</code> is used to create a directory. <code>os.path.exists(path)</code> is used to check if the path exists to avoid to decide whether to create the directory or not.</p>
+
+<pre><code>if not os.path.exists('./files_demo'):
+    os.mkdir('./files_demo')
+</code></pre>
+
+<p><code>os.path.getsize(path)</code> is used to find the size of the file in the specified path.</p>
+
+<p><code>os.listdir(path)</code> lists all the folders and subfolders in the path specified.</p>
+
+<p><code>os.path.isdir(path)</code> and <code>os.path.isfile(path)</code> are used to verify if the specified paths are a directory and a file respectively. It returns <code>True</code> or <code>False</code>.</p>
+
+<pre><code>print(os.path.getsize('./temp.txt'))
+print(os.listdir('./'))
+
+print(os.path.isdir('./files_demo'))
+print(os.path.isfile('./temp.txt'))
+#output
+35
+['.git', 'requirements.txt', 'io.py', 'files_demo', 'strings.py', 'range.py', 'lists.py', 'LICENSE', 'datat
+ypes.py', 'tuples.py', 'control_flow.py', 'hello.py', 'sets.py', 'dictionaries.py', 'functions.py', '.gitig
+nore', 'module_demo.py', 'classes.py', 'temp.txt', 'README.md', 'modules']
+True
+True
+</code></pre>
+
+<p>The <code>shelve</code> module is used to save variables to a file and retrieve them. It stores the contents in binary format.</p>
+
+<pre><code>shelf = shelve.open('shelve_test')
+langs = ['python', 'java', 'php']
+shelf['langs'] = langs
+shelf.close()
+
+shelf = shelve.open('shelve_test')
+print(shelf['langs'])
+shelf.close()
+#output
+['python', 'java', 'php']
+</code></pre>
+
+<p><code>shutil</code> is a module that lets us move, copy, rename and delete files and folders.</p>
+
+<pre><code>#copy to directory
+shutil.copy('./temp.txt','./files_demo')
+#copy and entire folder recursively
+shutil.copytree('./modules','./modules_backup')
+#move a file
+shutil.move('./temp.txt','./files_demo/temp_backup.txt')
+
+if not os.path.exists('./files_demo_2'):
+    os.mkdir('./files_demo_2')
+
+#move a folder
+shutil.move('./files_demo_2','files_demo')
+shutil.move('./shelve_test','./files_demo/files_demo_2')
+</code></pre>
+
+<p>Deletion of files and folders can be done using the <code>os</code> and <code>shutil</code> modules:</p>
+
+<ul>
+<li><code>os.unlink(path)</code> deletes a file</li>
+<li><code>os.rmdir(path)</code> deletes an empty folder</li>
+<li><code>shutil.rmtree(path)</code> will delete a directory along with all files and subfolders</li>
+</ul>
+
+<p>Since deletion of files and folders is a risky operation, the above functions can be replaced by the <code>send2trash</code> module. The mentioned module moves the files and folders to be deleted into the trash so it gives us the chance to restore files and folders in case something unexpected happens.</p>
+
+<p>Install the <code>send2trash</code> module using:</p>
+
+<pre><code>pip install send2trash
+</code></pre>
+
+<p>Make sure to update the <code>requirements.txt</code> using</p>
+
+<pre><code>pip freeze &gt; requirements.txt
+</code></pre>
+
+<p>The following example shows the usage of <code>send2trash</code>:</p>
+
+<pre><code>send2trash.send2trash('./files_demo')
+send2trash.send2trash('./modules_backup')
+</code></pre>
+
+<p>A commonly used operation is to traverse a folder and all its files and subfolders recursively. This can be accomplished using <code>os.walk(path)</code>:</p>
+
+<pre><code>for folderName, subfolders, filenames in os.walk('./'):
+    print('The current folder is ' + folderName)
+
+    for subfolder in subfolders:
+        print('SUBFOLDER OF ' + folderName + ': ' + subfolder)
+    for filename in filenames:
+        print('FILE INSIDE ' + folderName + ': '+ filename)
+
+    print('')
+</code></pre>
+
+<p>The above code prints all the folders, subfolders and files in the current directory. I did not paste the output, since it includes the contents of <code>.git</code> which will unnecessarily clutter this plog.</p>
+
+<p>The <code>json</code> module enables us to convert strings to json and vice-versa.</p>
+
+<p>Example:</p>
+
+<pre><code>json_string = '{&quot;first_name&quot;: &quot;Guido&quot;, &quot;last_name&quot;:&quot;Rossum&quot;}'
+parsed_json = json.loads(json_string)
+print(parsed_json['first_name'])
+print(json.dumps(parsed_json))
+#output
+Guido
+{&quot;last_name&quot;: &quot;Rossum&quot;, &quot;first_name&quot;: &quot;Guido&quot;}
+</code></pre>
+
+<p><code>json.load()</code> and <code>json.dump()</code> also exist, which accept files instead of strings as arguments.</p>
+
+<p>The reason <code>shelve</code> is preferred over serializing and deserializing objects as json is because of performance. Serializing and deserializing json is an expensive operation for custom objects. Json can be used for dictionaries and lists.</p>
+
+<p>Source code for today&rsquo;s plog is <a href="https://github.com/ploggingdev/python_learn/blob/master/io.py">here</a>.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/inputoutput.html">Official docs</a></li>
+<li><a href="https://automatetheboringstuff.com/chapter8/">Automate the boring stuff chapter 8</a></li>
+<li><a href="https://automatetheboringstuff.com/chapter9/">Automate the boring stuff chapter 9</a></li>
+<li><a href="http://docs.python-guide.org/en/latest/scenarios/json/">Hitchhiker&rsquo;s guide to python</a></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/" data-toggle="tooltip" data-placement="top" title="Virtual environments and package management in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/file-io-and-json-in-python-3\/';
+    var disqus_title = 'File IO and JSON in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/file-io-and-json-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

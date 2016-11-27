@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Unit testing in Python 3</title>
+
+  <meta name="author" content="" />
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Unit testing in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/11/unit-testing-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Unit testing in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on November 27, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.</p>
+
+<p>The <code>unittest</code> framework is a built-in unit testing framework in Python.</p>
+
+<p>Some terminology:</p>
+
+<ul>
+<li>test fixture: the preparation needed to perform one or more tests, and any associate cleanup actions</li>
+<li>test case: individual unit of testing which checks for the correct response for a given input</li>
+</ul>
+
+<p>I will be covering a minimal subset of <code>unittest</code> that will be enough to understand what unit testing is and how to go about writing test cases. To learn more, refer to the <a href="https://docs.python.org/3/library/unittest.html">official docs</a>.</p>
+
+<p>A simple example:</p>
+
+<pre><code>import unittest
+
+class Test2(unittest.TestCase):
+    
+    def test_simple(self):
+        self.assertEqual(2+2,4)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p></p>
+
+<p>Run the test using the following command</p>
+
+<pre><code>python -m unittest -v test_2.py
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>test_simple (test_2.Test) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</code></pre>
+
+<p>If the module name is not provided, by default all unit tests in the current project are executed. The <code>-v</code> argument is used to display verbose output.</p>
+
+<p>A few notes:</p>
+
+<ul>
+<li>The <code>unittest</code> module is imported</li>
+<li>Testcases are created by subclassing <code>unittest.TestCase</code></li>
+<li>The function that contains the tests begins with <code>test</code></li>
+</ul>
+
+<p>The TestCase class provides methods to check for and report failures.</p>
+
+<p>Some of the methods are listed below:</p>
+
+<ul>
+<li>assertEqual(a,b)</li>
+<li>assertNotEqual(a,b)</li>
+<li>assertTrue(x)</li>
+<li>assertFalse(x)</li>
+<li>assertIs(a,b)</li>
+<li>assertIn(a,b)</li>
+</ul>
+
+<p>Another example of writing test cases:</p>
+
+<pre><code>import unittest
+
+def division(x,y):
+    &quot;&quot;&quot;Return result of division&quot;&quot;&quot;
+    try:
+        return x/y
+    except ZeroDivisionError:
+        print(&quot;Division by zero&quot;)
+
+class Testexceptions(unittest.TestCase):
+
+    def test_basic(self):
+        self.assertEqual(division(10,5), 2.0)
+        self.assertEqual(division(10,-2), -5.0)
+
+    def test_type_exceptions(self):
+        with self.assertRaises(TypeError):
+            division(10,'a')
+    
+    def test_zero_division(self):
+        try:
+            division(10,0)
+        except ZeroDivisionError:
+            self.fail(&quot;ZeroDivisionError&quot;)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>test_basic (t.Testexceptions) ... ok
+test_type_exceptions (t.Testexceptions) ... ok
+test_zero_division (t.Testexceptions) ... Division by zero
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+</code></pre>
+
+<p>The above example introduces <code>assertRaises</code> which is used to verify that an exception is raised. There is no <code>assertNotRaises</code>, so one way to achieve that is by using <code>try</code> and <code>except</code> as shown in the <code>test_zero_division</code> method above.</p>
+
+<p>There are cases where there is a lot of repetitive code shared by tests, such as connecting to databases or fetching data from a URL. To factor out common code, there are a few methods that we can implement:</p>
+
+<ul>
+<li><code>setUp()</code> is called before the execution of every test method</li>
+<li><code>tearDown()</code> is called after the execution of every test method</li>
+<li><code>setUpClass()</code> is called before tests in an individual class are run</li>
+<li><code>tearDownClass()</code> is called after the tests in a class are run</li>
+<li><code>setUpModule()</code> is called before code in a module is run</li>
+<li><code>tearDownModule()</code> is called after all tests are run inside the module</li>
+</ul>
+
+<p>The following example demonstrates the order in which the methods are called.</p>
+
+<p><code>tests.py</code></p>
+
+<pre><code>import unittest
+
+def setUpModule():
+    print(&quot;setUpModule() from tests.py&quot;)
+
+def tearDownModule():
+    print(&quot;tearDownModule() from tests.py&quot;)
+
+def division(x,y):
+    &quot;&quot;&quot;Return result of division&quot;&quot;&quot;
+    try:
+        return x/y
+    except ZeroDivisionError:
+        print(&quot;Division by zero&quot;)
+
+class Testexceptions(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        print(&quot;setUpClass() from Testexceptions class in tests.py&quot;)
+    
+    @classmethod
+    def tearDownClass(cls):
+        print(&quot;tearDownClass() from Testexceptions class in tests.py&quot;)
+
+    def setUp(self):
+        print(&quot;setUp() from Testexceptions in tests.py&quot;)
+    def tearDown(self):
+        print(&quot;tearDown() from Testexceptions in tests.py&quot;)
+    
+    def test_basic(self):
+        self.assertEqual(division(10,5), 2.0)
+        self.assertEqual(division(10,-2), -5.0)
+
+    def test_type_exceptions(self):
+        with self.assertRaises(TypeError):
+            division(10,'a')
+    
+    def test_zero_division(self):
+        try:
+            division(10,0)
+        except ZeroDivisionError:
+            self.fail(&quot;ZeroDivisionError&quot;)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p><code>test_2.py</code></p>
+
+<pre><code>import unittest
+
+def setUpModule():
+    print(&quot;setUpModule() from test_2.py&quot;)
+
+def tearDownModule():
+    print(&quot;tearDownModule() from test_2.py&quot;)
+
+class Test2(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        print(&quot;setUpClass() from Test2 class in test_2.py&quot;)
+
+    
+    def setUp(self):
+        print(&quot;setUp() from Test2 in test_2.py&quot;)
+    
+    def test_simple(self):
+        self.assertEqual(2+2,4)
+
+    @unittest.skip(&quot;Skipping a test demo&quot;)
+    def test_skip(self):
+        self.fail(&quot;Never happens&quot;)
+
+    def tearDown(self):
+        print(&quot;tearDown() from Test2 in test_2.py&quot;)
+    
+    @classmethod
+    def tearDownClass(cls):
+        print(&quot;tearDownClass() from Test2 class in test_2.py&quot;)
+
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>setUpModule() from test_2.py
+setUpClass() from Test2 class in test_2.py
+test_simple (test_2.Test2) ... setUp() from Test2 in test_2.py
+tearDown() from Test2 in test_2.py
+ok
+test_skip (test_2.Test2) ... skipped 'Skipping a test demo'
+tearDownClass() from Test2 class in test_2.py
+tearDownModule() from test_2.py
+setUpModule() from tests.py
+setUpClass() from Testexceptions class in tests.py
+test_basic (tests.Testexceptions) ... setUp() from Testexceptions in tests.py
+tearDown() from Testexceptions in tests.py
+ok
+test_type_exceptions (tests.Testexceptions) ... setUp() from Testexceptions in tests.py
+tearDown() from Testexceptions in tests.py
+ok
+test_zero_division (tests.Testexceptions) ... setUp() from Testexceptions in tests.py
+Division by zero
+tearDown() from Testexceptions in tests.py
+ok
+tearDownClass() from Testexceptions class in tests.py
+tearDownModule() from tests.py
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK (skipped=1)
+</code></pre>
+
+<p>The <code>unittest,skip(msg)</code> decorator can be used to skip a test. This is useful when a test is known to fail and it needs to be fixed.</p>
+
+<p>Source code for today&rsquo;s plog is <a href="https://github.com/ploggingdev/python_learn/blob/master/tests.py">here</a> and <a href="https://github.com/ploggingdev/python_learn/blob/master/test_2.py">here</a>.</p>
+
+<p>Reference: <a href="https://docs.python.org/3/library/unittest.html">official docs</a>.</p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/" data-toggle="tooltip" data-placement="top" title="Errors and exceptions in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/unit-testing-in-python-3\/';
+    var disqus_title = 'Unit testing in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/unit-testing-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

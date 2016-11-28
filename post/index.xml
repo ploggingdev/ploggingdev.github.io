@@ -8,8 +8,146 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com</managingEditor>
     <webMaster>ploggingdev@gmail.com</webMaster>
-    <lastBuildDate>Sun, 27 Nov 2016 01:57:31 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 27 Nov 2016 21:54:01 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Floating point arithmetic issues in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/</link>
+      <pubDate>Sun, 27 Nov 2016 21:54:01 -0800</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/</guid>
+      <description>&lt;p&gt;By default, numbers having a decimal point are represented as floating point numbers.&lt;/p&gt;
+
+&lt;p&gt;Verification:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(type(1.5))
+#output
+&amp;lt;class &#39;float&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Floating point numbers are represented in computer hardware in base 2. Floating point numbers are used to represent decimal (base 10) numbers in the most common use cases. But most decimal fractions cannot be represented exactly as binary fractions.&lt;/p&gt;
+
+&lt;p&gt;To understand this problem, consider the conversion of a decimal fraction to a decimal number: &lt;code&gt;1/3&lt;/code&gt; is equal to &lt;code&gt;0.333...&lt;/code&gt; with repeating 3&amp;rsquo;s. When represented as a decimal number, it will never be equal to &lt;code&gt;1/3&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Similarly, many decimal numbers cannot be represented accurately in base 2.&lt;/p&gt;
+
+&lt;p&gt;Some examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&amp;quot;0.1 + 0.2 = {}&amp;quot;.format(0.1+0.2))
+#output
+0.1 + 0.2 = 0.30000000000000004
+
+print(&amp;quot;0.1 + 0.4 = {}&amp;quot;.format(0.1+0.4))
+#output
+0.1 + 0.4 = 0.5
+
+print(&amp;quot;1/10 = {}&amp;quot;.format(1/10))
+#output
+1/10 = 0.1
+
+print(&amp;quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&amp;quot;)
+print(0.1 + 0.1 + 0.1 == 0.3)
+#output
+Is (0.1 + 0.1 + 0.1 == 0.3) ?
+False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;In the above examples, notice that some decimal numbers can be represented accurately in base 2 while others cannot be represented accurately.&lt;/p&gt;
+
+&lt;p&gt;I won&amp;rsquo;t pretend that I understand the intricate details behind why this happens, so I will link to some resources if you are interested to learn more: &lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt; and &lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;How can we overcome this issue in Python? Some solutions are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;using &lt;code&gt;round()&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;using the &lt;code&gt;decimal&lt;/code&gt; module&lt;/li&gt;
+&lt;li&gt;using the &lt;code&gt;fractions&lt;/code&gt; module&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let me explain each of these solutions a little more:&lt;/p&gt;
+
+&lt;p&gt;Using &lt;code&gt;round()&lt;/code&gt;, floating point numbers can be rounded to a specified number of decimal places. If it&amp;rsquo;s used for post rounding a result (round after performing all operations on floats), working with floats will work as expected. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&amp;quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&amp;quot;)
+print(round(0.1 + 0.1 + 0.1, 5) == round(0.3, 5))
+#output
+Is (0.1 + 0.1 + 0.1 == 0.3) ?
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;round()&lt;/code&gt; function accepts a number as the first parameter and another number to specify the precision after the decimal point as the second parameter. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(round(10.33333, 3))
+#output
+10.333
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Another alternative is to use the &lt;code&gt;decimal&lt;/code&gt; module when dealing with decimal numbers and accuracy is very important. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from decimal import getcontext, Decimal
+from math import pi
+
+print(getcontext())
+
+getcontext().prec = 5
+print(Decimal(1)/Decimal(3))
+
+getcontext().prec = 30
+print(Decimal(pi))
+
+#output
+Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[], traps=
+[InvalidOperation, DivisionByZero, Overflow])
+0.33333
+3.141592653589793115997963468544185161590576171875
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;getcontext()&lt;/code&gt; allows us to specify the precision and the rounding technique to be used, The default rounding technique is &lt;code&gt;ROUND_HALF_EVEN&lt;/code&gt; which rounds to nearest with ties going to nearest even integer.&lt;/p&gt;
+
+&lt;p&gt;To deal directly with fractions, the &lt;code&gt;fractions&lt;/code&gt; module can be used which supports rational number arithmetic. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from fractions import Fraction
+
+num1 = Fraction(2,3)
+num2 = Fraction(1,3)
+
+print(&amp;quot;num1 = {} and num2 = {}&amp;quot;.format(num1,num2))
+
+print(num1 + num2)
+
+print(num1 - num2)
+
+print(num1*10)
+
+print(num1/num2)
+
+#output
+num1 = 2/3 and num2 = 1/3
+1
+1/3
+20/3
+2
+&amp;lt;class &#39;fractions.Fraction&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are multiple ways to construct fractions and the details can be found in the official documentation which is linked below.&lt;/p&gt;
+
+&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/funny_floats.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/floatingpoint.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/functions.html#round&#34;&gt;round() documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/decimal.html#module-decimal&#34;&gt;decimal module&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/fractions.html#module-fractions&#34;&gt;fractions module&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Unit testing in Python 3</title>
@@ -1879,126 +2017,6 @@ TypeError: &#39;str&#39; object does not support item assignment
 &lt;p&gt;A quick note about why I am not explaining all the string processing services and string methods: I just need to know, at a high level, what string processing resources exist and where to find them when the need arises. Spending time trying out all the methods and services is not very efficient or interesting. Let me reiterate that I will be learning on the fly.&lt;/p&gt;
 
 &lt;p&gt;Code for today&amp;rsquo;s plog is available &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/strings.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Data types in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</link>
-      <pubDate>Sat, 05 Nov 2016 07:26:45 +0530</pubDate>
-      <author>ploggingdev@gmail.com</author>
-      <guid>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</guid>
-      <description>&lt;p&gt;Python is a dynamically typed programming language, so you don&amp;rsquo;t need to explicitly specify the data type of a
-variable before usage. A variable&amp;rsquo;s data type can be changed at runtime and the Python interpreter will not complain.&lt;/p&gt;
-
-&lt;p&gt;An example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;var=10
-print(var)
-10
-var=&#39;string&#39;
-print(var)
-string
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;The following are the data types available in Python:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Boolean - True and False&lt;/li&gt;
-&lt;li&gt;int and float&lt;/li&gt;
-&lt;li&gt;list&lt;/li&gt;
-&lt;li&gt;tuple&lt;/li&gt;
-&lt;li&gt;range&lt;/li&gt;
-&lt;li&gt;string&lt;/li&gt;
-&lt;li&gt;set&lt;/li&gt;
-&lt;li&gt;dictionary&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;This is not an exhaustive list, just the list of types I am guessing are most relevant to me for Machine learning and building web apps. For the complete list refer this &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#mapping-types-dict&#34;&gt;link&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The following values are considered Falsey:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;False&lt;/li&gt;
-&lt;li&gt;None&lt;/li&gt;
-&lt;li&gt;0&lt;/li&gt;
-&lt;li&gt;{},&amp;ldquo;,(),[]&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;All other values can be considered truthy.&lt;/p&gt;
-
-&lt;p&gt;What is the difference between true and false vs truthy and falsey?&lt;/p&gt;
-
-&lt;p&gt;True and False are boolean values.
-Truthy and Falsey values are terms to describe how objects will be evaluated as True and False values in the context of &lt;code&gt;if&lt;/code&gt; conditions. A better explanation can be found on &lt;a href=&#34;http://stackoverflow.com/questions/10440792/why-does-false-evaluate-to-false-when-if-not-succeeds&#34;&gt;Stackoverflow&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To quickly check the truthiness or falsiness of objects, use &lt;code&gt;bool(data)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;if not bool(()):
-	print(&#39;() is falsey&#39;)
-if not bool([]):
-	print(&#39;[] is falsey&#39;)
-if not bool({}):
-	print(&#39;{} is falsey&#39;)
-if not bool(&#39;&#39;):
-	print(&#39;\&#39;\&#39; is falsey&#39;)
-if not bool(None):
-	print(&#39;None is falsey&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;() is falsey
-[] is falsey
-{} is falsey
-&#39;&#39; is falsey
-None is falsey
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;All other values can be considered truthy.&lt;/p&gt;
-
-&lt;p&gt;To check the datatype of an object, use &lt;code&gt;type(value)&lt;/code&gt;. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;type(0)
-&amp;lt;class &#39;int&#39;&amp;gt;
-type(&#39;text&#39;)
-&amp;lt;class &#39;str&#39;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Moving on to integers and floats.&lt;/p&gt;
-
-&lt;p&gt;Integers are just whole numbers. So you can have positive and negative values but not fractions. Examples: 10,1414,524123,-1414.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;myint=100&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;The cool thing about integers in Python is that the maximum value is only limited by the available system memory on the device running the code. Coming from Java, it&amp;rsquo;s a welcome change, especially when dealing with large numbers (I encountered this problem in programming challenges online).&lt;/p&gt;
-
-&lt;p&gt;The standard operators can be used on integers such as *,/,+,-,**.&lt;/p&gt;
-
-&lt;p&gt;(I will blog about operators later).&lt;/p&gt;
-
-&lt;p&gt;Floating point numbers can handle precision after the decimal point. Examples 6.2, 24.3.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;myfloat=24123.324&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Float is implemented using double in C. To check the maximum float value your system supports, type in the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;sys.float_info.max
-1.7976931348623157e+308
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The second line is the result on my system.&lt;/p&gt;
-
-&lt;p&gt;Comments in python start with a #.&lt;/p&gt;
-
-&lt;p&gt;Examples:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;#single line comment&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Find the code for todays plog &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/datatypes.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The upcoming blogs will explore more built in data types.&lt;/p&gt;</description>
     </item>
     
   </channel>

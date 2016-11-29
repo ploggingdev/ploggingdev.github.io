@@ -1929,15 +1929,14 @@ for num in list4:
 
 &lt;p&gt;If the indices of the elements are required:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;for i in range(len(list4)):
-    print(&#39;Index : &#39;,i,&#39; ,value : &#39;,list4[i])
+&lt;pre&gt;&lt;code&gt;for ix, num in enumerate(list4):
+    print(&#39;Index : {} ,value : {}&#39;.format(ix, num))
 Index :  0  Value :  8
 Index :  1  Value :  9
 Index :  2  Value :  10
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;code&gt;range&lt;/code&gt; data type is used to represent a sequence of numbers, in this case from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;elements-1&lt;/code&gt;.
-I will talk about the &lt;code&gt;range&lt;/code&gt; data type in more detail in an upcoming blog.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;enumerate()&lt;/code&gt; function is used to traverse the list and obtain the index of each element.&lt;/p&gt;
 
 &lt;p&gt;A few notes about lists:&lt;/p&gt;
 

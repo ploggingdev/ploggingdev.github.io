@@ -205,15 +205,14 @@ for num in list4:
 
 <p>If the indices of the elements are required:</p>
 
-<pre><code>for i in range(len(list4)):
-    print('Index : ',i,' ,value : ',list4[i])
+<pre><code>for ix, num in enumerate(list4):
+    print('Index : {} ,value : {}'.format(ix, num))
 Index :  0  Value :  8
 Index :  1  Value :  9
 Index :  2  Value :  10
 </code></pre>
 
-<p>The <code>range</code> data type is used to represent a sequence of numbers, in this case from <code>0</code> to <code>elements-1</code>.
-I will talk about the <code>range</code> data type in more detail in an upcoming blog.</p>
+<p>The <code>enumerate()</code> function is used to traverse the list and obtain the index of each element.</p>
 
 <p>A few notes about lists:</p>
 

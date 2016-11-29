@@ -85,6 +85,13 @@ True
 10.333
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;&lt;strong&gt;Edit:&lt;/strong&gt; It has been pointed out to me that using &lt;code&gt;round()&lt;/code&gt; may not be the best solution in certain cases where the rounded number will be used in calculations further in the program. Using &lt;code&gt;round()&lt;/code&gt; in such cases will lead to accuracy issues. An option is to use string formatting to display the required number of digits since this will not round the numbers. Syntax is as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;print(&#39;{: .3f}&#39;.format(10.34123))
+#output
+10.341
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;Another alternative is to use the &lt;code&gt;decimal&lt;/code&gt; module when dealing with decimal numbers and accuracy is very important. Example:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;from decimal import getcontext, Decimal

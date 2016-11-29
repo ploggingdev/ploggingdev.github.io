@@ -195,6 +195,13 @@ True
 10.333
 </code></pre>
 
+<p><strong>Edit:</strong> It has been pointed out to me that using <code>round()</code> may not be the best solution in certain cases where the rounded number will be used in calculations further in the program. Using <code>round()</code> in such cases will lead to accuracy issues. An option is to use string formatting to display the required number of digits since this will not round the numbers. Syntax is as follows:</p>
+
+<pre><code>print('{: .3f}'.format(10.34123))
+#output
+10.341
+</code></pre>
+
 <p>Another alternative is to use the <code>decimal</code> module when dealing with decimal numbers and accuracy is very important. Example:</p>
 
 <pre><code>from decimal import getcontext, Decimal

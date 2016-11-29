@@ -190,6 +190,15 @@ Second line.
 Third line
 </code></pre>
 
+<p>A context manager lets us open a file with the guarantee that the file will be closed even if an exception is raised. Example:</p>
+
+<pre><code>with open('workfile', 'r') as f:
+    read_data = f.read()
+print(f.closed)
+#output
+True
+</code></pre>
+
 <p>The <code>os</code> module is used to interact with the operating system.</p>
 
 <p>The function, <code>os.path.join()</code> is used to generate a string to represent a path. The generated path is dependent on the OS it is being run on. Eg- Windows uses backslash in paths while *nix OSes use a forward slash.</p>

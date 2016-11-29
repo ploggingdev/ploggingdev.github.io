@@ -673,6 +673,15 @@ Second line.
 Third line
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;A context manager lets us open a file with the guarantee that the file will be closed even if an exception is raised. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;with open(&#39;workfile&#39;, &#39;r&#39;) as f:
+    read_data = f.read()
+print(f.closed)
+#output
+True
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;The &lt;code&gt;os&lt;/code&gt; module is used to interact with the operating system.&lt;/p&gt;
 
 &lt;p&gt;The function, &lt;code&gt;os.path.join()&lt;/code&gt; is used to generate a string to represent a path. The generated path is dependent on the OS it is being run on. Eg- Windows uses backslash in paths while *nix OSes use a forward slash.&lt;/p&gt;

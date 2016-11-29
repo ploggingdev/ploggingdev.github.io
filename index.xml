@@ -1170,6 +1170,15 @@ some more text
 some more text
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;By adding&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:
+    import sys
+    #pass sys.argv to relevant function
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;a module can be used as a script and a module. Executing the module with &lt;code&gt;python module.py arguments&lt;/code&gt; , the code in the module will be executed, just as if you imported it, but with the &lt;code&gt;__name__&lt;/code&gt; set to &lt;code&gt;__main__&lt;/code&gt;.&lt;/p&gt;
+
 &lt;p&gt;The source code can be found in the &lt;a href=&#34;https://github.com/ploggingdev/python_learn&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;A few notes about modules and packages in Python:&lt;/p&gt;
@@ -1177,7 +1186,6 @@ some more text
 &lt;ul&gt;
 &lt;li&gt;Be explicit: import only what is required.&lt;/li&gt;
 &lt;li&gt;Avoid &lt;code&gt;from modules import *&lt;/code&gt;. It clutters the namespace and can result in namespace clashes.&lt;/li&gt;
-&lt;li&gt;Modules can be run as scripts by checking for &lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;Avoiding nesting modules as far as possible, prefer a flat structure. For the purpose of demonstration,
 I nested a module two levels deep.&lt;/li&gt;
 &lt;li&gt;Intra package references &lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html#intra-package-references&#34;&gt;info&lt;/a&gt;&lt;/li&gt;

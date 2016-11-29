@@ -161,6 +161,15 @@ some more text
 some more text
 </code></pre>
 
+<p>By adding</p>
+
+<pre><code>if __name__ == &quot;__main__&quot;:
+    import sys
+    #pass sys.argv to relevant function
+</code></pre>
+
+<p>a module can be used as a script and a module. Executing the module with <code>python module.py arguments</code> , the code in the module will be executed, just as if you imported it, but with the <code>__name__</code> set to <code>__main__</code>.</p>
+
 <p>The source code can be found in the <a href="https://github.com/ploggingdev/python_learn">repository</a>.</p>
 
 <p>A few notes about modules and packages in Python:</p>
@@ -168,7 +177,6 @@ some more text
 <ul>
 <li>Be explicit: import only what is required.</li>
 <li>Avoid <code>from modules import *</code>. It clutters the namespace and can result in namespace clashes.</li>
-<li>Modules can be run as scripts by checking for <code>if __name__ == &quot;__main__&quot;:</code>.</li>
 <li>Avoiding nesting modules as far as possible, prefer a flat structure. For the purpose of demonstration,
 I nested a module two levels deep.</li>
 <li>Intra package references <a href="https://docs.python.org/3/tutorial/modules.html#intra-package-references">info</a></li>

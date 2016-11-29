@@ -682,6 +682,14 @@ print(f.closed)
 True
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;Some common exceptions to handle when dealing with files:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FileNotFoundError&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FileExistsError&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PermissionError&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;p&gt;The &lt;code&gt;os&lt;/code&gt; module is used to interact with the operating system.&lt;/p&gt;
 
 &lt;p&gt;The function, &lt;code&gt;os.path.join()&lt;/code&gt; is used to generate a string to represent a path. The generated path is dependent on the OS it is being run on. Eg- Windows uses backslash in paths while *nix OSes use a forward slash.&lt;/p&gt;

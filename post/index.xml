@@ -8,8 +8,183 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com</managingEditor>
     <webMaster>ploggingdev@gmail.com</webMaster>
-    <lastBuildDate>Sun, 27 Nov 2016 21:54:01 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 30 Nov 2016 04:14:07 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>N queens solver in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/</link>
+      <pubDate>Wed, 30 Nov 2016 04:14:07 -0800</pubDate>
+      <author>ploggingdev@gmail.com</author>
+      <guid>https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/</guid>
+      <description>&lt;p&gt;What is the N queens problem?&lt;/p&gt;
+
+&lt;p&gt;The N queens problem is the problem of placing N non-attacking queens on an NxN chessboard, for which solutions exist for all natural numbers N with the exception of N=2 and N=3.&lt;/p&gt;
+
+&lt;p&gt;When N=1, the solution is trivial so the program will ask for a value of N such that &lt;code&gt;N &amp;gt;= 4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I will solve this problem using backtracking. There are more efficient ways to solve this problem, but I will use backtracking since it&amp;rsquo;s the most intuitive way to arrive at the solution without getting into the mathematics of arriving at efficient solutions. Through solving these problems, I aim to better understand Python.&lt;/p&gt;
+
+&lt;p&gt;What is backtracking?&lt;/p&gt;
+
+&lt;p&gt;Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons each partial candidate &lt;em&gt;c&lt;/em&gt; (&amp;ldquo;backtracks&amp;rdquo;) as soon as it determines that &lt;em&gt;c&lt;/em&gt; cannot possibly be completed to a valid solution.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;A high level overview of how to use backtracking to solve the N queens problem:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;place a queen in the first column and first row&lt;/li&gt;
+&lt;li&gt;place a queen in the second column such that it does not attack the queen in the first column&lt;/li&gt;
+&lt;li&gt;continue placing non-attacking queens in the remaining columns&lt;/li&gt;
+&lt;li&gt;if all N queens have been placed, a solution has been found. Remove the queen in the Nth column, and try incrementing the row of the queen in the (N-1)th column&lt;/li&gt;
+&lt;li&gt;if it&amp;rsquo;s a dead end, remove the queen, increment the row of the queen in the previous column&lt;/li&gt;
+&lt;li&gt;continue doing this until the queen in the 1st column exhausts all options and is in the row N&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The above explanation starts counting at 1, not 0 based counting.&lt;/p&gt;
+
+&lt;p&gt;To see a visualization of backtracking, refer &lt;a href=&#34;https://en.wikipedia.org/wiki/Eight_queens_puzzle#Exercise_in_algorithm_design&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The solution:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import copy
+
+def take_input():
+    &amp;quot;&amp;quot;&amp;quot;Accepts the size of the chess board&amp;quot;&amp;quot;&amp;quot;
+
+    while True:
+        try:
+            size = int(input(&#39;What is the size of the chessboard? n = \n&#39;))
+            if size == 1:
+                print(&amp;quot;Trivial solution, choose a board size of atleast 4&amp;quot;)
+            if size &amp;lt;= 3:
+                print(&amp;quot;Enter a value such that size&amp;gt;=4&amp;quot;)
+                continue
+            return size
+        except ValueError:
+            print(&amp;quot;Invalid value entered. Enter again&amp;quot;)
+
+def get_board(size):
+    &amp;quot;&amp;quot;&amp;quot;Returns an n by n board&amp;quot;&amp;quot;&amp;quot;
+    board = [0]*size
+    for ix in range(size):
+        board[ix] = [0]*size
+    return board
+
+def print_solutions(solutions, size):
+    &amp;quot;&amp;quot;&amp;quot;Prints all the solutions in user friendly way&amp;quot;&amp;quot;&amp;quot;
+    for sol in solutions:
+        for row in sol:
+            print(row)
+        print()
+            
+def is_safe(board, row, col, size):
+    &amp;quot;&amp;quot;&amp;quot;Check if it&#39;s safe to place a queen at board[x][y]&amp;quot;&amp;quot;&amp;quot;
+
+    #check row on left side
+    for iy in range(col):
+        if board[row][iy] == 1:
+            return False
+    
+    ix, iy = row, col
+    while ix &amp;gt;= 0 and iy &amp;gt;= 0:
+        if board[ix][iy] == 1:
+            return False
+        ix-=1
+        iy-=1
+    
+    jx, jy = row,col
+    while jx &amp;lt; size and jy &amp;gt;= 0:
+        if board[jx][jy] == 1:
+            return False
+        jx+=1
+        jy-=1
+    
+    return True
+
+def solve(board, col, size):
+    &amp;quot;&amp;quot;&amp;quot;Use backtracking to find all solutions&amp;quot;&amp;quot;&amp;quot;
+    #base case
+    if col &amp;gt;= size:
+        return
+    
+    for i in range(size):
+        if is_safe(board, i, col, size):
+            board[i][col] = 1
+            if col == size-1:
+                add_solution(board)
+                board[i][col] = 0
+                return
+            solve(board, col+1, size)
+            #backtrack
+            board[i][col] = 0
+
+def add_solution(board):
+    &amp;quot;&amp;quot;&amp;quot;Saves the board state to the global variable &#39;solutions&#39;&amp;quot;&amp;quot;&amp;quot;
+    global solutions
+    saved_board = copy.deepcopy(board)
+    solutions.append(saved_board)
+
+size = take_input()
+
+board = get_board(size)
+
+solutions = []
+
+solve(board, 0, size)
+
+print_solutions(solutions, size)
+
+print(&amp;quot;Total solutions = {}&amp;quot;.format(len(solutions)))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output of the program when N=4:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;What is the size of the chessboard? n = 
+4
+[0, 0, 1, 0]
+[1, 0, 0, 0]
+[0, 0, 0, 1]
+[0, 1, 0, 0]
+
+[0, 1, 0, 0]
+[0, 0, 0, 1]
+[1, 0, 0, 0]
+[0, 0, 1, 0]
+
+Total solutions = 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Some important takeaways from coding the solution:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To make an NxM list use:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;A = [0] * N
+for i in range(N):
+    A[i] = [0] * M
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I tried, &lt;code&gt;A = [[0] * M] * N&lt;/code&gt; initially, which is wrong. More info &lt;a href=&#34;https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;When saving the contents of a multidimensional list, use &lt;code&gt;copy.deepcopy(to_save)&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Testing is hard! More so when dealing with complicated outputs from a function. I will update this blog with tests soon.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Source code available &lt;a href=&#34;https://github.com/ploggingdev/n-queens&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Eight_queens_puzzle&#34;&gt;Eight queens problem on Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Backtracking&#34;&gt;Backtracking on Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Floating point arithmetic issues in Python 3</title>
@@ -1973,81 +2148,6 @@ Index :  2  Value :  10
 
 &lt;p&gt;The source code for today&amp;rsquo;s plog can be viewed
 &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/lists.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Strings in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/strings-in-python-3/</link>
-      <pubDate>Sun, 06 Nov 2016 07:35:00 +0530</pubDate>
-      <author>ploggingdev@gmail.com</author>
-      <guid>https://www.ploggingdev.com/2016/11/strings-in-python-3/</guid>
-      <description>&lt;p&gt;Strings are sequences of characters.&lt;/p&gt;
-
-&lt;p&gt;Strings can be written in the following ways:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&amp;lsquo;single quotes&amp;rsquo;&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;double quotes&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;&amp;rdquo;&amp;lsquo;multi line&amp;rdquo;&amp;rsquo;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Escape sequences are used to display characters with a special meaning such as &lt;code&gt;&#39;&lt;/code&gt;, &lt;code&gt;&amp;quot;&lt;/code&gt; , &lt;code&gt;\&lt;/code&gt; within a string.&lt;/p&gt;
-
-&lt;p&gt;Some examples:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;\\&lt;/code&gt; displays &lt;code&gt;\&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\&amp;quot;&lt;/code&gt; displays &lt;code&gt;&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\&#39;&lt;/code&gt; displays &lt;code&gt;&#39;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\n&lt;/code&gt; displays a new line (LF)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Further reading about escape sequences &lt;a href=&#34;https://docs.python.org/3/reference/lexical_analysis.html#strings&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To find the length a string, the &lt;code&gt;len()&lt;/code&gt; function can be used.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;len(&#39;String&#39;)
-6
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To convert other datatypes to a string, the &lt;code&gt;str()&lt;/code&gt; function can be used.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;mystr=str(100)
-type(mystr)
-&amp;lt;class &#39;str&#39;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There are built in methods available to perform common operations/transformations in  Python. Some of them can be found &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#string-methods&#34;&gt;here&lt;/a&gt;. I won&amp;rsquo;t show the usage of the functions here though.&lt;/p&gt;
-
-&lt;p&gt;I will talk about slicing strings very briefly. A slice is a segment of the string. The following code demonstrates how to slice a string.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;slice_example=&#39;string contents&#39;
-print(slice_example[3:12])
-ing conte
-print(slice_example[:10])
-string con
-print(slice_example[4:])
-ng contents
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The operator &lt;code&gt;[n:m]&lt;/code&gt; returns the string from the n-th character to the m-th character, including the n-th character and excluding the m-th character. If &lt;code&gt;n&lt;/code&gt; is omitted, it starts from the first character. If &lt;code&gt;m&lt;/code&gt; is omitted, it ends with the last character.&lt;/p&gt;
-
-&lt;p&gt;An important property of strings is that, they are immutable. The following example demonstrates this property.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;s=&#39;abc&#39;
-s[0]=&#39;x&#39;
-TypeError: &#39;str&#39; object does not support item assignment
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To learn more about text processing refer this &lt;a href=&#34;https://docs.python.org/3/library/text.html#textservices&#34;&gt;link&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A quick note about why I am not explaining all the string processing services and string methods: I just need to know, at a high level, what string processing resources exist and where to find them when the need arises. Spending time trying out all the methods and services is not very efficient or interesting. Let me reiterate that I will be learning on the fly.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is available &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/strings.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

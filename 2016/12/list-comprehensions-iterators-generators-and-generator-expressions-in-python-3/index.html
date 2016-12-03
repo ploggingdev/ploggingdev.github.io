@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>N queens solver in Python 3</title>
+  <title>List comprehensions, iterators, generators and generator expressions in Python 3</title>
 
   <meta name="author" content="" />
 
@@ -24,9 +24,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="N queens solver in Python 3" />
+  <meta property="og:title" content="List comprehensions, iterators, generators and generator expressions in Python 3" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/2016/11/n-queens-solver-in-python-3//" />
+  <meta property="og:url" content="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -107,11 +107,11 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>N queens solver in Python 3</h1>
+          <h1>List comprehensions, iterators, generators and generator expressions in Python 3</h1>
       
       
       
-      <span class="post-meta">Posted on November 30, 2016</span>
+      <span class="post-meta">Posted on December 2, 2016</span>
       
         </div>
       </div>
@@ -127,185 +127,139 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-          <p>What is the N queens problem?</p>
+          <p>A list comprehension is a concise way to create lists that would normally require <code>for</code> loops to build.</p>
 
-<p>The N queens problem is the problem of placing N non-attacking queens on an NxN chessboard, for which solutions exist for all natural numbers N with the exception of N=2 and N=3.</p>
+<p>Example:</p>
 
-<p>When N=1, the solution is trivial so the program will ask for a value of N such that <code>N &gt;= 4</code>.</p>
+<pre><code>list1 = [x**2 for x in range(10)]
+print(list1)
+#output
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
 
-<p>I will solve this problem using backtracking. There are more efficient ways to solve this problem, but I will use backtracking since it&rsquo;s the most intuitive way to arrive at the solution without getting into the mathematics of arriving at efficient solutions. Through solving these problems, I aim to better understand Python.</p>
+<p>List comprehension to create a list of tuples:</p>
 
-<p>What is backtracking?</p>
-
-<p>Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons each partial candidate <em>c</em> (&ldquo;backtracks&rdquo;) as soon as it determines that <em>c</em> cannot possibly be completed to a valid solution.</p>
+<pre><code>list2 = [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+print(list2)
+#output
+[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+</code></pre>
 
 <p></p>
 
-<p>A high level overview of how to use backtracking to solve the N queens problem:</p>
+<p>List comprehension using an <code>if</code> condition:</p>
 
-<ul>
-<li>place a queen in the first column and first row</li>
-<li>place a queen in the second column such that it does not attack the queen in the first column</li>
-<li>continue placing non-attacking queens in the remaining columns</li>
-<li>if all N queens have been placed, a solution has been found. Remove the queen in the Nth column, and try incrementing the row of the queen in the (N-1)th column</li>
-<li>if it&rsquo;s a dead end, remove the queen, increment the row of the queen in the previous column</li>
-<li>continue doing this until the queen in the 1st column exhausts all options and is in the row N</li>
-</ul>
-
-<p>The above explanation starts counting at 1, not 0 based counting.</p>
-
-<p>To see a visualization of backtracking, refer <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle#Exercise_in_algorithm_design">here</a>.</p>
-
-<p>The solution:</p>
-
-<pre><code>import copy
-
-def take_input():
-    &quot;&quot;&quot;Accepts the size of the chess board&quot;&quot;&quot;
-
-    while True:
-        try:
-            size = int(input('What is the size of the chessboard? n = \n'))
-            if size == 1:
-                print(&quot;Trivial solution, choose a board size of atleast 4&quot;)
-            if size &lt;= 3:
-                print(&quot;Enter a value such that size&gt;=4&quot;)
-                continue
-            return size
-        except ValueError:
-            print(&quot;Invalid value entered. Enter again&quot;)
-
-def get_board(size):
-    &quot;&quot;&quot;Returns an n by n board&quot;&quot;&quot;
-    board = [0]*size
-    for ix in range(size):
-        board[ix] = [0]*size
-    return board
-
-def print_solutions(solutions, size):
-    &quot;&quot;&quot;Prints all the solutions in user friendly way&quot;&quot;&quot;
-    for sol in solutions:
-        for row in sol:
-            print(row)
-        print()
-            
-def is_safe(board, row, col, size):
-    &quot;&quot;&quot;Check if it's safe to place a queen at board[x][y]&quot;&quot;&quot;
-
-    #check row on left side
-    for iy in range(col):
-        if board[row][iy] == 1:
-            return False
-    
-    ix, iy = row, col
-    while ix &gt;= 0 and iy &gt;= 0:
-        if board[ix][iy] == 1:
-            return False
-        ix-=1
-        iy-=1
-    
-    jx, jy = row,col
-    while jx &lt; size and jy &gt;= 0:
-        if board[jx][jy] == 1:
-            return False
-        jx+=1
-        jy-=1
-    
-    return True
-
-def solve(board, col, size):
-    &quot;&quot;&quot;Use backtracking to find all solutions&quot;&quot;&quot;
-    #base case
-    if col &gt;= size:
-        return
-    
-    for i in range(size):
-        if is_safe(board, i, col, size):
-            board[i][col] = 1
-            if col == size-1:
-                add_solution(board)
-                board[i][col] = 0
-                return
-            solve(board, col+1, size)
-            #backtrack
-            board[i][col] = 0
-
-def add_solution(board):
-    &quot;&quot;&quot;Saves the board state to the global variable 'solutions'&quot;&quot;&quot;
-    global solutions
-    saved_board = copy.deepcopy(board)
-    solutions.append(saved_board)
-
-size = take_input()
-
-board = get_board(size)
-
-solutions = []
-
-solve(board, 0, size)
-
-print_solutions(solutions, size)
-
-print(&quot;Total solutions = {}&quot;.format(len(solutions)))
+<pre><code>list3 = [x for x in range(10) if x%2 != 0]
+print(list3)
+#output
+[1, 3, 5, 7, 9]
 </code></pre>
 
-<p>Output of the program when N=4:</p>
+<p>Only odd numbers are printed in the above example.</p>
 
-<pre><code>What is the size of the chessboard? n = 
+<p>Nested list comprehensions allow us to emulate nested <code>for</code> loops in some way.</p>
+
+<p>Example:</p>
+
+<pre><code>matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+    [10,11,12]
+]
+
+transposed = [[row[i] for row in matrix] for i in range(3)]
+print(transposed)
+#output
+[[1, 4, 7, 10], [2, 5, 8, 11], [3, 6, 9, 12]]
+</code></pre>
+
+<p>The equivalent using nested <code>for</code> loops would be:</p>
+
+<pre><code>for i in range(3):
+    transposed.append([row[i] for row in matrix])
+</code></pre>
+
+<p>Moving on to iterators. Iterators let us iterate over container objects using <code>for</code> loops. How to create an iterator: create a class which defines <code>__iter__()</code> and <code>__next__()</code>. <code>__iter__()</code> returns an object with a <code>__next__()</code> method. The <code>__next__()</code> method which is used to retrieve the next object in the container. The <code>__next__()</code> method will also need to raise a <code>StopIteration</code> exception when there are no more elements to iterate over.</p>
+
+<p>Example:</p>
+
+<pre><code>class Squared:
+    &quot;&quot;&quot;Square all the numbers&quot;&quot;&quot;
+
+    def __init__(self, data):
+        self.data = data
+        self.index = 0
+    
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index == len(self.data):
+            raise StopIteration
+        val = self.data[self.index] **2
+        self.index += 1
+
+        return val
+
+values = Squared([1,2,3,10])
+
+for i in values:
+    print(i)
+
+#output
+1
 4
-[0, 0, 1, 0]
-[1, 0, 0, 0]
-[0, 0, 0, 1]
-[0, 1, 0, 0]
-
-[0, 1, 0, 0]
-[0, 0, 0, 1]
-[1, 0, 0, 0]
-[0, 0, 1, 0]
-
-Total solutions = 2
+9
+100
 </code></pre>
 
-<p>Some important takeaways from coding the solution:</p>
+<p>Generators are a way to create iterators. There is no need to explicitly define the <code>__iter__()</code> and <code>__next__()</code> methods, they are created automatically. Generators are functions that use the <code>yield</code> statement to return data. When <code>__next__()</code> is called, the function resumes where it left off and remembers the state of the program. The <code>StopIteration</code> exception is also automatically raised.</p>
 
-<ul>
-<li>To make an NxM list use:</li>
-</ul>
+<pre><code>def double_values(data):
+    &quot;&quot;&quot;Doubles all the values&quot;&quot;&quot;
+    for val in data:
+        yield val*2
 
-<pre><code>A = [0] * N
-for i in range(N):
-    A[i] = [0] * M
+for i in double_values([4,5,3]):
+    print(i)
+
+#output
+8
+10
+6
 </code></pre>
 
-<p>I tried, <code>A = [[0] * M] * N</code> initially, which is wrong. More info <a href="https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list">here</a>.</p>
+<p>Generator expressions are a simple but limited way to create generators and used in cases where the return value of the generator expression is used immediately. They have a syntax similar to list comprehensions, but use parantheses instead of brackets.</p>
 
-<ul>
-<li><p>When saving the contents of a multidimensional list, use <code>copy.deepcopy(to_save)</code>.</p></li>
+<p>Since generator expressions <em>generate</em> the values on the fly instead of storing all the values in memory like list comprehensions do, they tend to be more memory efficient than the equivalent list comprehension but also tend to be a little slower. This is an important tradeoff to keep in mind.</p>
 
-<li><p>Testing is hard! More so when dealing with complicated outputs from a function. I will update this blog with tests soon.</p></li>
-</ul>
+<p>Example:</p>
 
-<p>Source code available <a href="https://github.com/ploggingdev/n-queens">here</a>.</p>
+<pre><code>exp = sum(i for i in range(5))
+print(exp)
+
+#output
+10
+</code></pre>
+
+<p>Source code for today&rsquo;s plog is <a href="https://github.com/ploggingdev/python_learn/blob/master/generators.py">here</a>.</p>
 
 <p>References:</p>
 
 <ul>
-<li><p><a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">Eight queens problem on Wikipedia</a></p></li>
+<li><p><a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">List comprehensions</a></p></li>
 
-<li><p><a href="https://en.wikipedia.org/wiki/Backtracking">Backtracking on Wikipedia</a></p></li>
+<li><p><a href="https://docs.python.org/3/tutorial/classes.html#iterators">Generators, iterators and generator expressions</a></p></li>
 </ul>
       </article>
 
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/" data-toggle="tooltip" data-placement="top" title="Floating point arithmetic issues in Python 3">&larr; Previous Post</a>
+          <a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/" data-toggle="tooltip" data-placement="top" title="N queens solver in Python 3">&larr; Previous Post</a>
         </li>
         
-        
-        <li class="next">
-          <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/" data-toggle="tooltip" data-placement="top" title="List comprehensions, iterators, generators and generator expressions in Python 3">Next Post &rarr;</a>
-        </li>
         
       </ul>
 
@@ -314,9 +268,9 @@ for i in range(N):
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ploggingdev';
-    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/n-queens-solver-in-python-3\/';
-    var disqus_title = 'N queens solver in Python 3';
-    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/n-queens-solver-in-python-3\/';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/12\/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3\/';
+    var disqus_title = 'List comprehensions, iterators, generators and generator expressions in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/12\/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

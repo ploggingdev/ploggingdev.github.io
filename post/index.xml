@@ -715,7 +715,7 @@ Ran 5 tests in 0.001s
 OK (skipped=1)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;code&gt;unittest,skip(msg)&lt;/code&gt; decorator can be used to skip a test. This is useful when a test is known to fail and it needs to be fixed.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;unittest.skip(msg)&lt;/code&gt; decorator can be used to skip a test. This is useful when a test is known to fail and it needs to be fixed.&lt;/p&gt;
 
 &lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/tests.py&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/test_2.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 

@@ -8,8 +8,64 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Fri, 02 Dec 2016 20:54:31 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Dec 2016 00:57:13 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Archive</title>
+      <link>https://www.ploggingdev.com/archive/</link>
+      <pubDate>Sat, 03 Dec 2016 00:57:13 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/archive/</guid>
+      <description>
+
+&lt;p&gt;This page contains links to all posts on this site.&lt;/p&gt;
+
+&lt;h2 id=&#34;python&#34;&gt;Python&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/beginning-python-3/&#34;&gt;Beginning Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/data-types-in-python-3/&#34;&gt;Data types in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/strings-in-python-3/&#34;&gt;Strings in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/lists-in-python-3/&#34;&gt;Lists in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/tuples-in-python-3/&#34;&gt;Tuples in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/ranges-in-python-3/&#34;&gt;Ranges in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/sets-in-python-3/&#34;&gt;Sets in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/&#34;&gt;Dictionaries in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/&#34;&gt;Control flow tools in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/functions-in-python-3/&#34;&gt;Functions in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/&#34;&gt;Modules and packages in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/&#34;&gt;Classes and inheritance in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/&#34;&gt;Virtual environments and package management in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/&#34;&gt;File IO and JSON in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/&#34;&gt;Errors and exceptions in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/&#34;&gt;Unit testing in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/&#34;&gt;Floating point arithmetic issues in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/&#34;&gt;N queens solver in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/&#34;&gt;List comprehensions, iterators, generators and generator expressions in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/hello-world/&#34;&gt;Hello World&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>List comprehensions, iterators, generators and generator expressions in Python 3</title>
@@ -2085,97 +2141,6 @@ True
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/range.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Tuples in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</link>
-      <pubDate>Tue, 08 Nov 2016 10:48:13 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</guid>
-      <description>&lt;p&gt;Tuples are immutable sequences of values. The values can be heterogeneous.
-The values in a tuple are indexed by integers.&lt;/p&gt;
-
-&lt;p&gt;Tuple construction:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;()&lt;/code&gt; for empty tuple&lt;/li&gt;
-&lt;li&gt;Single value in a tuple requires a trailing comma: &lt;code&gt;1,&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Comma separated values: &lt;code&gt;1,2,3&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;using &lt;code&gt;tuple()&lt;/code&gt; function&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Examples:&lt;/p&gt;
-
-&lt;p&gt;Empty tuple.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;t0=() 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Single value in a tuple(singleton). Notice the trailing comma.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;t1=&#39;a&#39;,
-print(t1)
-(&#39;a&#39;,) 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Comma separated values.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;t2=1,2,3
-print(t2)
-(1, 2, 3)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Using the &lt;code&gt;tuple()&lt;/code&gt; function. Note that it accepts only one argument.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;t3=tuple()
-print(t3)
-()
-
-#trailing comma not required
-t4=tuple(&#39;a&#39;)
-print(t4)
-(&#39;a&#39;,)
-
-t5=tuple(&#39;abcd&#39;)
-print(t5)
-(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)
-
-t6=tuple(1234)
-TypeError: &#39;int&#39; object is not iterable
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;tuple()&lt;/code&gt; function does not accept integers as they are not iterable. To understand what iterables are,
-refer to the official &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#iterator-types&#34;&gt;docs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Tuples are immutable:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;t2[0]=456
-TypeError: &#39;tuple&#39; object does not support item assignment
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Tuple packing is the process of packing values into a tuple.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;t7=123,&#39;abc&#39;,345
-print(t7)
-(123, &#39;abc&#39;, 345) 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Tuple unpacking is the opposite.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var1,var2,var3=t7
-print(var1)
-123
-print(var2)
-abc
-print(var3) 
-345
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The source code for today&amp;rsquo;s plog is available
-&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/tuples.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -6,14 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Data types in Python 3</title>
+  <title>Archive</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Data types in Python 3">
+  <meta name="description" content="Archive">
 
-  
-  <meta name="keywords" content="python 3, beginning python 3, data types in python 3, datatypes in python 3, boolean in python 3, ints in python 3, floats in python 3">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -28,9 +26,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Data types in Python 3" />
+  <meta property="og:title" content="Archive" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/2016/11/data-types-in-python-3//" />
+  <meta property="og:url" content="/archive//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -116,12 +114,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-heading">
-          <h1>Data types in Python 3</h1>
+        <div class="page-heading">
+          <h1>Archive</h1>
       
       
-      
-      <span class="post-meta">Posted on November 5, 2016</span>
       
         </div>
       </div>
@@ -133,144 +129,65 @@
 
 
 
-<div class="container">
+<div class="container" role="main">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <article role="main" class="blog-post">
-          <p>Python is a dynamically typed programming language, so you don&rsquo;t need to explicitly specify the data type of a variable before usage. A variable can be rebound to objects of different data types at runtime and the Python interpreter will not complain.</p>
+      
 
-<p>An example:</p>
+<p>This page contains links to all posts on this site.</p>
 
-<pre><code class="language-python3">var=10
-print(var)
-10
-var='string'
-print(var)
-string
-</code></pre>
+<h2 id="python">Python</h2>
 
-<p></p>
+<p><a href="/2016/11/beginning-python-3/">Beginning Python 3</a></p>
 
-<p>The following are the data types available in Python:</p>
+<p><a href="/2016/11/data-types-in-python-3/">Data types in Python 3</a></p>
 
-<ul>
-<li>Boolean - True and False</li>
-<li>int and float</li>
-<li>list</li>
-<li>tuple</li>
-<li>range</li>
-<li>string</li>
-<li>set</li>
-<li>dictionary</li>
-</ul>
+<p><a href="/2016/11/strings-in-python-3/">Strings in Python 3</a></p>
 
-<p>This is not an exhaustive list, just the list of types I am guessing are most relevant to me for Machine learning and building web apps. For the complete list refer this <a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">link</a>.</p>
+<p><a href="/2016/11/lists-in-python-3/">Lists in Python 3</a></p>
 
-<p>The following values are considered Falsey:</p>
+<p><a href="/2016/11/tuples-in-python-3/">Tuples in Python 3</a></p>
 
-<ul>
-<li>False</li>
-<li>None</li>
-<li>0</li>
-<li>{},&ldquo;,(),[]</li>
-</ul>
+<p><a href="/2016/11/ranges-in-python-3/">Ranges in Python 3</a></p>
 
-<p>All other values can be considered truthy.</p>
+<p><a href="/2016/11/sets-in-python-3/">Sets in Python 3</a></p>
 
-<p>What is the difference between true and false vs truthy and falsey?</p>
+<p><a href="/2016/11/dictionaries-in-python-3/">Dictionaries in Python 3</a></p>
 
-<p>True and False are boolean values.
-Truthy and Falsey values are terms to describe how objects will be evaluated as True and False values in the context of <code>if</code> conditions. A better explanation can be found on <a href="http://stackoverflow.com/questions/10440792/why-does-false-evaluate-to-false-when-if-not-succeeds">Stackoverflow</a>.</p>
+<p><a href="/2016/11/control-flow-tools-in-python-3/">Control flow tools in Python 3</a></p>
 
-<p>To quickly check the truthiness or falsiness of objects, use <code>bool(data)</code>.</p>
+<p><a href="/2016/11/functions-in-python-3/">Functions in Python 3</a></p>
 
-<pre><code class="language-python3">if not bool(()):
-	print('() is falsey')
-if not bool([]):
-	print('[] is falsey')
-if not bool({}):
-	print('{} is falsey')
-if not bool(''):
-	print('\'\' is falsey')
-if not bool(None):
-	print('None is falsey')
-</code></pre>
+<p><a href="/2016/11/modules-and-packages-in-python-3/">Modules and packages in Python 3</a></p>
 
-<p>Output:</p>
+<p><a href="/2016/11/classes-and-inheritance-in-python-3/">Classes and inheritance in Python 3</a></p>
 
-<pre><code class="language-python3">() is falsey
-[] is falsey
-{} is falsey
-'' is falsey
-None is falsey
-</code></pre>
+<p><a href="/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></p>
 
-<p>All other values can be considered truthy.</p>
+<p><a href="/2016/11/file-io-and-json-in-python-3/">File IO and JSON in Python 3</a></p>
 
-<p>To check the datatype of an object, use <code>type(value)</code>. Example:</p>
+<p><a href="/2016/11/errors-and-exceptions-in-python-3/">Errors and exceptions in Python 3</a></p>
 
-<pre><code class="language-python3">type(0)
-&lt;class 'int'&gt;
-type('text')
-&lt;class 'str'&gt;
-</code></pre>
+<p><a href="/2016/11/unit-testing-in-python-3/">Unit testing in Python 3</a></p>
 
-<p>Moving on to integers and floats.</p>
+<p><a href="/2016/11/floating-point-arithmetic-issues-in-python-3/">Floating point arithmetic issues in Python 3</a></p>
 
-<p>Integers are just whole numbers. So you can have positive and negative values but not fractions. Examples: 10,1414,524123,-1414.</p>
+<p><a href="/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></p>
 
-<p><code>myint=100</code></p>
+<p><a href="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">List comprehensions, iterators, generators and generator expressions in Python 3</a></p>
 
-<p>The cool thing about integers in Python is that the maximum value is only limited by the available system memory on the device running the code. Coming from Java, it&rsquo;s a welcome change, especially when dealing with large numbers (I encountered this problem in programming challenges online).</p>
+<h1 id="miscellaneous">Miscellaneous</h1>
 
-<p>The standard operators can be used on integers such as *,/,+,-,**.</p>
-
-<p>(I will blog about operators later).</p>
-
-<p>Floating point numbers can handle precision after the decimal point. Examples 6.2, 24.3.</p>
-
-<p><code>myfloat=24123.324</code></p>
-
-<p>Float is implemented using double in C. To check the maximum float value your system supports, type in the following:</p>
-
-<pre><code class="language-python3">sys.float_info.max
-1.7976931348623157e+308
-</code></pre>
-
-<p>The second line is the result on my system.</p>
-
-<p>Comments in python start with a #.</p>
-
-<p>Examples:</p>
-
-<p><code>#single line comment</code></p>
-
-<p>Find the code for todays plog <a href="https://github.com/ploggingdev/python_learn/blob/master/datatypes.py">here</a>.</p>
-
-<p>The upcoming blogs will explore more built in data types.</p>
-      </article>
-
-      <ul class="pager blog-pager">
-        
-        <li class="previous">
-          <a href="https://www.ploggingdev.com/2016/11/beginning-python-3/" data-toggle="tooltip" data-placement="top" title="Beginning Python 3">&larr; Previous Post</a>
-        </li>
-        
-        
-        <li class="next">
-          <a href="https://www.ploggingdev.com/2016/11/strings-in-python-3/" data-toggle="tooltip" data-placement="top" title="Strings in Python 3">Next Post &rarr;</a>
-        </li>
-        
-      </ul>
+<p><a href="/2016/11/hello-world/">Hello World</a></p>
 
       
-      <div class="disqus-comments">
+        <div class="disqus-comments">
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ploggingdev';
-    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/11\/data-types-in-python-3\/';
-    var disqus_title = 'Data types in Python 3';
-    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/11\/data-types-in-python-3\/';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/archive\/';
+    var disqus_title = 'Archive';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/archive\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -280,9 +197,8 @@ type('text')
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      </div>
+        </div>
       
-
     </div>
   </div>
 </div>

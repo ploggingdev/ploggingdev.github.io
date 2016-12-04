@@ -8,8 +8,390 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sat, 03 Dec 2016 00:57:13 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Dec 2016 21:13:22 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Performance measurement in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/</link>
+      <pubDate>Sat, 03 Dec 2016 21:13:22 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/</guid>
+      <description>&lt;p&gt;Performance measurement is the process of collecting and understanding information regarding the performance of some code.&lt;/p&gt;
+
+&lt;p&gt;In this blog I will cover the basics of the following modules in Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;timeit&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;cProfile&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;pstats&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;memory_profiler&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;line_profiler&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;I will start with the &lt;code&gt;timeit&lt;/code&gt; module. This module enables us to time small pieces of code.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import timeit
+
+res1 = timeit.timeit(&#39;&#39;&#39;
+a = [i for i in range(50000)]
+for i in a:
+    pass
+&#39;&#39;&#39;, number = 100)
+
+res2 = timeit.timeit(&#39;&#39;&#39;
+a = (i for i in range(50000))
+for i in a:
+    pass
+&#39;&#39;&#39;, number = 100)
+
+print(res1)
+
+print(res2)
+
+#output
+0.26830113399955735
+0.3227190840007097
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Running &lt;code&gt;timeit.timeit(args)&lt;/code&gt; returns a float which represents the time taken to execute the given code. In the above example, the first argument is the code to be executed and the second argument is the number of times the code should be run. Executing the code multiple times and taking the average gives a more accurate result than running it a single time.&lt;/p&gt;
+
+&lt;p&gt;Interestingly, the above example also demonstrates that list comprehensions are faster than using generator expressions to iterate over a range of values, but the memory consumption is higher which is not profiled in the above example.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;cProfile&lt;/code&gt; module provides deterministic profiling of a python program. Calling &lt;code&gt;cProfile.run(func_name, output_file_name)&lt;/code&gt; profiles the given function and writes the output to a specified file.&lt;/p&gt;
+
+&lt;p&gt;The following columns are included in the output:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;ncalls&lt;/code&gt; : for the number of calls&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;tottime&lt;/code&gt; : for the total time spent in the given function (and excluding time made in calls to sub-functions)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;percall&lt;/code&gt; : is the quotient of tottime divided by ncalls&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;cumtime&lt;/code&gt; : is the cumulative time spent in this and all subfunctions (from invocation till exit). This figure is accurate even for recursive functions&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;percall&lt;/code&gt; : is the quotient of cumtime divided by primitive calls&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;filename:lineno(function)&lt;/code&gt; : provides the respective data of each function&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;code&gt;pstats.Stats&lt;/code&gt; class is used to read the profiled data and format the results as required.&lt;/p&gt;
+
+&lt;p&gt;The following example profiles &lt;code&gt;to_be_profiled()&lt;/code&gt; and writes the profile data into the file called &lt;code&gt;cprofile_results&lt;/code&gt;. The &lt;code&gt;pstats.Stats&lt;/code&gt; class is then used to format the profile results in commonly used formats (check the comments in the program).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import cProfile
+import pstats
+import time
+import sys
+
+def to_be_profiled():
+    my_list1 = [i**2 for i in range(50000)]
+
+    my_list2 = (i**2 for i in range(100000, 150000))
+
+    sum = 0
+
+    print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
+    print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
+
+    for i in my_list2:
+        sum += i
+        time.sleep(0.00001)
+        my_list1.append(i)
+    print(sum)
+
+cProfile.run(&#39;to_be_profiled()&#39;, &#39;cprofile_results&#39;)
+
+p = pstats.Stats(&#39;cprofile_results&#39;)
+#sort by standard name
+p.strip_dirs().sort_stats(-1).print_stats(10)
+#sort by function name
+p.sort_stats(&#39;name&#39;).print_stats(10)
+#sort by cumulative time in a function
+p.sort_stats(&#39;cumulative&#39;).print_stats(10)
+#sort by time spent in a function
+p.sort_stats(&#39;time&#39;).print_stats(10)
+
+#output
+my_list1 = 406496 bytes
+my_list2 = 88 bytes
+791660416675000
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: standard name
+   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
+        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
+        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}
+
+
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: function name
+   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
+    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
+        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}
+        2    0.000    0.000    0.000    0.000 {method &#39;format&#39; of &#39;str&#39; objects}
+        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
+
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: cumulative time
+   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
+        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
+    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+        2    0.000    0.000    0.000    0.000 {method &#39;format&#39; of &#39;str&#39; objects}
+
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: internal time
+   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
+    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
+        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+        2    0.000    0.000    0.000    0.000 {method &#39;format&#39; of &#39;str&#39; objects}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Moving on to the &lt;code&gt;memory_profiler&lt;/code&gt;, the installation procedure is as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#install memory_profiler module
+pip install memory_profiler
+
+#install psutil
+
+pip install psutil
+
+#install matplotlib
+pip install matplotlib
+
+sudo apt-get install python3-matplotlib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To install &lt;code&gt;matplotlib&lt;/code&gt;, I first tried &lt;code&gt;pip install matplotlib&lt;/code&gt;, but I was still facing issues plotting graphs. Then I tried, &lt;code&gt;sudo apt-get install python-matplotlib&lt;/code&gt; which installed &lt;code&gt;matplotlib&lt;/code&gt; for Python 2. Finally I tried &lt;code&gt;sudo apt-get install python3-matplotlib&lt;/code&gt; and was able to plot graphs. So my installation procedure installed a lot of unnecessay modules and packages.&lt;/p&gt;
+
+&lt;p&gt;To see a line by line memory profile of a function, the &lt;code&gt;memory_profiler&lt;/code&gt; is used. Importing is done using &lt;code&gt;from memory_profiler import profile&lt;/code&gt;. To specify which function needs to be memory profiled, use the &lt;code&gt;@profile&lt;/code&gt; decorator.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import sys
+import cProfile
+from memory_profiler import profile
+
+@profile()
+def mem_to_be_profiled():
+    
+    my_list1 = [i**2 for i in range(50000)]
+
+    my_list2 = (i**2 for i in range(100000, 150000))
+
+    sum = 0
+
+    print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
+    print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
+
+    for i in my_list2:
+        sum += i
+        my_list1.append(i)
+    print(sum)
+
+mem_to_be_profiled()
+
+#output
+my_list1 = 406496 bytes
+my_list2 = 88 bytes
+791660416675000
+Filename: mem.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5     30.4 MiB      0.0 MiB   @profile()
+     6                             def mem_to_be_profiled():
+     7
+     8     32.1 MiB      1.7 MiB       my_list1 = [i**2 for i in range(50000)]
+     9
+    10     34.8 MiB      2.7 MiB       my_list2 = (i**2 for i in range(100000, 150000))
+    11
+    12     32.1 MiB     -2.7 MiB       sum = 0
+    13
+    14     32.1 MiB      0.0 MiB       print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
+    15     32.1 MiB      0.0 MiB       print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
+    16
+    17     34.8 MiB      2.7 MiB       for i in my_list2:
+    18     34.8 MiB      0.0 MiB           sum += i
+    19     34.8 MiB      0.0 MiB           my_list1.append(i)
+    20     34.8 MiB      0.0 MiB       print(sum)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I was hoping to demonstrate that list comprehensions use more memory than generator expressions using memory profiling, but for some reason &lt;code&gt;2.7 MB&lt;/code&gt; of memory is allocated during the creation of a generator object and then it&amp;rsquo;s immediately released in the next line. If you know why this happens everytime, let me know in the comments.&lt;/p&gt;
+
+&lt;p&gt;Now comes the interesting part: plotting a graph of memory usage vs time. We will use the &lt;code&gt;mprof&lt;/code&gt; executable for this.&lt;/p&gt;
+
+&lt;p&gt;Run the script and collect memory profile data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mprof run mem.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above command stores the result in a file in the current directory.&lt;/p&gt;
+
+&lt;p&gt;Plot a graph of memory usage vs time:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mprof plot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above command uses the most recently generated memory profile data.&lt;/p&gt;
+
+&lt;p&gt;Output screenshot:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/mem_profile.png&#34; alt=&#34;Memory profile graph&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next I will cover the &lt;code&gt;line_profiler&lt;/code&gt; module.&lt;/p&gt;
+
+&lt;p&gt;Installation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install line_profiler
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Use the &lt;code&gt;@profile&lt;/code&gt; decorator to specify the function that needs to be profiled.&lt;/p&gt;
+
+&lt;p&gt;Running the script directly using &lt;code&gt;python file.py&lt;/code&gt; throws an error since &lt;code&gt;@profile&lt;/code&gt; is not defined,&lt;/p&gt;
+
+&lt;p&gt;To see the line by line profile of the function, use :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kernprof -l -v line.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are ways to get around this issue and run it as a normal script as well as profiling it using &lt;code&gt;kernprof&lt;/code&gt;. Here is a &lt;a href=&#34;http://stackoverflow.com/questions/18229628/python-profiling-using-line-profiler-clever-way-to-remove-profile-statements&#34;&gt;Stackoverflow answer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import sys
+
+@profile
+def to_be_profiled():
+    
+    my_list1 = [i**2 for i in range(50000)]
+
+    my_list2 = (i**2 for i in range(100000, 150000))
+    sum = 0
+    print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
+    print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
+
+    for i in my_list2:
+        sum += i
+        my_list1.append(i)
+    print(sum)
+
+
+to_be_profiled()
+
+#output
+my_list1 = 406496 bytes
+my_list2 = 88 bytes
+791660416675000
+Wrote profile results to line.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 0.17311 s
+File: line.py
+Function: to_be_profiled at line 3
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     3                                           @profile
+     4                                           def to_be_profiled():
+     5
+     6         1        17575  17575.0     10.2      my_list1 = [i**2 for i in range(50000)]
+     7
+     8         1            7      7.0      0.0      my_list2 = (i**2 for i in range(100000, 150000))
+     9         1            1      1.0      0.0      sum = 0
+    10         1           43     43.0      0.0      print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_li
+st1)))
+    11         1           24     24.0      0.0      print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_li
+st2)))
+    12
+    13     50001        68438      1.4     39.5      for i in my_list2:
+    14     50000        42867      0.9     24.8          sum += i
+    15     50000        44122      0.9     25.5          my_list1.append(i)
+    16         1           33     33.0      0.0      print(sum)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I only covered the basic usage of the performance measurement modules, to learn more refer to the links below.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/timeit.html#module-timeit&#34;&gt;timeit module&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/profile.html&#34;&gt;cProfile and pstats&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi/memory_profiler&#34;&gt;memory_profiler&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/rkern/line_profiler&#34;&gt;line_profiler&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/performance.py&#34;&gt;performance.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/mem.py&#34;&gt;mem.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/line.py&#34;&gt;line.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/requirements.txt&#34;&gt;requirements.txt has been updated&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Archive</title>
@@ -60,6 +442,8 @@
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/&#34;&gt;N queens solver in Python 3&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/&#34;&gt;List comprehensions, iterators, generators and generator expressions in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/&#34;&gt;Performance measurement in Python 3&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
@@ -2060,87 +2444,6 @@ False
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#sets&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset&#34;&gt;Official library reference&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Ranges in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</link>
-      <pubDate>Wed, 09 Nov 2016 14:00:07 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</guid>
-      <description>&lt;p&gt;The range is an immutable sequence of numbers. The main advantage of using the range type is that the
-memory occupied is fixed irrespective of the size of the range. This is because the actual contents of
-the range are not stored, instead they are computed at runtime.&lt;/p&gt;
-
-&lt;p&gt;Ranges can be created using:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;range(stop)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;range(start,stop)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;range(start,stop,step)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Only the 1st and 3rd are constructors. In &lt;code&gt;range(start,stop,step)&lt;/code&gt;, step is an optional
-parameter. When step is not specified, what we end up with is &lt;code&gt;range(start,stop)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Quick notes about the arguments passed to &lt;code&gt;range()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;If &lt;code&gt;start&lt;/code&gt; is not specified, the default value is 0.&lt;/li&gt;
-&lt;li&gt;If &lt;code&gt;step&lt;/code&gt; is not specified, the default value is 1.&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value cannot be zero, a runtime error will be thrown.&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value &lt;em&gt;can&lt;/em&gt; be negative.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Stop&lt;/code&gt; is always required to be specified.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;To check the values of a range, convert the range to a list and print the list. Printing a range
-directly using &lt;code&gt;print(range_var)&lt;/code&gt; will not display the values in the range, since the values are not stored.&lt;/p&gt;
-
-&lt;p&gt;Some examples to demonstrate the usage of ranges:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#range(stop)
-r1=range(10)
-print(list(r1))
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-#range(start,stop)
-r2=range(2,10)
-print(list(r2))
-[2, 3, 4, 5, 6, 7, 8, 9]
-
-#range(start,stop,step)
-r3=range(10,20,2)
-print(list(r3))
-[10, 12, 14, 16, 18]
-
-#negative step value
-r4=range(30,10,-5)
-print(list(r4))
-[30, 25, 20, 15]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To check if a value is present in a range, the &lt;code&gt;in&lt;/code&gt; operator can be used.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r5=range(10,20)
-print(15 in r5)
-True
-
-print(25 in r5)
-False 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The comparison operators &lt;code&gt;==&lt;/code&gt; and &lt;code&gt;!=&lt;/code&gt; can be used to compare the values of different ranges.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(range(0,4,2)==range(0,3,2))
-True
-
-print(range(10)!=range(20))
-True
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/range.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

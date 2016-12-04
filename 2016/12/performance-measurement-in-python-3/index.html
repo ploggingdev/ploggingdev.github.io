@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Performance measurement in Python 3</title>
+
+  <meta name="author" content="Plogging Dev" />
+
+  <meta name="description" content="Performance measurement in Python 3">
+
+  
+  <meta name="keywords" content="python 3, performance measurement, timeit module, pstats, cProfile, memory_profiler, line_profiler">
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Performance measurement in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/12/performance-measurement-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Archive" href="/archive/">Archive</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Performance measurement in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on December 3, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Performance measurement is the process of collecting and understanding information regarding the performance of some code.</p>
+
+<p>In this blog I will cover the basics of the following modules in Python:</p>
+
+<ul>
+<li><p><code>timeit</code></p></li>
+
+<li><p><code>cProfile</code></p></li>
+
+<li><p><code>pstats</code></p></li>
+
+<li><p><code>memory_profiler</code></p></li>
+
+<li><p><code>line_profiler</code></p></li>
+</ul>
+
+<p></p>
+
+<p>I will start with the <code>timeit</code> module. This module enables us to time small pieces of code.</p>
+
+<p>Example:</p>
+
+<pre><code>import timeit
+
+res1 = timeit.timeit('''
+a = [i for i in range(50000)]
+for i in a:
+    pass
+''', number = 100)
+
+res2 = timeit.timeit('''
+a = (i for i in range(50000))
+for i in a:
+    pass
+''', number = 100)
+
+print(res1)
+
+print(res2)
+
+#output
+0.26830113399955735
+0.3227190840007097
+</code></pre>
+
+<p>Running <code>timeit.timeit(args)</code> returns a float which represents the time taken to execute the given code. In the above example, the first argument is the code to be executed and the second argument is the number of times the code should be run. Executing the code multiple times and taking the average gives a more accurate result than running it a single time.</p>
+
+<p>Interestingly, the above example also demonstrates that list comprehensions are faster than using generator expressions to iterate over a range of values, but the memory consumption is higher which is not profiled in the above example.</p>
+
+<p>The <code>cProfile</code> module provides deterministic profiling of a python program. Calling <code>cProfile.run(func_name, output_file_name)</code> profiles the given function and writes the output to a specified file.</p>
+
+<p>The following columns are included in the output:</p>
+
+<ul>
+<li><p><code>ncalls</code> : for the number of calls</p></li>
+
+<li><p><code>tottime</code> : for the total time spent in the given function (and excluding time made in calls to sub-functions)</p></li>
+
+<li><p><code>percall</code> : is the quotient of tottime divided by ncalls</p></li>
+
+<li><p><code>cumtime</code> : is the cumulative time spent in this and all subfunctions (from invocation till exit). This figure is accurate even for recursive functions</p></li>
+
+<li><p><code>percall</code> : is the quotient of cumtime divided by primitive calls</p></li>
+
+<li><p><code>filename:lineno(function)</code> : provides the respective data of each function</p></li>
+</ul>
+
+<p>The <code>pstats.Stats</code> class is used to read the profiled data and format the results as required.</p>
+
+<p>The following example profiles <code>to_be_profiled()</code> and writes the profile data into the file called <code>cprofile_results</code>. The <code>pstats.Stats</code> class is then used to format the profile results in commonly used formats (check the comments in the program).</p>
+
+<pre><code>import cProfile
+import pstats
+import time
+import sys
+
+def to_be_profiled():
+    my_list1 = [i**2 for i in range(50000)]
+
+    my_list2 = (i**2 for i in range(100000, 150000))
+
+    sum = 0
+
+    print(&quot;my_list1 = {} bytes&quot;.format(sys.getsizeof(my_list1)))
+    print(&quot;my_list2 = {} bytes&quot;.format(sys.getsizeof(my_list2)))
+
+    for i in my_list2:
+        sum += i
+        time.sleep(0.00001)
+        my_list1.append(i)
+    print(sum)
+
+cProfile.run('to_be_profiled()', 'cprofile_results')
+
+p = pstats.Stats('cprofile_results')
+#sort by standard name
+p.strip_dirs().sort_stats(-1).print_stats(10)
+#sort by function name
+p.sort_stats('name').print_stats(10)
+#sort by cumulative time in a function
+p.sort_stats('cumulative').print_stats(10)
+#sort by time spent in a function
+p.sort_stats('time').print_stats(10)
+
+#output
+my_list1 = 406496 bytes
+my_list2 = 88 bytes
+791660416675000
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: standard name
+   List reduced from 11 to 10 due to restriction &lt;10&gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.002    0.002    3.580    3.580 &lt;string&gt;:1(&lt;module&gt;)
+        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&lt;listcomp&gt;)
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&lt;genexpr&gt;)
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+    50000    0.011    0.000    0.011    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: function name
+   List reduced from 11 to 10 due to restriction &lt;10&gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&lt;genexpr&gt;)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&lt;listcomp&gt;)
+    50000    0.011    0.000    0.011    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        2    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+        1    0.002    0.002    3.580    3.580 &lt;string&gt;:1(&lt;module&gt;)
+
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: cumulative time
+   List reduced from 11 to 10 due to restriction &lt;10&gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        1    0.002    0.002    3.580    3.580 &lt;string&gt;:1(&lt;module&gt;)
+        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&lt;genexpr&gt;)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&lt;listcomp&gt;)
+    50000    0.011    0.000    0.011    0.000 {method 'append' of 'list' objects}
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+        2    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+
+Sat Dec  3 21:23:38 2016    cprofile_results
+
+         150013 function calls in 3.580 seconds
+
+   Ordered by: internal time
+   List reduced from 11 to 10 due to restriction &lt;10&gt;
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
+        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
+    50001    0.078    0.000    0.078    0.000 performance.py:26(&lt;genexpr&gt;)
+        1    0.014    0.014    0.014    0.014 performance.py:24(&lt;listcomp&gt;)
+    50000    0.011    0.000    0.011    0.000 {method 'append' of 'list' objects}
+        1    0.002    0.002    3.580    3.580 &lt;string&gt;:1(&lt;module&gt;)
+        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
+        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
+        2    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+</code></pre>
+
+<p>Moving on to the <code>memory_profiler</code>, the installation procedure is as follows:</p>
+
+<pre><code>#install memory_profiler module
+pip install memory_profiler
+
+#install psutil
+
+pip install psutil
+
+#install matplotlib
+pip install matplotlib
+
+sudo apt-get install python3-matplotlib
+</code></pre>
+
+<p>To install <code>matplotlib</code>, I first tried <code>pip install matplotlib</code>, but I was still facing issues plotting graphs. Then I tried, <code>sudo apt-get install python-matplotlib</code> which installed <code>matplotlib</code> for Python 2. Finally I tried <code>sudo apt-get install python3-matplotlib</code> and was able to plot graphs. So my installation procedure installed a lot of unnecessay modules and packages.</p>
+
+<p>To see a line by line memory profile of a function, the <code>memory_profiler</code> is used. Importing is done using <code>from memory_profiler import profile</code>. To specify which function needs to be memory profiled, use the <code>@profile</code> decorator.</p>
+
+<p>Example:</p>
+
+<pre><code>import sys
+import cProfile
+from memory_profiler import profile
+
+@profile()
+def mem_to_be_profiled():
+    
+    my_list1 = [i**2 for i in range(50000)]
+
+    my_list2 = (i**2 for i in range(100000, 150000))
+
+    sum = 0
+
+    print(&quot;my_list1 = {} bytes&quot;.format(sys.getsizeof(my_list1)))
+    print(&quot;my_list2 = {} bytes&quot;.format(sys.getsizeof(my_list2)))
+
+    for i in my_list2:
+        sum += i
+        my_list1.append(i)
+    print(sum)
+
+mem_to_be_profiled()
+
+#output
+my_list1 = 406496 bytes
+my_list2 = 88 bytes
+791660416675000
+Filename: mem.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5     30.4 MiB      0.0 MiB   @profile()
+     6                             def mem_to_be_profiled():
+     7
+     8     32.1 MiB      1.7 MiB       my_list1 = [i**2 for i in range(50000)]
+     9
+    10     34.8 MiB      2.7 MiB       my_list2 = (i**2 for i in range(100000, 150000))
+    11
+    12     32.1 MiB     -2.7 MiB       sum = 0
+    13
+    14     32.1 MiB      0.0 MiB       print(&quot;my_list1 = {} bytes&quot;.format(sys.getsizeof(my_list1)))
+    15     32.1 MiB      0.0 MiB       print(&quot;my_list2 = {} bytes&quot;.format(sys.getsizeof(my_list2)))
+    16
+    17     34.8 MiB      2.7 MiB       for i in my_list2:
+    18     34.8 MiB      0.0 MiB           sum += i
+    19     34.8 MiB      0.0 MiB           my_list1.append(i)
+    20     34.8 MiB      0.0 MiB       print(sum)
+</code></pre>
+
+<p>I was hoping to demonstrate that list comprehensions use more memory than generator expressions using memory profiling, but for some reason <code>2.7 MB</code> of memory is allocated during the creation of a generator object and then it&rsquo;s immediately released in the next line. If you know why this happens everytime, let me know in the comments.</p>
+
+<p>Now comes the interesting part: plotting a graph of memory usage vs time. We will use the <code>mprof</code> executable for this.</p>
+
+<p>Run the script and collect memory profile data:</p>
+
+<pre><code>mprof run mem.py
+</code></pre>
+
+<p>The above command stores the result in a file in the current directory.</p>
+
+<p>Plot a graph of memory usage vs time:</p>
+
+<pre><code>mprof plot
+</code></pre>
+
+<p>The above command uses the most recently generated memory profile data.</p>
+
+<p>Output screenshot:</p>
+
+<p><img src="/images/mem_profile.png" alt="Memory profile graph" /></p>
+
+<p>Next I will cover the <code>line_profiler</code> module.</p>
+
+<p>Installation:</p>
+
+<pre><code>pip install line_profiler
+</code></pre>
+
+<p>Use the <code>@profile</code> decorator to specify the function that needs to be profiled.</p>
+
+<p>Running the script directly using <code>python file.py</code> throws an error since <code>@profile</code> is not defined,</p>
+
+<p>To see the line by line profile of the function, use :</p>
+
+<pre><code>kernprof -l -v line.py
+</code></pre>
+
+<p>There are ways to get around this issue and run it as a normal script as well as profiling it using <code>kernprof</code>. Here is a <a href="http://stackoverflow.com/questions/18229628/python-profiling-using-line-profiler-clever-way-to-remove-profile-statements">Stackoverflow answer</a>.</p>
+
+<p>Example:</p>
+
+<pre><code>import sys
+
+@profile
+def to_be_profiled():
+    
+    my_list1 = [i**2 for i in range(50000)]
+
+    my_list2 = (i**2 for i in range(100000, 150000))
+    sum = 0
+    print(&quot;my_list1 = {} bytes&quot;.format(sys.getsizeof(my_list1)))
+    print(&quot;my_list2 = {} bytes&quot;.format(sys.getsizeof(my_list2)))
+
+    for i in my_list2:
+        sum += i
+        my_list1.append(i)
+    print(sum)
+
+
+to_be_profiled()
+
+#output
+my_list1 = 406496 bytes
+my_list2 = 88 bytes
+791660416675000
+Wrote profile results to line.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 0.17311 s
+File: line.py
+Function: to_be_profiled at line 3
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     3                                           @profile
+     4                                           def to_be_profiled():
+     5
+     6         1        17575  17575.0     10.2      my_list1 = [i**2 for i in range(50000)]
+     7
+     8         1            7      7.0      0.0      my_list2 = (i**2 for i in range(100000, 150000))
+     9         1            1      1.0      0.0      sum = 0
+    10         1           43     43.0      0.0      print(&quot;my_list1 = {} bytes&quot;.format(sys.getsizeof(my_li
+st1)))
+    11         1           24     24.0      0.0      print(&quot;my_list2 = {} bytes&quot;.format(sys.getsizeof(my_li
+st2)))
+    12
+    13     50001        68438      1.4     39.5      for i in my_list2:
+    14     50000        42867      0.9     24.8          sum += i
+    15     50000        44122      0.9     25.5          my_list1.append(i)
+    16         1           33     33.0      0.0      print(sum)
+</code></pre>
+
+<p>I only covered the basic usage of the performance measurement modules, to learn more refer to the links below.</p>
+
+<p>References:</p>
+
+<ul>
+<li><p><a href="https://docs.python.org/3/library/timeit.html#module-timeit">timeit module</a></p></li>
+
+<li><p><a href="https://docs.python.org/3/library/profile.html">cProfile and pstats</a></p></li>
+
+<li><p><a href="https://pypi.python.org/pypi/memory_profiler">memory_profiler</a></p></li>
+
+<li><p><a href="https://github.com/rkern/line_profiler">line_profiler</a></p></li>
+</ul>
+
+<p>Code for today&rsquo;s plog:</p>
+
+<ul>
+<li><p><a href="https://github.com/ploggingdev/python_learn/blob/master/performance.py">performance.py</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/python_learn/blob/master/mem.py">mem.py</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/python_learn/blob/master/line.py">line.py</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/python_learn/blob/master/requirements.txt">requirements.txt has been updated</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/" data-toggle="tooltip" data-placement="top" title="List comprehensions, iterators, generators and generator expressions in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/12\/performance-measurement-in-python-3\/';
+    var disqus_title = 'Performance measurement in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/12\/performance-measurement-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  Plogging Dev
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

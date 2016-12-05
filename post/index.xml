@@ -8,8 +8,159 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sat, 03 Dec 2016 21:13:22 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Dec 2016 22:29:11 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Decorators in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/12/decorators-in-python-3/</link>
+      <pubDate>Sun, 04 Dec 2016 22:29:11 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/12/decorators-in-python-3/</guid>
+      <description>&lt;p&gt;A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def my_decorator(func):
+    def inner():
+        print(&amp;quot;Decoration before function call&amp;quot;)
+        func()
+        print(&amp;quot;Decoration after function call&amp;quot;)
+
+    return inner
+
+@my_decorator
+def simple_print():
+    print(&amp;quot;Hello from simple_print&amp;quot;)
+
+simple_print()
+print()
+
+#output
+Decoration before function call
+Hello from simple_print
+Decoration after function call
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The function &lt;code&gt;my_decorator(func)&lt;/code&gt; is the decorator function. To use a decorator, place &lt;code&gt;@decorator_function_name&lt;/code&gt; before the function definition that you want to decorate.&lt;/p&gt;
+
+&lt;p&gt;Doing the following&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@my_decorator
+def simple_print():
+    print(&amp;quot;Hello from simple_print&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is equivalent to doing&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def simple_print():
+    print(&amp;quot;Hello from simple_print&amp;quot;)
+simple_print = my_decorator(simple_print)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Decorators can also work with functions that accept arguments.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def check_valid_division(func):
+    def inner(a,b):
+        if b == 0:
+            print(&amp;quot;Division by zero is not allowed&amp;quot;)
+        else:
+            func(a,b)
+    
+    return inner
+
+@check_valid_division
+def divide(a, b):
+    print(a/b)
+
+divide(10,5)
+divide(10,0)
+
+#output
+2.0
+Division by zero is not allowed
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice how we decorated the &lt;code&gt;divide(a,b)&lt;/code&gt; function to prevent throwing a &lt;code&gt;ZeroDivisionError&lt;/code&gt; which would have been raised  if it was not decorated.&lt;/p&gt;
+
+&lt;p&gt;It is also possible to chain multiple decorators together.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def print_star(func):
+    def inner(val):
+        print(&amp;quot;*&amp;quot; * 20)
+        func(val)
+        print(&amp;quot;*&amp;quot; * 20)
+    
+    return inner
+
+def print_percent(func):
+    def inner(val):
+        print(&amp;quot;%&amp;quot; * 20)
+        func(val)
+        print(&amp;quot;%&amp;quot; * 20)
+    
+    return inner
+
+@print_star
+@print_percent
+def fancy_print(val):
+    print(val)
+
+fancy_print(&amp;quot;Hello World&amp;quot;)
+print()
+
+@print_percent
+@print_star
+def fancy_print_different(val):
+    print(val)
+
+fancy_print_different(&amp;quot;Different decoration&amp;quot;)
+
+#output
+********************
+%%%%%%%%%%%%%%%%%%%%
+Hello World
+%%%%%%%%%%%%%%%%%%%%
+********************
+
+%%%%%%%%%%%%%%%%%%%%
+********************
+Different decoration
+********************
+%%%%%%%%%%%%%%%%%%%%
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The syntax&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@print_star
+@print_percent
+def fancy_print(val):
+    print(val)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is equivalent to&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def fancy_print(val):
+    print(val)
+fancy_print = print_star(print_percent(fancy_print))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/decorators.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.python.org/dev/peps/pep-0318/&#34;&gt;PEP 318&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.programiz.com/python-programming/decorator&#34;&gt;Programiz&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Performance measurement in Python 3</title>
@@ -2386,87 +2537,6 @@ False
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#sets&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset&#34;&gt;Official library reference&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Ranges in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</link>
-      <pubDate>Wed, 09 Nov 2016 14:00:07 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</guid>
-      <description>&lt;p&gt;The range is an immutable sequence of numbers. The main advantage of using the range type is that the
-memory occupied is fixed irrespective of the size of the range. This is because the actual contents of
-the range are not stored, instead they are computed at runtime.&lt;/p&gt;
-
-&lt;p&gt;Ranges can be created using:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;range(stop)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;range(start,stop)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;range(start,stop,step)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Only the 1st and 3rd are constructors. In &lt;code&gt;range(start,stop,step)&lt;/code&gt;, step is an optional
-parameter. When step is not specified, what we end up with is &lt;code&gt;range(start,stop)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Quick notes about the arguments passed to &lt;code&gt;range()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;If &lt;code&gt;start&lt;/code&gt; is not specified, the default value is 0.&lt;/li&gt;
-&lt;li&gt;If &lt;code&gt;step&lt;/code&gt; is not specified, the default value is 1.&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value cannot be zero, a runtime error will be thrown.&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value &lt;em&gt;can&lt;/em&gt; be negative.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Stop&lt;/code&gt; is always required to be specified.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;To check the values of a range, convert the range to a list and print the list. Printing a range
-directly using &lt;code&gt;print(range_var)&lt;/code&gt; will not display the values in the range, since the values are not stored.&lt;/p&gt;
-
-&lt;p&gt;Some examples to demonstrate the usage of ranges:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#range(stop)
-r1=range(10)
-print(list(r1))
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-#range(start,stop)
-r2=range(2,10)
-print(list(r2))
-[2, 3, 4, 5, 6, 7, 8, 9]
-
-#range(start,stop,step)
-r3=range(10,20,2)
-print(list(r3))
-[10, 12, 14, 16, 18]
-
-#negative step value
-r4=range(30,10,-5)
-print(list(r4))
-[30, 25, 20, 15]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To check if a value is present in a range, the &lt;code&gt;in&lt;/code&gt; operator can be used.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r5=range(10,20)
-print(15 in r5)
-True
-
-print(25 in r5)
-False 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The comparison operators &lt;code&gt;==&lt;/code&gt; and &lt;code&gt;!=&lt;/code&gt; can be used to compare the values of different ranges.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(range(0,4,2)==range(0,3,2))
-True
-
-print(range(10)!=range(20))
-True
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/range.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

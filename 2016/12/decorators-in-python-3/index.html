@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Archive</title>
+  <title>Decorators in Python 3</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Archive">
+  <meta name="description" content="Decorators in Python 3">
 
+  
+  <meta name="keywords" content="python 3, decorators">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -26,9 +28,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Archive" />
+  <meta property="og:title" content="Decorators in Python 3" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/archive//" />
+  <meta property="og:url" content="/2016/12/decorators-in-python-3//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,10 +116,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Archive</h1>
+        <div class="post-heading">
+          <h1>Decorators in Python 3</h1>
       
       
+      
+      <span class="post-meta">Posted on December 4, 2016</span>
       
         </div>
       </div>
@@ -129,69 +133,172 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.</p>
+
+<p>Example:</p>
+
+<pre><code>def my_decorator(func):
+    def inner():
+        print(&quot;Decoration before function call&quot;)
+        func()
+        print(&quot;Decoration after function call&quot;)
+
+    return inner
+
+@my_decorator
+def simple_print():
+    print(&quot;Hello from simple_print&quot;)
+
+simple_print()
+print()
+
+#output
+Decoration before function call
+Hello from simple_print
+Decoration after function call
+</code></pre>
+
+<p></p>
+
+<p>The function <code>my_decorator(func)</code> is the decorator function. To use a decorator, place <code>@decorator_function_name</code> before the function definition that you want to decorate.</p>
+
+<p>Doing the following</p>
+
+<pre><code>@my_decorator
+def simple_print():
+    print(&quot;Hello from simple_print&quot;)
+</code></pre>
+
+<p>is equivalent to doing</p>
+
+<pre><code>def simple_print():
+    print(&quot;Hello from simple_print&quot;)
+simple_print = my_decorator(simple_print)
+</code></pre>
+
+<p>Decorators can also work with functions that accept arguments.</p>
+
+<p>Example:</p>
+
+<pre><code>def check_valid_division(func):
+    def inner(a,b):
+        if b == 0:
+            print(&quot;Division by zero is not allowed&quot;)
+        else:
+            func(a,b)
+    
+    return inner
+
+@check_valid_division
+def divide(a, b):
+    print(a/b)
+
+divide(10,5)
+divide(10,0)
+
+#output
+2.0
+Division by zero is not allowed
+</code></pre>
+
+<p>Notice how we decorated the <code>divide(a,b)</code> function to prevent throwing a <code>ZeroDivisionError</code> which would have been raised  if it was not decorated.</p>
+
+<p>It is also possible to chain multiple decorators together.</p>
+
+<p>Example:</p>
+
+<pre><code>def print_star(func):
+    def inner(val):
+        print(&quot;*&quot; * 20)
+        func(val)
+        print(&quot;*&quot; * 20)
+    
+    return inner
+
+def print_percent(func):
+    def inner(val):
+        print(&quot;%&quot; * 20)
+        func(val)
+        print(&quot;%&quot; * 20)
+    
+    return inner
+
+@print_star
+@print_percent
+def fancy_print(val):
+    print(val)
+
+fancy_print(&quot;Hello World&quot;)
+print()
+
+@print_percent
+@print_star
+def fancy_print_different(val):
+    print(val)
+
+fancy_print_different(&quot;Different decoration&quot;)
+
+#output
+********************
+%%%%%%%%%%%%%%%%%%%%
+Hello World
+%%%%%%%%%%%%%%%%%%%%
+********************
+
+%%%%%%%%%%%%%%%%%%%%
+********************
+Different decoration
+********************
+%%%%%%%%%%%%%%%%%%%%
+</code></pre>
+
+<p>The syntax</p>
+
+<pre><code>@print_star
+@print_percent
+def fancy_print(val):
+    print(val)
+</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code>def fancy_print(val):
+    print(val)
+fancy_print = print_star(print_percent(fancy_print))
+</code></pre>
+
+<p>Code for today&rsquo;s plog is <a href="https://github.com/ploggingdev/python_learn/blob/master/decorators.py">here</a>.</p>
+
+<p>References:</p>
+
+<ul>
+<li><p><a href="https://www.python.org/dev/peps/pep-0318/">PEP 318</a></p></li>
+
+<li><p><a href="https://www.programiz.com/python-programming/decorator">Programiz</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/" data-toggle="tooltip" data-placement="top" title="Performance measurement in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
       
-
-<p>This page contains links to all posts on this site.</p>
-
-<h2 id="python">Python</h2>
-
-<p><a href="/2016/11/beginning-python-3/">Beginning Python 3</a></p>
-
-<p><a href="/2016/11/data-types-in-python-3/">Data types in Python 3</a></p>
-
-<p><a href="/2016/11/strings-in-python-3/">Strings in Python 3</a></p>
-
-<p><a href="/2016/11/lists-in-python-3/">Lists in Python 3</a></p>
-
-<p><a href="/2016/11/tuples-in-python-3/">Tuples in Python 3</a></p>
-
-<p><a href="/2016/11/ranges-in-python-3/">Ranges in Python 3</a></p>
-
-<p><a href="/2016/11/sets-in-python-3/">Sets in Python 3</a></p>
-
-<p><a href="/2016/11/dictionaries-in-python-3/">Dictionaries in Python 3</a></p>
-
-<p><a href="/2016/11/control-flow-tools-in-python-3/">Control flow tools in Python 3</a></p>
-
-<p><a href="/2016/11/functions-in-python-3/">Functions in Python 3</a></p>
-
-<p><a href="/2016/11/modules-and-packages-in-python-3/">Modules and packages in Python 3</a></p>
-
-<p><a href="/2016/11/classes-and-inheritance-in-python-3/">Classes and inheritance in Python 3</a></p>
-
-<p><a href="/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></p>
-
-<p><a href="/2016/11/file-io-and-json-in-python-3/">File IO and JSON in Python 3</a></p>
-
-<p><a href="/2016/11/errors-and-exceptions-in-python-3/">Errors and exceptions in Python 3</a></p>
-
-<p><a href="/2016/11/unit-testing-in-python-3/">Unit testing in Python 3</a></p>
-
-<p><a href="/2016/11/floating-point-arithmetic-issues-in-python-3/">Floating point arithmetic issues in Python 3</a></p>
-
-<p><a href="/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></p>
-
-<p><a href="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">List comprehensions, iterators, generators and generator expressions in Python 3</a></p>
-
-<p><a href="/2016/12/performance-measurement-in-python-3/">Performance measurement in Python 3</a></p>
-
-<p><a href="/2016/12/decorators-in-python-3/">Decorators in Python 3</a></p>
-
-<h1 id="miscellaneous">Miscellaneous</h1>
-
-<p><a href="/2016/11/hello-world/">Hello World</a></p>
-
-      
-        <div class="disqus-comments">
+      <div class="disqus-comments">
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ploggingdev';
-    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/archive\/';
-    var disqus_title = 'Archive';
-    var disqus_url = 'https:\/\/www.ploggingdev.com\/archive\/';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/12\/decorators-in-python-3\/';
+    var disqus_title = 'Decorators in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/12\/decorators-in-python-3\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -201,8 +308,9 @@
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        </div>
+      </div>
       
+
     </div>
   </div>
 </div>

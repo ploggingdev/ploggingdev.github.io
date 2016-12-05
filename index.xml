@@ -8,8 +8,159 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sat, 03 Dec 2016 21:13:22 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Dec 2016 22:29:11 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Decorators in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/12/decorators-in-python-3/</link>
+      <pubDate>Sun, 04 Dec 2016 22:29:11 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/12/decorators-in-python-3/</guid>
+      <description>&lt;p&gt;A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def my_decorator(func):
+    def inner():
+        print(&amp;quot;Decoration before function call&amp;quot;)
+        func()
+        print(&amp;quot;Decoration after function call&amp;quot;)
+
+    return inner
+
+@my_decorator
+def simple_print():
+    print(&amp;quot;Hello from simple_print&amp;quot;)
+
+simple_print()
+print()
+
+#output
+Decoration before function call
+Hello from simple_print
+Decoration after function call
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The function &lt;code&gt;my_decorator(func)&lt;/code&gt; is the decorator function. To use a decorator, place &lt;code&gt;@decorator_function_name&lt;/code&gt; before the function definition that you want to decorate.&lt;/p&gt;
+
+&lt;p&gt;Doing the following&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@my_decorator
+def simple_print():
+    print(&amp;quot;Hello from simple_print&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is equivalent to doing&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def simple_print():
+    print(&amp;quot;Hello from simple_print&amp;quot;)
+simple_print = my_decorator(simple_print)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Decorators can also work with functions that accept arguments.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def check_valid_division(func):
+    def inner(a,b):
+        if b == 0:
+            print(&amp;quot;Division by zero is not allowed&amp;quot;)
+        else:
+            func(a,b)
+    
+    return inner
+
+@check_valid_division
+def divide(a, b):
+    print(a/b)
+
+divide(10,5)
+divide(10,0)
+
+#output
+2.0
+Division by zero is not allowed
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice how we decorated the &lt;code&gt;divide(a,b)&lt;/code&gt; function to prevent throwing a &lt;code&gt;ZeroDivisionError&lt;/code&gt; which would have been raised  if it was not decorated.&lt;/p&gt;
+
+&lt;p&gt;It is also possible to chain multiple decorators together.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def print_star(func):
+    def inner(val):
+        print(&amp;quot;*&amp;quot; * 20)
+        func(val)
+        print(&amp;quot;*&amp;quot; * 20)
+    
+    return inner
+
+def print_percent(func):
+    def inner(val):
+        print(&amp;quot;%&amp;quot; * 20)
+        func(val)
+        print(&amp;quot;%&amp;quot; * 20)
+    
+    return inner
+
+@print_star
+@print_percent
+def fancy_print(val):
+    print(val)
+
+fancy_print(&amp;quot;Hello World&amp;quot;)
+print()
+
+@print_percent
+@print_star
+def fancy_print_different(val):
+    print(val)
+
+fancy_print_different(&amp;quot;Different decoration&amp;quot;)
+
+#output
+********************
+%%%%%%%%%%%%%%%%%%%%
+Hello World
+%%%%%%%%%%%%%%%%%%%%
+********************
+
+%%%%%%%%%%%%%%%%%%%%
+********************
+Different decoration
+********************
+%%%%%%%%%%%%%%%%%%%%
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The syntax&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@print_star
+@print_percent
+def fancy_print(val):
+    print(val)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is equivalent to&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def fancy_print(val):
+    print(val)
+fancy_print = print_star(print_percent(fancy_print))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/decorators.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.python.org/dev/peps/pep-0318/&#34;&gt;PEP 318&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.programiz.com/python-programming/decorator&#34;&gt;Programiz&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Performance measurement in Python 3</title>
@@ -444,6 +595,8 @@ st2)))
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/&#34;&gt;List comprehensions, iterators, generators and generator expressions in Python 3&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/&#34;&gt;Performance measurement in Python 3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/decorators-in-python-3/&#34;&gt;Decorators in Python 3&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
@@ -2354,96 +2507,6 @@ dict_values([22])
 &lt;/ul&gt;
 
 &lt;p&gt;The code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/dictionaries.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Sets in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/sets-in-python-3/</link>
-      <pubDate>Thu, 10 Nov 2016 09:21:40 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/sets-in-python-3/</guid>
-      <description>&lt;p&gt;A set is an unordered collection with no duplicate elements. Sets are used for membership testing, removing
-duplicate entries and performing set operations such as intersection, union and difference.&lt;/p&gt;
-
-&lt;p&gt;There are two built-in set types: set and frozenset. The set type is mutable and the frozenset type is
-immutable.&lt;/p&gt;
-
-&lt;p&gt;Set construction:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;set()&lt;/code&gt; for empty set. &lt;strong&gt;Note:&lt;/strong&gt; {} cannot be used&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set(values)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;{value1,valuen}&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Construction of frozenset is very similar and uses &lt;code&gt;frozenset()&lt;/code&gt; instead of &lt;code&gt;set()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Set examples:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;myset1=set()
-print(myset1)
-set()
-
-myset2=set(&#39;aaabbcc&#39;)
-print(myset2)
-{&#39;b&#39;, &#39;a&#39;, &#39;c&#39;}
-
-myset3={&#39;python&#39;,&#39;java&#39;,&#39;c#&#39;,&#39;php&#39;}
-print(myset3)
-{&#39;c#&#39;, &#39;php&#39;, &#39;java&#39;, &#39;python&#39;}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Operators that can be used on sets and frozensets with example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#membership testing
-print(&#39;python&#39; in myset3)
-True
-
-#find length
-print(len(myset3))
-4
-
-myset4={&#39;python&#39;,&#39;c++&#39;}
-
-#intersection
-print(myset3.intersection(myset4))
-{&#39;python&#39;}
-
-#difference
-print(myset3.difference(myset4))
-{&#39;c#&#39;, &#39;php&#39;, &#39;java&#39;}
-
-#union
-print(myset3.union(myset4))
-{&#39;php&#39;, &#39;python&#39;, &#39;c#&#39;, &#39;java&#39;, &#39;c++&#39;}
-
-#add element to set
-myset4.add(&#39;lisp&#39;)
-print(myset4)
-{&#39;c++&#39;, &#39;python&#39;, &#39;lisp&#39;}
-
-#remove lement from set
-myset4.remove(&#39;c++&#39;)
-print(myset4)
-{&#39;python&#39;, &#39;lisp&#39;}
-
-#equality testing
-print(myset3==myset4)
-False
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Operations that involve modification of set data such as &lt;code&gt;add()&lt;/code&gt; and &lt;code&gt;remove()&lt;/code&gt; cannot be used on frozensets.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/sets.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#sets&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset&#34;&gt;Official library reference&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

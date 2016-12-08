@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Scraping my website using requests and BeautifulSoup</title>
+
+  <meta name="author" content="Plogging Dev" />
+
+  <meta name="description" content="Scraping my website using requests and BeautifulSoup">
+
+  
+  <meta name="keywords" content="python 3, webscraping, BeautifulSoup, requests, webbrowser">
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Scraping my website using requests and BeautifulSoup" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2016/12/scraping-my-website-using-requests-and-beautifulsoup//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Archive" href="/archive/">Archive</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Scraping my website using requests and BeautifulSoup</h1>
+      
+      
+      
+      <span class="post-meta">Posted on December 8, 2016</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Ok, I didn&rsquo;t use Scrapy because I am yet to go through it&rsquo;s documentation. I will explore Scrapy in an upcoming blog post.</p>
+
+<p>Before getting to write code to scrape my website, I will cover the basics of the following modules:</p>
+
+<ul>
+<li><p><code>webbrowser</code></p></li>
+
+<li><p><code>requests</code></p></li>
+
+<li><p><code>BeautifulSoup</code></p></li>
+</ul>
+
+<p>The <code>webbrowser</code> module is a builtin module in Python . There is not a lot to explore in this module, except the <code>open(url)</code> method. All it does is open the the default browser to a specified URL.</p>
+
+<p>Example:</p>
+
+<pre><code>import webbrowser
+
+urls = [&quot;https://automatetheboringstuff.com/&quot;, &quot;https://automatetheboringstuff.com/chapter11/&quot;]
+
+for link in urls:
+   webbrowser.open(link)
+</code></pre>
+
+<p></p>
+
+<p>The above code opens the links in the defualt browser. It should be noted that running the above code when no browser is open will cause an error message in Firefox. The message is something like &ldquo;Firefox is already running&rdquo;. This happens because the <code>webbrowser</code> module detects that there is no browser open, and tries to open a new window for both links. Why both links? Probably because the second <code>webbrowser.open(url)</code> method is called before the first call causes Firefox to start. How can this be avoided? A hacky solution is to use <code>time.sleep(n seconds)</code> only after the first call to <code>webbrowser.open()</code>. Another way is to just keep a Firefox window open, so all calls to <code>webbrowser.open()</code> will open the link in a new tab. There are probably more elegant ways around this problem, let me know if you aware of any.</p>
+
+<p>The <code>requests</code> library lets us make HTTP requests without worrying about network errors, connection problems, and data compression. It can make <code>get</code>, <code>put</code>, and <code>delete</code> requests among others.</p>
+
+<p>In the following example, <code>requests</code> is used to get the homepage of this website and print some basic information about the response. The html response is saved to <code>mysite.html</code>.</p>
+
+<pre><code>import requests
+
+res = requests.get('https://www.ploggingdev.com')
+res.raise_for_status()
+
+#print(res.text)
+print(&quot;{} bytes&quot;.format(len(res.text)))
+print(&quot;HTTP status code: {}&quot;.format(res.status_code))
+print(&quot;response object type: {}&quot;.format(type(res)))
+
+mysite = open(&quot;mysite.html&quot;, &quot;wb&quot;)
+
+print(&quot;Writing the response content to mysite.html&quot;)
+
+for chunk in res.iter_content(10000):
+    mysite.write(chunk)
+
+mysite.close()
+
+print(&quot;Done writing&quot;)
+
+#output
+11681 bytes
+HTTP status code: 200
+response object type: &lt;class 'requests.models.Response'&gt;
+Writing the response content to mysite.html
+Done writing
+</code></pre>
+
+<p>Some points to note:</p>
+
+<ul>
+<li><p><code>res.raise_for_status()</code> is used to raise an exception if an error occurs while downloading</p></li>
+
+<li><p>When writing the response html to a file, the file is opened in <code>wb</code> mode to maintain the Unicode encoding of the text.</p></li>
+
+<li><p><code>res.iter_content(bytes)</code> returns the specified number of bytes of the response content. This is useful when working with large responses.</p></li>
+</ul>
+
+<p>If you don&rsquo;t already know about Unicode and character sets, read this <a href="https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/">post</a>.</p>
+
+<p>Once the html content of a webpage has been retrieved, we need a library to parse the html. This is where <code>BeautifulSoup</code> comes in.</p>
+
+<p>A <code>BeautifulSoup</code> object is created by passing in html content. The html content can be in the form of <code>res.text</code> using the <code>requests</code> module or can be a text file.</p>
+
+<p>Briefly, <code>BeautifulSoup</code> lets us:</p>
+
+<ul>
+<li><p>find elements in html using the <code>select()</code> method. The selection can be made using html tags, ids. Additionally attributes can also be specified.</p></li>
+
+<li><p>Data associated with an attribute can be retieved.</p></li>
+</ul>
+
+<p>Learn more about how to use <code>BeautifulSoup</code> by following the links at the end of this post.</p>
+
+<p>Coming to webscraping this website, what am I going to scrape? The url, title and keywords associated with every article.</p>
+
+<p>How will I accomplish this?</p>
+
+<ul>
+<li><p>Hard code the url of the first blog post</p></li>
+
+<li><p>create lists to hold urls, keywords and titles for every article</p></li>
+
+<li><p>Inside a <code>while True:</code> loop, record the current blog url</p></li>
+
+<li><p>fetch the content hosted at the current blog url using <code>requests</code>.</p></li>
+
+<li><p>Use <code>BeautifulSoup</code> to parse the current page and extract the title and keywords for the current page</p></li>
+
+<li><p>Store the title and keywords for the current post</p></li>
+
+<li><p>try to locate the link that leads to the next post and follow it</p></li>
+
+<li><p>if the link to the next page is not found, it means that we have reached the latest blog and it&rsquo;s time to stop scraping.</p></li>
+</ul>
+
+<p>I added keywords to all blog posts recently and this will be an oppurtunity to check if the keywords have made it into all blogs. Why wouldn&rsquo;t the keywords make it into the blogs if I added them? I use Hugo for this site. Sometimes if there is a typo while specifying the keywords (eg- an extra comma) then the <code>&lt;meta name=&quot;keywords&quot;</code> tag won&rsquo;t be generated.</p>
+
+<p>Code:</p>
+
+<pre><code>import requests
+import bs4
+
+print(&quot;Fetching all blog posts&quot;)
+
+current_url = 'https://www.ploggingdev.com/2016/11/hello-world/'
+
+urls = list()
+titles = list()
+keywords = list()
+
+while True:
+    urls.append(current_url)
+
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&quot;html.parser&quot;)
+    
+    current_title = current_page.select('title')[0].getText()
+    titles.append(current_title)
+
+    current_keywords = current_page.select('meta[name=&quot;keywords&quot;]')[0].get('content')
+    keywords.append(current_keywords)
+
+    #url for next blog post
+    try:
+        current_url = current_page.select('ul[class=&quot;pager blog-pager&quot;] &gt; li[class=&quot;next&quot;] &gt; a')[0].get('href')
+    except IndexError as ie:
+        break
+
+#printing all my blog posts with urls. It's number from 1 to n
+
+zipped = zip(range(1, len(urls)+1), titles, urls, keywords)
+
+for blog_num, blog_title, blog_url, blog_keywords in zipped:
+    print(blog_num)
+    print(blog_title)
+    print(blog_url)
+    print(blog_keywords)
+    print()
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Fetching all blog posts
+1
+Hello World
+https://www.ploggingdev.com/2016/11/hello-world/
+plogging dev, hello world
+
+2
+Beginning Python 3
+https://www.ploggingdev.com/2016/11/beginning-python-3/
+python 3, Beginning python 3
+
+3
+Data types in Python 3
+https://www.ploggingdev.com/2016/11/data-types-in-python-3/
+python 3, beginning python 3, data types in python 3, datatypes in python 3, boolean in python 3, ints in p
+ython 3, floats in python 3
+
+4
+Strings in Python 3
+https://www.ploggingdev.com/2016/11/strings-in-python-3/
+python 3, data types in python 3, datatypes in python 3, strings in python 3
+</code></pre>
+
+<p>I won&rsquo;t include the complete output here, but the program successfully scraped all the blog posts. You can find the output <a href="https://gist.github.com/ploggingdev/343a0636e9696eac6799211d4f4385f8">here</a>.</p>
+
+<p>Code for today&rsquo;s plog:</p>
+
+<ul>
+<li><p><a href="https://github.com/ploggingdev/python_learn/blob/master/webbrowser_demo.py">Using webbrowser module</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/python_learn/blob/master/webscraping.py">Code for requests and BeautifulSoup demo</a></p></li>
+</ul>
+
+<p>References:</p>
+
+<ul>
+<li><p><a href="https://automatetheboringstuff.com/chapter11/">automatetheboringstuff</a></p></li>
+
+<li><p><a href="http://docs.python-requests.org/en/master/">Requests docs</a></p></li>
+
+<li><p><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup docs</a></p></li>
+
+<li><p><a href="https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/">Unicode by Joel Spolsky</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" data-toggle="tooltip" data-placement="top" title="Decorators in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/12\/scraping-my-website-using-requests-and-beautifulsoup\/';
+    var disqus_title = 'Scraping my website using requests and BeautifulSoup';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/12\/scraping-my-website-using-requests-and-beautifulsoup\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  Plogging Dev
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

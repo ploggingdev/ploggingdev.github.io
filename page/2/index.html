@@ -122,6 +122,60 @@
             
             
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/">
+          	  <h2 class="post-title">Floating point arithmetic issues in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on November 27, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>By default, numbers having a decimal point are represented as floating point numbers.</p>
+
+<p>Verification:</p>
+
+<pre><code>print(type(1.5))
+#output
+&lt;class 'float'&gt;
+</code></pre>
+
+<p>Floating point numbers are represented in computer hardware in base 2. Floating point numbers are used to represent decimal (base 10) numbers in the most common use cases. But most decimal fractions cannot be represented exactly as binary fractions.</p>
+
+<p>To understand this problem, consider the conversion of a decimal fraction to a decimal number: <code>1/3</code> is equal to <code>0.333...</code> with repeating 3&rsquo;s. When represented as a decimal number, it will never be equal to <code>1/3</code>.</p>
+
+<p>Similarly, many decimal numbers cannot be represented accurately in base 2.</p>
+
+<p>Some examples:</p>
+
+<pre><code>print(&quot;0.1 + 0.2 = {}&quot;.format(0.1+0.2))
+#output
+0.1 + 0.2 = 0.30000000000000004
+
+print(&quot;0.1 + 0.4 = {}&quot;.format(0.1+0.4))
+#output
+0.1 + 0.4 = 0.5
+
+print(&quot;1/10 = {}&quot;.format(1/10))
+#output
+1/10 = 0.1
+
+print(&quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&quot;)
+print(0.1 + 0.1 + 0.1 == 0.3)
+#output
+Is (0.1 + 0.1 + 0.1 == 0.3) ?
+False
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/">
           	  <h2 class="post-title">Unit testing in Python 3</h2>
 
@@ -272,39 +326,6 @@ Age?
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/">
-          	  <h2 class="post-title">Classes and inheritance in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 19, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).</p>
-
-<p>Features of classes in Python:</p>
-
-<ul>
-<li>Multiple inheritance permitted</li>
-<li>Derived class can override base class methods</li>
-<li>Base class methods can be called using <code>super().method_name()</code></li>
-<li>Class members are dynamic, can be modified at runtime</li>
-<li>Class members are public, methods are virtual (can be overridden)</li>
-<li>The first parameter in a method is a reference to the calling object, usually <code>self</code></li>
-<li>Operator overloading is supported</li>
-<li>Aliasing of objects is supported</li>
-</ul>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

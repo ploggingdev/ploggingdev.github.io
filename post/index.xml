@@ -8,8 +8,218 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sun, 04 Dec 2016 22:29:11 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Dec 2016 04:48:07 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Scraping my website using requests and BeautifulSoup</title>
+      <link>https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/</link>
+      <pubDate>Thu, 08 Dec 2016 04:48:07 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/</guid>
+      <description>&lt;p&gt;Ok, I didn&amp;rsquo;t use Scrapy because I am yet to go through it&amp;rsquo;s documentation. I will explore Scrapy in an upcoming blog post.&lt;/p&gt;
+
+&lt;p&gt;Before getting to write code to scrape my website, I will cover the basics of the following modules:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;webbrowser&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;requests&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;BeautifulSoup&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;code&gt;webbrowser&lt;/code&gt; module is a builtin module in Python . There is not a lot to explore in this module, except the &lt;code&gt;open(url)&lt;/code&gt; method. All it does is open the the default browser to a specified URL.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import webbrowser
+
+urls = [&amp;quot;https://automatetheboringstuff.com/&amp;quot;, &amp;quot;https://automatetheboringstuff.com/chapter11/&amp;quot;]
+
+for link in urls:
+   webbrowser.open(link)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The above code opens the links in the defualt browser. It should be noted that running the above code when no browser is open will cause an error message in Firefox. The message is something like &amp;ldquo;Firefox is already running&amp;rdquo;. This happens because the &lt;code&gt;webbrowser&lt;/code&gt; module detects that there is no browser open, and tries to open a new window for both links. Why both links? Probably because the second &lt;code&gt;webbrowser.open(url)&lt;/code&gt; method is called before the first call causes Firefox to start. How can this be avoided? A hacky solution is to use &lt;code&gt;time.sleep(n seconds)&lt;/code&gt; only after the first call to &lt;code&gt;webbrowser.open()&lt;/code&gt;. Another way is to just keep a Firefox window open, so all calls to &lt;code&gt;webbrowser.open()&lt;/code&gt; will open the link in a new tab. There are probably more elegant ways around this problem, let me know if you aware of any.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;requests&lt;/code&gt; library lets us make HTTP requests without worrying about network errors, connection problems, and data compression. It can make &lt;code&gt;get&lt;/code&gt;, &lt;code&gt;put&lt;/code&gt;, and &lt;code&gt;delete&lt;/code&gt; requests among others.&lt;/p&gt;
+
+&lt;p&gt;In the following example, &lt;code&gt;requests&lt;/code&gt; is used to get the homepage of this website and print some basic information about the response. The html response is saved to &lt;code&gt;mysite.html&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import requests
+
+res = requests.get(&#39;https://www.ploggingdev.com&#39;)
+res.raise_for_status()
+
+#print(res.text)
+print(&amp;quot;{} bytes&amp;quot;.format(len(res.text)))
+print(&amp;quot;HTTP status code: {}&amp;quot;.format(res.status_code))
+print(&amp;quot;response object type: {}&amp;quot;.format(type(res)))
+
+mysite = open(&amp;quot;mysite.html&amp;quot;, &amp;quot;wb&amp;quot;)
+
+print(&amp;quot;Writing the response content to mysite.html&amp;quot;)
+
+for chunk in res.iter_content(10000):
+    mysite.write(chunk)
+
+mysite.close()
+
+print(&amp;quot;Done writing&amp;quot;)
+
+#output
+11681 bytes
+HTTP status code: 200
+response object type: &amp;lt;class &#39;requests.models.Response&#39;&amp;gt;
+Writing the response content to mysite.html
+Done writing
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Some points to note:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;res.raise_for_status()&lt;/code&gt; is used to raise an exception if an error occurs while downloading&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;When writing the response html to a file, the file is opened in &lt;code&gt;wb&lt;/code&gt; mode to maintain the Unicode encoding of the text.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;res.iter_content(bytes)&lt;/code&gt; returns the specified number of bytes of the response content. This is useful when working with large responses.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t already know about Unicode and character sets, read this &lt;a href=&#34;https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/&#34;&gt;post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once the html content of a webpage has been retrieved, we need a library to parse the html. This is where &lt;code&gt;BeautifulSoup&lt;/code&gt; comes in.&lt;/p&gt;
+
+&lt;p&gt;A &lt;code&gt;BeautifulSoup&lt;/code&gt; object is created by passing in html content. The html content can be in the form of &lt;code&gt;res.text&lt;/code&gt; using the &lt;code&gt;requests&lt;/code&gt; module or can be a text file.&lt;/p&gt;
+
+&lt;p&gt;Briefly, &lt;code&gt;BeautifulSoup&lt;/code&gt; lets us:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;find elements in html using the &lt;code&gt;select()&lt;/code&gt; method. The selection can be made using html tags, ids. Additionally attributes can also be specified.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Data associated with an attribute can be retieved.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Learn more about how to use &lt;code&gt;BeautifulSoup&lt;/code&gt; by following the links at the end of this post.&lt;/p&gt;
+
+&lt;p&gt;Coming to webscraping this website, what am I going to scrape? The url, title and keywords associated with every article.&lt;/p&gt;
+
+&lt;p&gt;How will I accomplish this?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Hard code the url of the first blog post&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;create lists to hold urls, keywords and titles for every article&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Inside a &lt;code&gt;while True:&lt;/code&gt; loop, record the current blog url&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;fetch the content hosted at the current blog url using &lt;code&gt;requests&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Use &lt;code&gt;BeautifulSoup&lt;/code&gt; to parse the current page and extract the title and keywords for the current page&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Store the title and keywords for the current post&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;try to locate the link that leads to the next post and follow it&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;if the link to the next page is not found, it means that we have reached the latest blog and it&amp;rsquo;s time to stop scraping.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I added keywords to all blog posts recently and this will be an oppurtunity to check if the keywords have made it into all blogs. Why wouldn&amp;rsquo;t the keywords make it into the blogs if I added them? I use Hugo for this site. Sometimes if there is a typo while specifying the keywords (eg- an extra comma) then the &lt;code&gt;&amp;lt;meta name=&amp;quot;keywords&amp;quot;&lt;/code&gt; tag won&amp;rsquo;t be generated.&lt;/p&gt;
+
+&lt;p&gt;Code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import requests
+import bs4
+
+print(&amp;quot;Fetching all blog posts&amp;quot;)
+
+current_url = &#39;https://www.ploggingdev.com/2016/11/hello-world/&#39;
+
+urls = list()
+titles = list()
+keywords = list()
+
+while True:
+    urls.append(current_url)
+
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
+    
+    current_title = current_page.select(&#39;title&#39;)[0].getText()
+    titles.append(current_title)
+
+    current_keywords = current_page.select(&#39;meta[name=&amp;quot;keywords&amp;quot;]&#39;)[0].get(&#39;content&#39;)
+    keywords.append(current_keywords)
+
+    #url for next blog post
+    try:
+        current_url = current_page.select(&#39;ul[class=&amp;quot;pager blog-pager&amp;quot;] &amp;gt; li[class=&amp;quot;next&amp;quot;] &amp;gt; a&#39;)[0].get(&#39;href&#39;)
+    except IndexError as ie:
+        break
+
+#printing all my blog posts with urls. It&#39;s number from 1 to n
+
+zipped = zip(range(1, len(urls)+1), titles, urls, keywords)
+
+for blog_num, blog_title, blog_url, blog_keywords in zipped:
+    print(blog_num)
+    print(blog_title)
+    print(blog_url)
+    print(blog_keywords)
+    print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Fetching all blog posts
+1
+Hello World
+https://www.ploggingdev.com/2016/11/hello-world/
+plogging dev, hello world
+
+2
+Beginning Python 3
+https://www.ploggingdev.com/2016/11/beginning-python-3/
+python 3, Beginning python 3
+
+3
+Data types in Python 3
+https://www.ploggingdev.com/2016/11/data-types-in-python-3/
+python 3, beginning python 3, data types in python 3, datatypes in python 3, boolean in python 3, ints in p
+ython 3, floats in python 3
+
+4
+Strings in Python 3
+https://www.ploggingdev.com/2016/11/strings-in-python-3/
+python 3, data types in python 3, datatypes in python 3, strings in python 3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I won&amp;rsquo;t include the complete output here, but the program successfully scraped all the blog posts. You can find the output &lt;a href=&#34;https://gist.github.com/ploggingdev/343a0636e9696eac6799211d4f4385f8&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Code for today&amp;rsquo;s plog:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/webbrowser_demo.py&#34;&gt;Using webbrowser module&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/webscraping.py&#34;&gt;Code for requests and BeautifulSoup demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://automatetheboringstuff.com/chapter11/&#34;&gt;automatetheboringstuff&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://docs.python-requests.org/en/master/&#34;&gt;Requests docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/bs4/doc/&#34;&gt;BeautifulSoup docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/&#34;&gt;Unicode by Joel Spolsky&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Decorators in Python 3</title>
@@ -2447,96 +2657,6 @@ dict_values([22])
 &lt;/ul&gt;
 
 &lt;p&gt;The code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/dictionaries.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Sets in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/sets-in-python-3/</link>
-      <pubDate>Thu, 10 Nov 2016 09:21:40 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/sets-in-python-3/</guid>
-      <description>&lt;p&gt;A set is an unordered collection with no duplicate elements. Sets are used for membership testing, removing
-duplicate entries and performing set operations such as intersection, union and difference.&lt;/p&gt;
-
-&lt;p&gt;There are two built-in set types: set and frozenset. The set type is mutable and the frozenset type is
-immutable.&lt;/p&gt;
-
-&lt;p&gt;Set construction:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;set()&lt;/code&gt; for empty set. &lt;strong&gt;Note:&lt;/strong&gt; {} cannot be used&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set(values)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;{value1,valuen}&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Construction of frozenset is very similar and uses &lt;code&gt;frozenset()&lt;/code&gt; instead of &lt;code&gt;set()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Set examples:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;myset1=set()
-print(myset1)
-set()
-
-myset2=set(&#39;aaabbcc&#39;)
-print(myset2)
-{&#39;b&#39;, &#39;a&#39;, &#39;c&#39;}
-
-myset3={&#39;python&#39;,&#39;java&#39;,&#39;c#&#39;,&#39;php&#39;}
-print(myset3)
-{&#39;c#&#39;, &#39;php&#39;, &#39;java&#39;, &#39;python&#39;}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Operators that can be used on sets and frozensets with example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#membership testing
-print(&#39;python&#39; in myset3)
-True
-
-#find length
-print(len(myset3))
-4
-
-myset4={&#39;python&#39;,&#39;c++&#39;}
-
-#intersection
-print(myset3.intersection(myset4))
-{&#39;python&#39;}
-
-#difference
-print(myset3.difference(myset4))
-{&#39;c#&#39;, &#39;php&#39;, &#39;java&#39;}
-
-#union
-print(myset3.union(myset4))
-{&#39;php&#39;, &#39;python&#39;, &#39;c#&#39;, &#39;java&#39;, &#39;c++&#39;}
-
-#add element to set
-myset4.add(&#39;lisp&#39;)
-print(myset4)
-{&#39;c++&#39;, &#39;python&#39;, &#39;lisp&#39;}
-
-#remove lement from set
-myset4.remove(&#39;c++&#39;)
-print(myset4)
-{&#39;python&#39;, &#39;lisp&#39;}
-
-#equality testing
-print(myset3==myset4)
-False
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Operations that involve modification of set data such as &lt;code&gt;add()&lt;/code&gt; and &lt;code&gt;remove()&lt;/code&gt; cannot be used on frozensets.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/sets.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#sets&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset&#34;&gt;Official library reference&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

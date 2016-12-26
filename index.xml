@@ -8,8 +8,93 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Thu, 08 Dec 2016 04:48:07 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 25 Dec 2016 23:03:21 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Analyzing programming language statistics of 100,000 Github repositories</title>
+      <link>https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/</link>
+      <pubDate>Sun, 25 Dec 2016 23:03:21 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/</guid>
+      <description>&lt;p&gt;The first step is to gather data about 100,000 repositories using the Github api. I used &lt;code&gt;scrapy&lt;/code&gt; for this.&lt;/p&gt;
+
+&lt;p&gt;A high level overview of how I did this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Start from the id of my &lt;code&gt;scrape_github&lt;/code&gt; repo &lt;code&gt;https://api.github.com/repositories?since=76761293&amp;amp;access_token=MY_TOKEN&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Save only the &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;name&lt;/code&gt; and &lt;code&gt;languages_url&lt;/code&gt; for each repo. The &lt;code&gt;languages_url&lt;/code&gt; is the api endpoint which contains the programming language statistics of the current repo.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Extract the link to the next page from the &lt;code&gt;Link&lt;/code&gt; header and follow it repeating the above steps.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Each api call returns a list of 100 repositories, so to retrieve data about 100,000 repositories, 1000 api calls are required.&lt;/p&gt;
+
+&lt;p&gt;All the output is saved to a file called &lt;code&gt;all_repos.jsonl&lt;/code&gt; which came to around 13MB.&lt;/p&gt;
+
+&lt;p&gt;The next step is to follow the &lt;code&gt;languages_url&lt;/code&gt; api endpoint for each repository and save the data.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;A high level overview of how I did this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Read a line from &lt;code&gt;all_repos.jsonl&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Retrieve data from the &lt;code&gt;languages_url&lt;/code&gt; endpoint&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If an exception occurred, output an empty json object to &lt;code&gt;lang_data.jsonl&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Otherwise save the response to &lt;code&gt;lang_data.jsonl&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Check headers to see if api limit has been reached&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If api limit is reached, sleep until the api limit is reset&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Otherwise go to step 1 and repeat until all lines have been read&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;There were a few HTTPError exceptions (returned HTTP 403 and 404 status codes) since Github blocked a few repositories for violating their Terms of Service. Around 3 such exceptions in the first 5000 repositories. There were also a lot of empty repositories.&lt;/p&gt;
+
+&lt;p&gt;The api limit for Github is 5000 calls per hour. The headers include &lt;code&gt;X-RateLimit-Remaining&lt;/code&gt; which specifies how many api calls are remaining in the current hour. The &lt;code&gt;X-RateLimit-Reset&lt;/code&gt; header contains a number which specifies when the ratelimit will be reset. It is respresented as the seconds since the Unix epoch. These headers are used to check if the api limit has been reached and how much time to sleep for, if the limit has been reached.&lt;/p&gt;
+
+&lt;p&gt;The total number of api calls made in this step is 100,000 which took a little over 20 hours to complete. I ran this in a VPS.&lt;/p&gt;
+
+&lt;p&gt;Interesting to note that it takes around 5 minutes to make the 5000 api calls on the VPS. So the script is sleeping for the remaining 55+ minutes per hour. I took a screenshot of the bandwidth usage of the VPS the script was running on and it was nice to see a spike every hour (script is calling the Github api) and then go back to zero usage (script is sleeping) until the next spike. Here is the screenshot.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/clockwork_code.png&#34; alt=&#34;Bandwidth usage over 24 hours&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once all the relevant data was retieved, the next step was to plot some graphs. Note that a single repository can include code using multiple programming languages.&lt;/p&gt;
+
+&lt;p&gt;I was interested in the following data:&lt;/p&gt;
+
+&lt;p&gt;Size of code vs programming language:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/size_vs_lang.png&#34; alt=&#34;Size of code vs programming language&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Repos appeared in vs programming language:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/repos_vs_lang.png&#34; alt=&#34;Repos appeared in vs programming language:&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Megabytes/repo vs programming language:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/mb_per_repo_vs_lang.png&#34; alt=&#34;Megabytes/repo vs programming language:&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Take this data with a pinch of salt as it only represents the repositories created approximately over a 2 day perioid. Initially I planned to consider all repos created in 2016, but the sheer scale of Github made me rethink my plans. Extrapolating the number of repos created over 2 days to the the entire year, the number comes to around 18 million repos created in 2016. Besides, the point of the project was to learn a little about &lt;code&gt;scrapy&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here is the &lt;a href=&#34;https://github.com/ploggingdev/scrape_github&#34;&gt;code&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The installation instructions are on the readme file.&lt;/p&gt;
+
+&lt;p&gt;The repo also includes the data I gathered from the github api:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/scrape_github/blob/master/lang_data.jsonl&#34;&gt;lang_data.jsonl (3MB)&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/scrape_github/blob/master/github_scraper/all_repos.jsonl&#34;&gt;all_repos.jsonl (13MB)&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Scraping my website using requests and BeautifulSoup</title>
@@ -809,6 +894,8 @@ st2)))
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/decorators-in-python-3/&#34;&gt;Decorators in Python 3&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/&#34;&gt;Scraping my website using requests and BeautifulSoup&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/&#34;&gt;Analyzing programming language statistics of 100,000 Github repositories&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
@@ -2449,174 +2536,6 @@ affects the values in the outer scope, refer
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#defining-functions&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Control flow tools in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</link>
-      <pubDate>Sat, 12 Nov 2016 11:28:34 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</guid>
-      <description>&lt;p&gt;Before I start with control flow tools, here are a few definitions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Value:&lt;/strong&gt; Basic units of data. Eg- &lt;code&gt;10&lt;/code&gt;,&lt;code&gt;&#39;string&#39;&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Variable:&lt;/strong&gt; A name that refers to a value. Eg- &lt;code&gt;var=10&lt;/code&gt;, &lt;code&gt;var&lt;/code&gt; is the variable.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Statement:&lt;/strong&gt; A section of code that represents a command or action.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Operator:&lt;/strong&gt; A symbol that performs operations on operands. Eg- &lt;code&gt;*&lt;/code&gt; is for multiplication&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Expression&lt;/strong&gt; A combination of variables, operators, and values to perform a task.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To learn about operators in Python refer
-&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Some of the control flow tools are:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;if&lt;/code&gt; statement&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;while&lt;/code&gt; statement&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;for&lt;/code&gt; statement&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;break&lt;/code&gt;, &lt;code&gt;continue&lt;/code&gt; and &lt;code&gt;pass&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;if&lt;/code&gt; statements are used for conditional decision making. Executution starts from &lt;code&gt;if&lt;/code&gt; then &lt;code&gt;elif&lt;/code&gt; and
-finally &lt;code&gt;else&lt;/code&gt; statements. The first condition that matches (evaluates to &lt;code&gt;True&lt;/code&gt;) is executed and the
-remaining conditions are skipped. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;num=42
-if num&amp;gt;0:
-    print(&#39;postive number&#39;)
-elif num==0:
-    print(&#39;Zero&#39;)
-else:
-    print(&#39;negative number&#39;)
-#output
-postive number
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;while&lt;/code&gt; statement is used for iteration. It consists of a condition, which evaluates to either &lt;code&gt;True&lt;/code&gt;
-or &lt;code&gt;False&lt;/code&gt;. The code inside the &lt;code&gt;while&lt;/code&gt; loop is executed as long as the condition evaluates to &lt;code&gt;True&lt;/code&gt;.
-Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;while example&#39;)
-counter=10
-while counter&amp;gt;0:
-    print(counter)
-    counter-=1
-print(&#39;Blast off&#39;)
-#output
-while example
-10
-9
-8
-7
-6
-5
-4
-3
-2
-1
-Blast off
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A &lt;code&gt;for&lt;/code&gt; loop is used to iterate over the items of any sequence such as lists, strings. Examples:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;for example 1&#39;)
-values=[11,12,34,46]
-for i in values:
-    print(i)
-
-print(&#39;for example 2&#39;)
-for i in range(6):
-    print(i)
-#output
-for example 1
-11
-12
-34
-46
-for example 2
-0
-1
-2
-3
-4
-5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A &lt;code&gt;continue&lt;/code&gt; statement is used to skip the current iteration of either a &lt;code&gt;while&lt;/code&gt; or &lt;code&gt;for&lt;/code&gt; loop. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;continue example&#39;)
-for i in range(10):
-    if(i%2==0):
-        continue
-    print(i)
-#output
-continue example
-1
-3
-5
-7
-9
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In the above example, even numbers are not printed.&lt;/p&gt;
-
-&lt;p&gt;A &lt;code&gt;break&lt;/code&gt; statement is used to stop the execution of the loop that it is encountered in. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;break example&#39;)
-for i in range(10):
-    if(i==6):
-        break
-    print(i)
-#output
-break example
-0
-1
-2
-3
-4
-5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When &lt;code&gt;6&lt;/code&gt; is encountered, execution of the &lt;code&gt;for&lt;/code&gt; loop is stopped. Note that in the case of nested &lt;code&gt;for&lt;/code&gt;
-loops, only the execution of the loop that &lt;code&gt;break&lt;/code&gt; is encountered in is stopped, but not the loops at a
-higher level.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;pass&lt;/code&gt; statement does not do anything. It is generally used in situations where code is expected to
-be present, but there is nothing meaningful that can be placed. The following example demonstrates the
-usage of &lt;code&gt;pass&lt;/code&gt;, though it is not a good example of where to use &lt;code&gt;pass&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;pass example&#39;)
-for i in range(10):
-    pass
-    print(i)
-    pass
-#output
-pass example
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;Tutorials Point&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is
-&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/control_flow.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

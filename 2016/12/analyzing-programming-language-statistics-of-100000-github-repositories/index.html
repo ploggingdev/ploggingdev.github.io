@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Archive</title>
+  <title>Analyzing programming language statistics of 100,000 Github repositories</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Archive">
+  <meta name="description" content="Analyzing programming language statistics of 100,000 Github repositories">
 
+  
+  <meta name="keywords" content="python 3, webscraping, scrapy, requests, scrape github">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -26,9 +28,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Archive" />
+  <meta property="og:title" content="Analyzing programming language statistics of 100,000 Github repositories" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/archive//" />
+  <meta property="og:url" content="/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,10 +116,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Archive</h1>
+        <div class="post-heading">
+          <h1>Analyzing programming language statistics of 100,000 Github repositories</h1>
       
       
+      
+      <span class="post-meta">Posted on December 25, 2016</span>
       
         </div>
       </div>
@@ -129,73 +133,106 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>The first step is to gather data about 100,000 repositories using the Github api. I used <code>scrapy</code> for this.</p>
+
+<p>A high level overview of how I did this:</p>
+
+<ol>
+<li><p>Start from the id of my <code>scrape_github</code> repo <code>https://api.github.com/repositories?since=76761293&amp;access_token=MY_TOKEN</code></p></li>
+
+<li><p>Save only the <code>id</code>, <code>name</code> and <code>languages_url</code> for each repo. The <code>languages_url</code> is the api endpoint which contains the programming language statistics of the current repo.</p></li>
+
+<li><p>Extract the link to the next page from the <code>Link</code> header and follow it repeating the above steps.</p></li>
+</ol>
+
+<p>Each api call returns a list of 100 repositories, so to retrieve data about 100,000 repositories, 1000 api calls are required.</p>
+
+<p>All the output is saved to a file called <code>all_repos.jsonl</code> which came to around 13MB.</p>
+
+<p>The next step is to follow the <code>languages_url</code> api endpoint for each repository and save the data.</p>
+
+<p></p>
+
+<p>A high level overview of how I did this:</p>
+
+<ol>
+<li><p>Read a line from <code>all_repos.jsonl</code></p></li>
+
+<li><p>Retrieve data from the <code>languages_url</code> endpoint</p></li>
+
+<li><p>If an exception occurred, output an empty json object to <code>lang_data.jsonl</code></p></li>
+
+<li><p>Otherwise save the response to <code>lang_data.jsonl</code></p></li>
+
+<li><p>Check headers to see if api limit has been reached</p></li>
+
+<li><p>If api limit is reached, sleep until the api limit is reset</p></li>
+
+<li><p>Otherwise go to step 1 and repeat until all lines have been read</p></li>
+</ol>
+
+<p>There were a few HTTPError exceptions (returned HTTP 403 and 404 status codes) since Github blocked a few repositories for violating their Terms of Service. Around 3 such exceptions in the first 5000 repositories. There were also a lot of empty repositories.</p>
+
+<p>The api limit for Github is 5000 calls per hour. The headers include <code>X-RateLimit-Remaining</code> which specifies how many api calls are remaining in the current hour. The <code>X-RateLimit-Reset</code> header contains a number which specifies when the ratelimit will be reset. It is respresented as the seconds since the Unix epoch. These headers are used to check if the api limit has been reached and how much time to sleep for, if the limit has been reached.</p>
+
+<p>The total number of api calls made in this step is 100,000 which took a little over 20 hours to complete. I ran this in a VPS.</p>
+
+<p>Interesting to note that it takes around 5 minutes to make the 5000 api calls on the VPS. So the script is sleeping for the remaining 55+ minutes per hour. I took a screenshot of the bandwidth usage of the VPS the script was running on and it was nice to see a spike every hour (script is calling the Github api) and then go back to zero usage (script is sleeping) until the next spike. Here is the screenshot.</p>
+
+<p><img src="/images/clockwork_code.png" alt="Bandwidth usage over 24 hours" /></p>
+
+<p>Once all the relevant data was retieved, the next step was to plot some graphs. Note that a single repository can include code using multiple programming languages.</p>
+
+<p>I was interested in the following data:</p>
+
+<p>Size of code vs programming language:</p>
+
+<p><img src="/images/size_vs_lang.png" alt="Size of code vs programming language" /></p>
+
+<p>Repos appeared in vs programming language:</p>
+
+<p><img src="/images/repos_vs_lang.png" alt="Repos appeared in vs programming language:" /></p>
+
+<p>Megabytes/repo vs programming language:</p>
+
+<p><img src="/images/mb_per_repo_vs_lang.png" alt="Megabytes/repo vs programming language:" /></p>
+
+<p>Take this data with a pinch of salt as it only represents the repositories created approximately over a 2 day perioid. Initially I planned to consider all repos created in 2016, but the sheer scale of Github made me rethink my plans. Extrapolating the number of repos created over 2 days to the the entire year, the number comes to around 18 million repos created in 2016. Besides, the point of the project was to learn a little about <code>scrapy</code>.</p>
+
+<p>Here is the <a href="https://github.com/ploggingdev/scrape_github">code</a>.</p>
+
+<p>The installation instructions are on the readme file.</p>
+
+<p>The repo also includes the data I gathered from the github api:</p>
+
+<ul>
+<li><p><a href="https://github.com/ploggingdev/scrape_github/blob/master/lang_data.jsonl">lang_data.jsonl (3MB)</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/scrape_github/blob/master/github_scraper/all_repos.jsonl">all_repos.jsonl (13MB)</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/" data-toggle="tooltip" data-placement="top" title="Scraping my website using requests and BeautifulSoup">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
       
-
-<p>This page contains links to all posts on this site.</p>
-
-<h2 id="python">Python</h2>
-
-<p><a href="/2016/11/beginning-python-3/">Beginning Python 3</a></p>
-
-<p><a href="/2016/11/data-types-in-python-3/">Data types in Python 3</a></p>
-
-<p><a href="/2016/11/strings-in-python-3/">Strings in Python 3</a></p>
-
-<p><a href="/2016/11/lists-in-python-3/">Lists in Python 3</a></p>
-
-<p><a href="/2016/11/tuples-in-python-3/">Tuples in Python 3</a></p>
-
-<p><a href="/2016/11/ranges-in-python-3/">Ranges in Python 3</a></p>
-
-<p><a href="/2016/11/sets-in-python-3/">Sets in Python 3</a></p>
-
-<p><a href="/2016/11/dictionaries-in-python-3/">Dictionaries in Python 3</a></p>
-
-<p><a href="/2016/11/control-flow-tools-in-python-3/">Control flow tools in Python 3</a></p>
-
-<p><a href="/2016/11/functions-in-python-3/">Functions in Python 3</a></p>
-
-<p><a href="/2016/11/modules-and-packages-in-python-3/">Modules and packages in Python 3</a></p>
-
-<p><a href="/2016/11/classes-and-inheritance-in-python-3/">Classes and inheritance in Python 3</a></p>
-
-<p><a href="/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></p>
-
-<p><a href="/2016/11/file-io-and-json-in-python-3/">File IO and JSON in Python 3</a></p>
-
-<p><a href="/2016/11/errors-and-exceptions-in-python-3/">Errors and exceptions in Python 3</a></p>
-
-<p><a href="/2016/11/unit-testing-in-python-3/">Unit testing in Python 3</a></p>
-
-<p><a href="/2016/11/floating-point-arithmetic-issues-in-python-3/">Floating point arithmetic issues in Python 3</a></p>
-
-<p><a href="/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></p>
-
-<p><a href="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">List comprehensions, iterators, generators and generator expressions in Python 3</a></p>
-
-<p><a href="/2016/12/performance-measurement-in-python-3/">Performance measurement in Python 3</a></p>
-
-<p><a href="/2016/12/decorators-in-python-3/">Decorators in Python 3</a></p>
-
-<p><a href="/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">Scraping my website using requests and BeautifulSoup</a></p>
-
-<p><a href="/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">Analyzing programming language statistics of 100,000 Github repositories</a></p>
-
-<h1 id="miscellaneous">Miscellaneous</h1>
-
-<p><a href="/2016/11/hello-world/">Hello World</a></p>
-
-      
-        <div class="disqus-comments">
+      <div class="disqus-comments">
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ploggingdev';
-    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/archive\/';
-    var disqus_title = 'Archive';
-    var disqus_url = 'https:\/\/www.ploggingdev.com\/archive\/';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2016\/12\/analyzing-programming-language-statistics-of-100000-github-repositories\/';
+    var disqus_title = 'Analyzing programming language statistics of 100,000 Github repositories';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2016\/12\/analyzing-programming-language-statistics-of-100000-github-repositories\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -205,8 +242,9 @@
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        </div>
+      </div>
       
+
     </div>
   </div>
 </div>

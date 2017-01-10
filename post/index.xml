@@ -8,8 +8,333 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sun, 25 Dec 2016 23:03:21 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jan 2017 23:03:51 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Multiprocessing and multithreading in Python 3</title>
+      <link>https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/</link>
+      <pubDate>Mon, 09 Jan 2017 23:03:51 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/</guid>
+      <description>&lt;p&gt;To begin with, let us clear up some terminlogy:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Concurrency is when two or more tasks can start, run, and complete in overlapping time periods. It doesn&amp;rsquo;t necessarily mean they&amp;rsquo;ll ever both be running at the same instant. Eg. multitasking on a single-core machine.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Parallelism is when two or more tasks are executed simultaneously.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A thread is a sequence of instructions within a process. It can be thought of as a lightweight process. Threads share the same memory space.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A process is an instance of a program running in a computer which can contain one or more threads. A process has its independant memory space.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;code&gt;threading&lt;/code&gt; module is used for working with threads in Python.&lt;/p&gt;
+
+&lt;p&gt;The CPython implementation has a Global Interpreter Lock (GIL) which allows only one thread to be active in the interpreter at once. This means that threads cannot be used for parallel execution of Python code. While parallel CPU computation is not possible, parallel IO operations are possible using threads. This is because performing IO operations releases the GIL. To learn more about the GIL refer &lt;a href=&#34;http://www.dabeaz.com/python/UnderstandingGIL.pdf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;What are threads used for in Python?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;In GUI applications to keep the UI thread responsive&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;IO tasks (network IO or filesystem IO)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Threads should not be used for CPU bound tasks. Using threads for CPU bound tasks will actually result in worse performance compared to using a single thread.&lt;/p&gt;
+
+&lt;p&gt;The following example demonstrates the use of threads for filesystem IO.&lt;/p&gt;
+
+&lt;p&gt;A queue is used to store the files that need to be processed. A dictionary is used to store the input and output file names. The &lt;code&gt;process_queue()&lt;/code&gt; function is used to retrieve items from the queue and perform the copy operation. The copy operation is done in the &lt;code&gt;copy_op&lt;/code&gt; function using the &lt;code&gt;shutil&lt;/code&gt; module.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import threading
+from queue import Queue
+import time
+import shutil
+
+print_lock = threading.Lock()
+
+def copy_op(file_data):
+    with print_lock:
+        print(&amp;quot;Starting thread : {}&amp;quot;.format(threading.current_thread().name))
+
+    mydata = threading.local()
+    mydata.ip, mydata.op = next(iter(file_data.items()))
+
+    shutil.copy(mydata.ip, mydata.op)
+
+    with print_lock:
+        print(&amp;quot;Finished thread : {}&amp;quot;.format(threading.current_thread().name))
+
+def process_queue():
+    while True:
+        file_data = compress_queue.get()
+        copy_op(file_data)
+        compress_queue.task_done()
+
+compress_queue = Queue()
+
+output_names = [{&#39;v1.mp4&#39; : &#39;v11.mp4&#39;},{&#39;v2.mp4&#39; : &#39;v22.mp4&#39;}]
+
+for i in range(2):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for file_data in output_names:
+    compress_queue.put(file_data)
+
+compress_queue.join()
+
+print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note : The v1.mp4 and v2.mp4 were 250MB each.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;7 to 10 seconds&lt;/strong&gt; was the time taken when using one thread&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4.5 to 5.5 seconds&lt;/strong&gt; was the time taken when using two threads&lt;/p&gt;
+
+&lt;p&gt;So it&amp;rsquo;s clear that threads can be used for parallel filesystem IO.&lt;/p&gt;
+
+&lt;p&gt;The following example demonstrates the use of threads for network IO using the &lt;code&gt;requests&lt;/code&gt; library. This is a toy example use case of threads for networking IO.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import threading
+from queue import Queue
+import requests
+import bs4
+import time
+
+print_lock = threading.Lock()
+
+def get_url(current_url):
+
+    with print_lock:
+        print(&amp;quot;\nStarting thread {}&amp;quot;.format(threading.current_thread().name))
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
+    current_title = current_page.select(&#39;title&#39;)[0].getText()
+
+    with print_lock:
+        print(&amp;quot;{}\n&amp;quot;.format(threading.current_thread().name))
+        print(&amp;quot;{}\n&amp;quot;.format(current_url))
+        print(&amp;quot;{}\n&amp;quot;.format(current_title))
+        print(&amp;quot;\nFinished fetching : {}&amp;quot;.format(current_url))
+
+def process_queue():
+    while True:
+        current_url = url_queue.get()
+        get_url(current_url)
+        url_queue.task_done()
+
+url_queue = Queue()
+
+url_list = [&amp;quot;https://www.google.com&amp;quot;]*5
+
+for i in range(5):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for current_url in url_list:
+    url_queue.put(current_url)
+
+url_queue.join()
+
+print(threading.enumerate())
+
+print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Single thread : &lt;strong&gt;4 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Two threads : &lt;strong&gt;3 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Five threads : &lt;strong&gt;2 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In network IO, most of the time is spent waiting for the response from the URL, so this is another use case where using threads improves performance.&lt;/p&gt;
+
+&lt;p&gt;Let me demonstrate why it&amp;rsquo;s a bad idea to use threads for CPU bound tasks. In the following program a queue holds numbers. The task is to find the sum of prime number less than or equal to the given number. This is clearly a CPU bound task.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import threading
+from queue import Queue
+import time
+
+list_lock = threading.Lock()
+
+def find_rand(num):
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &amp;lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    sum_primes_list.append(sum_of_primes)
+
+def is_prime(num):
+    if num &amp;lt;= 1:
+        return False
+    elif num &amp;lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &amp;lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+def process_queue():
+    while True:
+        rand_num = min_nums.get()
+        find_rand(rand_num)
+        min_nums.task_done()
+
+min_nums = Queue()
+
+rand_list = [1000000, 2000000, 3000000]
+sum_primes_list = list()
+
+for i in range(2):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for rand_num in rand_list:
+    min_nums.put(rand_num)
+
+min_nums.join()
+
+end_time = time.time()
+
+sum_primes_list.sort()
+print(sum_primes_list)
+
+print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(end_time - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Single thread : &lt;strong&gt;25.5 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Two threads : &lt;strong&gt;28 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The results are very clear : don&amp;rsquo;t use threads to improve performance of CPU bound tasks. You will always end up with worse performance.&lt;/p&gt;
+
+&lt;p&gt;For parallel execution of tasks, the &lt;code&gt;multiprocessing&lt;/code&gt; module can be used.&lt;/p&gt;
+
+&lt;p&gt;In the following example we take the same task used above and process the inputs in parallel using the &lt;code&gt;multiprocessing&lt;/code&gt; module.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from multiprocessing import Pool
+import time
+
+def sum_prime(num):
+    
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &amp;lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    return sum_of_primes
+
+def is_prime(num):
+    if num &amp;lt;= 1:
+        return False
+    elif num &amp;lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &amp;lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+if __name__ == &#39;__main__&#39;:
+    start = time.time()
+    with Pool(1) as p:
+        print(p.map(sum_prime, [1000000, 2000000, 3000000]))
+    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using a single process : &lt;strong&gt;27 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Using two processes : &lt;strong&gt;19 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Using three processes : &lt;strong&gt;18 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We see a huge improvement from using a single process to using two processes. But the jump from two processes to three processes is minimal. The reason behind this is my hardware. I have a dual core (laptop) CPU with hyperthreading (the OS detects it as four CPUs due to hyperthreading). On a side note, I knew Intel&amp;rsquo;s hyperthreading was not a replacement for more cores. The above example is a noob verification.&lt;/p&gt;
+
+&lt;p&gt;So using the &lt;code&gt;multiprocessing&lt;/code&gt; module results in the full utilization of the CPU.&lt;/p&gt;
+
+&lt;p&gt;Inter process communication can be achieved using queues or pipes. The &lt;code&gt;Queue&lt;/code&gt; in the &lt;code&gt;multiprocessing&lt;/code&gt; module works similar to the &lt;code&gt;queue&lt;/code&gt; module used to demonstrate how the &lt;code&gt;threading&lt;/code&gt; module works so I won&amp;rsquo;t cover it again.&lt;/p&gt;
+
+&lt;p&gt;Another useful communication mechanism between processes is a pipe. A pipe is a duplex (two way) communication channel. Note : Reading or writing to the same end of the pipe simultaneously can result in data corruption.&lt;/p&gt;
+
+&lt;p&gt;The following is a basic example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import multiprocessing as mp
+import os
+
+def info(conn):
+    conn.send(&amp;quot;Hello from {}\nppid = {}\npid={}&amp;quot;.format(mp.current_process().name, os.getppid(), os.getpid()))
+    conn.close()
+
+if __name__ == &#39;__main__&#39;:
+
+    parent_conn, child_conn = mp.Pipe()
+    p = mp.Process(target=info, args=(child_conn,))
+    p.daemon = True
+    p.start()
+    print(parent_conn.recv())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Hello from Process-1
+ppid = 18621
+pid=18622
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Code:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/tree/master/multiprocess_demo&#34;&gt;Multiprocessing demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/tree/master/multithread_demo&#34;&gt;Multithreading demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/threading.html&#34;&gt;threading docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/multiprocessing.html&#34;&gt;multiprocessing docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/queue.html&#34;&gt;queue docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference&#34;&gt;Stackoverflow question on Concurrency vs Parallelism&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.dabeaz.com/python/UnderstandingGIL.pdf&#34;&gt;Understanding the GIL&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Analyzing programming language statistics of 100,000 Github repositories</title>
@@ -2472,174 +2797,6 @@ affects the values in the outer scope, refer
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#defining-functions&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Control flow tools in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</link>
-      <pubDate>Sat, 12 Nov 2016 11:28:34 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</guid>
-      <description>&lt;p&gt;Before I start with control flow tools, here are a few definitions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Value:&lt;/strong&gt; Basic units of data. Eg- &lt;code&gt;10&lt;/code&gt;,&lt;code&gt;&#39;string&#39;&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Variable:&lt;/strong&gt; A name that refers to a value. Eg- &lt;code&gt;var=10&lt;/code&gt;, &lt;code&gt;var&lt;/code&gt; is the variable.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Statement:&lt;/strong&gt; A section of code that represents a command or action.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Operator:&lt;/strong&gt; A symbol that performs operations on operands. Eg- &lt;code&gt;*&lt;/code&gt; is for multiplication&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Expression&lt;/strong&gt; A combination of variables, operators, and values to perform a task.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To learn about operators in Python refer
-&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Some of the control flow tools are:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;if&lt;/code&gt; statement&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;while&lt;/code&gt; statement&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;for&lt;/code&gt; statement&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;break&lt;/code&gt;, &lt;code&gt;continue&lt;/code&gt; and &lt;code&gt;pass&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;if&lt;/code&gt; statements are used for conditional decision making. Executution starts from &lt;code&gt;if&lt;/code&gt; then &lt;code&gt;elif&lt;/code&gt; and
-finally &lt;code&gt;else&lt;/code&gt; statements. The first condition that matches (evaluates to &lt;code&gt;True&lt;/code&gt;) is executed and the
-remaining conditions are skipped. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;num=42
-if num&amp;gt;0:
-    print(&#39;postive number&#39;)
-elif num==0:
-    print(&#39;Zero&#39;)
-else:
-    print(&#39;negative number&#39;)
-#output
-postive number
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;while&lt;/code&gt; statement is used for iteration. It consists of a condition, which evaluates to either &lt;code&gt;True&lt;/code&gt;
-or &lt;code&gt;False&lt;/code&gt;. The code inside the &lt;code&gt;while&lt;/code&gt; loop is executed as long as the condition evaluates to &lt;code&gt;True&lt;/code&gt;.
-Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;while example&#39;)
-counter=10
-while counter&amp;gt;0:
-    print(counter)
-    counter-=1
-print(&#39;Blast off&#39;)
-#output
-while example
-10
-9
-8
-7
-6
-5
-4
-3
-2
-1
-Blast off
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A &lt;code&gt;for&lt;/code&gt; loop is used to iterate over the items of any sequence such as lists, strings. Examples:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;for example 1&#39;)
-values=[11,12,34,46]
-for i in values:
-    print(i)
-
-print(&#39;for example 2&#39;)
-for i in range(6):
-    print(i)
-#output
-for example 1
-11
-12
-34
-46
-for example 2
-0
-1
-2
-3
-4
-5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A &lt;code&gt;continue&lt;/code&gt; statement is used to skip the current iteration of either a &lt;code&gt;while&lt;/code&gt; or &lt;code&gt;for&lt;/code&gt; loop. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;continue example&#39;)
-for i in range(10):
-    if(i%2==0):
-        continue
-    print(i)
-#output
-continue example
-1
-3
-5
-7
-9
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In the above example, even numbers are not printed.&lt;/p&gt;
-
-&lt;p&gt;A &lt;code&gt;break&lt;/code&gt; statement is used to stop the execution of the loop that it is encountered in. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;break example&#39;)
-for i in range(10):
-    if(i==6):
-        break
-    print(i)
-#output
-break example
-0
-1
-2
-3
-4
-5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When &lt;code&gt;6&lt;/code&gt; is encountered, execution of the &lt;code&gt;for&lt;/code&gt; loop is stopped. Note that in the case of nested &lt;code&gt;for&lt;/code&gt;
-loops, only the execution of the loop that &lt;code&gt;break&lt;/code&gt; is encountered in is stopped, but not the loops at a
-higher level.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;pass&lt;/code&gt; statement does not do anything. It is generally used in situations where code is expected to
-be present, but there is nothing meaningful that can be placed. The following example demonstrates the
-usage of &lt;code&gt;pass&lt;/code&gt;, though it is not a good example of where to use &lt;code&gt;pass&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;pass example&#39;)
-for i in range(10):
-    pass
-    print(i)
-    pass
-#output
-pass example
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;Tutorials Point&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is
-&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/control_flow.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

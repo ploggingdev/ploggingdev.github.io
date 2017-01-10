@@ -122,6 +122,42 @@
             
             
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">
+          	  <h2 class="post-title">List comprehensions, iterators, generators and generator expressions in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on December 2, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>A list comprehension is a concise way to create lists that would normally require <code>for</code> loops to build.</p>
+
+<p>Example:</p>
+
+<pre><code>list1 = [x**2 for x in range(10)]
+print(list1)
+#output
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+
+<p>List comprehension to create a list of tuples:</p>
+
+<pre><code>list2 = [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+print(list2)
+#output
+[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/">
           	  <h2 class="post-title">N queens solver in Python 3</h2>
 
@@ -290,44 +326,6 @@ You can't divide by zero
 
              </article>
             
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/">
-          	  <h2 class="post-title">File IO and JSON in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 22, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>Before discussing file IO and json, let&rsquo;s talk about accepting input from the user using <code>input()</code>. Example:</p>
-
-<pre><code>name = input(&quot;What's your name?\n&quot;)
-age = int(input(&quot;Age?\n&quot;))
-print(&quot;Name : {}  Age : {}&quot;.format(name,age))
-#output
-What's your name?
-plog
-Age?
-42
-</code></pre>
-
-<p>Reading and writing files involves the following three steps:</p>
-
-<ul>
-<li>Open the file using <code>open(filename, mode)</code></li>
-<li>Read or write from or to the file using <code>read()</code> or <code>write()</code></li>
-<li>Close the file using <code>close()</code></li>
-</ul>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
           </div>
 
           
@@ -402,7 +400,7 @@ Age?
         <p class="copyright text-muted">
     		  Plogging Dev
     		  &nbsp;&bull;&nbsp;
-    		  2016
+    		  2017
 
     		  
     		  &nbsp;&bull;&nbsp;

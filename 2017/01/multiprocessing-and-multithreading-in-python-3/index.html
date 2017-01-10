@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Multiprocessing and multithreading in Python 3</title>
+
+  <meta name="author" content="Plogging Dev" />
+
+  <meta name="description" content="Multiprocessing and multithreading in Python 3">
+
+  
+  <meta name="keywords" content="python 3, multithreading, threading, multiprocessing, queues, pipes">
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="Multiprocessing and multithreading in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2017/01/multiprocessing-and-multithreading-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Archive" href="/archive/">Archive</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Multiprocessing and multithreading in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on January 9, 2017</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>To begin with, let us clear up some terminlogy:</p>
+
+<ul>
+<li><p>Concurrency is when two or more tasks can start, run, and complete in overlapping time periods. It doesn&rsquo;t necessarily mean they&rsquo;ll ever both be running at the same instant. Eg. multitasking on a single-core machine.</p></li>
+
+<li><p>Parallelism is when two or more tasks are executed simultaneously.</p></li>
+
+<li><p>A thread is a sequence of instructions within a process. It can be thought of as a lightweight process. Threads share the same memory space.</p></li>
+
+<li><p>A process is an instance of a program running in a computer which can contain one or more threads. A process has its independant memory space.</p></li>
+</ul>
+
+<p>The <code>threading</code> module is used for working with threads in Python.</p>
+
+<p>The CPython implementation has a Global Interpreter Lock (GIL) which allows only one thread to be active in the interpreter at once. This means that threads cannot be used for parallel execution of Python code. While parallel CPU computation is not possible, parallel IO operations are possible using threads. This is because performing IO operations releases the GIL. To learn more about the GIL refer <a href="http://www.dabeaz.com/python/UnderstandingGIL.pdf">here</a>.</p>
+
+<p></p>
+
+<p>What are threads used for in Python?</p>
+
+<ul>
+<li><p>In GUI applications to keep the UI thread responsive</p></li>
+
+<li><p>IO tasks (network IO or filesystem IO)</p></li>
+</ul>
+
+<p>Threads should not be used for CPU bound tasks. Using threads for CPU bound tasks will actually result in worse performance compared to using a single thread.</p>
+
+<p>The following example demonstrates the use of threads for filesystem IO.</p>
+
+<p>A queue is used to store the files that need to be processed. A dictionary is used to store the input and output file names. The <code>process_queue()</code> function is used to retrieve items from the queue and perform the copy operation. The copy operation is done in the <code>copy_op</code> function using the <code>shutil</code> module.</p>
+
+<pre><code>import threading
+from queue import Queue
+import time
+import shutil
+
+print_lock = threading.Lock()
+
+def copy_op(file_data):
+    with print_lock:
+        print(&quot;Starting thread : {}&quot;.format(threading.current_thread().name))
+
+    mydata = threading.local()
+    mydata.ip, mydata.op = next(iter(file_data.items()))
+
+    shutil.copy(mydata.ip, mydata.op)
+
+    with print_lock:
+        print(&quot;Finished thread : {}&quot;.format(threading.current_thread().name))
+
+def process_queue():
+    while True:
+        file_data = compress_queue.get()
+        copy_op(file_data)
+        compress_queue.task_done()
+
+compress_queue = Queue()
+
+output_names = [{'v1.mp4' : 'v11.mp4'},{'v2.mp4' : 'v22.mp4'}]
+
+for i in range(2):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for file_data in output_names:
+    compress_queue.put(file_data)
+
+compress_queue.join()
+
+print(&quot;Execution time = {0:.5f}&quot;.format(time.time() - start))
+</code></pre>
+
+<p>Note : The v1.mp4 and v2.mp4 were 250MB each.</p>
+
+<p><strong>7 to 10 seconds</strong> was the time taken when using one thread</p>
+
+<p><strong>4.5 to 5.5 seconds</strong> was the time taken when using two threads</p>
+
+<p>So it&rsquo;s clear that threads can be used for parallel filesystem IO.</p>
+
+<p>The following example demonstrates the use of threads for network IO using the <code>requests</code> library. This is a toy example use case of threads for networking IO.</p>
+
+<pre><code>import threading
+from queue import Queue
+import requests
+import bs4
+import time
+
+print_lock = threading.Lock()
+
+def get_url(current_url):
+
+    with print_lock:
+        print(&quot;\nStarting thread {}&quot;.format(threading.current_thread().name))
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&quot;html.parser&quot;)
+    current_title = current_page.select('title')[0].getText()
+
+    with print_lock:
+        print(&quot;{}\n&quot;.format(threading.current_thread().name))
+        print(&quot;{}\n&quot;.format(current_url))
+        print(&quot;{}\n&quot;.format(current_title))
+        print(&quot;\nFinished fetching : {}&quot;.format(current_url))
+
+def process_queue():
+    while True:
+        current_url = url_queue.get()
+        get_url(current_url)
+        url_queue.task_done()
+
+url_queue = Queue()
+
+url_list = [&quot;https://www.google.com&quot;]*5
+
+for i in range(5):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for current_url in url_list:
+    url_queue.put(current_url)
+
+url_queue.join()
+
+print(threading.enumerate())
+
+print(&quot;Execution time = {0:.5f}&quot;.format(time.time() - start))
+</code></pre>
+
+<p>Single thread : <strong>4 seconds</strong></p>
+
+<p>Two threads : <strong>3 seconds</strong></p>
+
+<p>Five threads : <strong>2 seconds</strong></p>
+
+<p>In network IO, most of the time is spent waiting for the response from the URL, so this is another use case where using threads improves performance.</p>
+
+<p>Let me demonstrate why it&rsquo;s a bad idea to use threads for CPU bound tasks. In the following program a queue holds numbers. The task is to find the sum of prime number less than or equal to the given number. This is clearly a CPU bound task.</p>
+
+<pre><code>import threading
+from queue import Queue
+import time
+
+list_lock = threading.Lock()
+
+def find_rand(num):
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    sum_primes_list.append(sum_of_primes)
+
+def is_prime(num):
+    if num &lt;= 1:
+        return False
+    elif num &lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+def process_queue():
+    while True:
+        rand_num = min_nums.get()
+        find_rand(rand_num)
+        min_nums.task_done()
+
+min_nums = Queue()
+
+rand_list = [1000000, 2000000, 3000000]
+sum_primes_list = list()
+
+for i in range(2):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for rand_num in rand_list:
+    min_nums.put(rand_num)
+
+min_nums.join()
+
+end_time = time.time()
+
+sum_primes_list.sort()
+print(sum_primes_list)
+
+print(&quot;Execution time = {0:.5f}&quot;.format(end_time - start))
+</code></pre>
+
+<p>Single thread : <strong>25.5 seconds</strong></p>
+
+<p>Two threads : <strong>28 seconds</strong></p>
+
+<p>The results are very clear : don&rsquo;t use threads to improve performance of CPU bound tasks. You will always end up with worse performance.</p>
+
+<p>For parallel execution of tasks, the <code>multiprocessing</code> module can be used.</p>
+
+<p>In the following example we take the same task used above and process the inputs in parallel using the <code>multiprocessing</code> module.</p>
+
+<pre><code>from multiprocessing import Pool
+import time
+
+def sum_prime(num):
+    
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    return sum_of_primes
+
+def is_prime(num):
+    if num &lt;= 1:
+        return False
+    elif num &lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+if __name__ == '__main__':
+    start = time.time()
+    with Pool(1) as p:
+        print(p.map(sum_prime, [1000000, 2000000, 3000000]))
+    print(&quot;Time taken = {0:.5f}&quot;.format(time.time() - start))
+</code></pre>
+
+<p>Using a single process : <strong>27 seconds</strong></p>
+
+<p>Using two processes : <strong>19 seconds</strong></p>
+
+<p>Using three processes : <strong>18 seconds</strong></p>
+
+<p>We see a huge improvement from using a single process to using two processes. But the jump from two processes to three processes is minimal. The reason behind this is my hardware. I have a dual core (laptop) CPU with hyperthreading (the OS detects it as four CPUs due to hyperthreading). On a side note, I knew Intel&rsquo;s hyperthreading was not a replacement for more cores. The above example is a noob verification.</p>
+
+<p>So using the <code>multiprocessing</code> module results in the full utilization of the CPU.</p>
+
+<p>Inter process communication can be achieved using queues or pipes. The <code>Queue</code> in the <code>multiprocessing</code> module works similar to the <code>queue</code> module used to demonstrate how the <code>threading</code> module works so I won&rsquo;t cover it again.</p>
+
+<p>Another useful communication mechanism between processes is a pipe. A pipe is a duplex (two way) communication channel. Note : Reading or writing to the same end of the pipe simultaneously can result in data corruption.</p>
+
+<p>The following is a basic example:</p>
+
+<pre><code>import multiprocessing as mp
+import os
+
+def info(conn):
+    conn.send(&quot;Hello from {}\nppid = {}\npid={}&quot;.format(mp.current_process().name, os.getppid(), os.getpid()))
+    conn.close()
+
+if __name__ == '__main__':
+
+    parent_conn, child_conn = mp.Pipe()
+    p = mp.Process(target=info, args=(child_conn,))
+    p.daemon = True
+    p.start()
+    print(parent_conn.recv())
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Hello from Process-1
+ppid = 18621
+pid=18622
+</code></pre>
+
+<p>Code:</p>
+
+<ul>
+<li><p><a href="https://github.com/ploggingdev/python_learn/tree/master/multiprocess_demo">Multiprocessing demo</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/python_learn/tree/master/multithread_demo">Multithreading demo</a></p></li>
+</ul>
+
+<p>References:</p>
+
+<ul>
+<li><p><a href="https://docs.python.org/3/library/threading.html">threading docs</a></p></li>
+
+<li><p><a href="https://docs.python.org/3/library/multiprocessing.html">multiprocessing docs</a></p></li>
+
+<li><p><a href="https://docs.python.org/3/library/queue.html">queue docs</a></p></li>
+
+<li><p><a href="http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference">Stackoverflow question on Concurrency vs Parallelism</a></p></li>
+
+<li><p><a href="http://www.dabeaz.com/python/UnderstandingGIL.pdf">Understanding the GIL</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/" data-toggle="tooltip" data-placement="top" title="Analyzing programming language statistics of 100,000 Github repositories">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+      
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2017\/01\/multiprocessing-and-multithreading-in-python-3\/';
+    var disqus_title = 'Multiprocessing and multithreading in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2017\/01\/multiprocessing-and-multithreading-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  Plogging Dev
+    		  &nbsp;&bull;&nbsp;
+    		  2017
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

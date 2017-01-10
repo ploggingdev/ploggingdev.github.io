@@ -8,8 +8,333 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sun, 25 Dec 2016 23:03:21 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jan 2017 23:03:51 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Multiprocessing and multithreading in Python 3</title>
+      <link>https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/</link>
+      <pubDate>Mon, 09 Jan 2017 23:03:51 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/</guid>
+      <description>&lt;p&gt;To begin with, let us clear up some terminlogy:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Concurrency is when two or more tasks can start, run, and complete in overlapping time periods. It doesn&amp;rsquo;t necessarily mean they&amp;rsquo;ll ever both be running at the same instant. Eg. multitasking on a single-core machine.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Parallelism is when two or more tasks are executed simultaneously.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A thread is a sequence of instructions within a process. It can be thought of as a lightweight process. Threads share the same memory space.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A process is an instance of a program running in a computer which can contain one or more threads. A process has its independant memory space.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;code&gt;threading&lt;/code&gt; module is used for working with threads in Python.&lt;/p&gt;
+
+&lt;p&gt;The CPython implementation has a Global Interpreter Lock (GIL) which allows only one thread to be active in the interpreter at once. This means that threads cannot be used for parallel execution of Python code. While parallel CPU computation is not possible, parallel IO operations are possible using threads. This is because performing IO operations releases the GIL. To learn more about the GIL refer &lt;a href=&#34;http://www.dabeaz.com/python/UnderstandingGIL.pdf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;What are threads used for in Python?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;In GUI applications to keep the UI thread responsive&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;IO tasks (network IO or filesystem IO)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Threads should not be used for CPU bound tasks. Using threads for CPU bound tasks will actually result in worse performance compared to using a single thread.&lt;/p&gt;
+
+&lt;p&gt;The following example demonstrates the use of threads for filesystem IO.&lt;/p&gt;
+
+&lt;p&gt;A queue is used to store the files that need to be processed. A dictionary is used to store the input and output file names. The &lt;code&gt;process_queue()&lt;/code&gt; function is used to retrieve items from the queue and perform the copy operation. The copy operation is done in the &lt;code&gt;copy_op&lt;/code&gt; function using the &lt;code&gt;shutil&lt;/code&gt; module.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import threading
+from queue import Queue
+import time
+import shutil
+
+print_lock = threading.Lock()
+
+def copy_op(file_data):
+    with print_lock:
+        print(&amp;quot;Starting thread : {}&amp;quot;.format(threading.current_thread().name))
+
+    mydata = threading.local()
+    mydata.ip, mydata.op = next(iter(file_data.items()))
+
+    shutil.copy(mydata.ip, mydata.op)
+
+    with print_lock:
+        print(&amp;quot;Finished thread : {}&amp;quot;.format(threading.current_thread().name))
+
+def process_queue():
+    while True:
+        file_data = compress_queue.get()
+        copy_op(file_data)
+        compress_queue.task_done()
+
+compress_queue = Queue()
+
+output_names = [{&#39;v1.mp4&#39; : &#39;v11.mp4&#39;},{&#39;v2.mp4&#39; : &#39;v22.mp4&#39;}]
+
+for i in range(2):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for file_data in output_names:
+    compress_queue.put(file_data)
+
+compress_queue.join()
+
+print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note : The v1.mp4 and v2.mp4 were 250MB each.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;7 to 10 seconds&lt;/strong&gt; was the time taken when using one thread&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4.5 to 5.5 seconds&lt;/strong&gt; was the time taken when using two threads&lt;/p&gt;
+
+&lt;p&gt;So it&amp;rsquo;s clear that threads can be used for parallel filesystem IO.&lt;/p&gt;
+
+&lt;p&gt;The following example demonstrates the use of threads for network IO using the &lt;code&gt;requests&lt;/code&gt; library. This is a toy example use case of threads for networking IO.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import threading
+from queue import Queue
+import requests
+import bs4
+import time
+
+print_lock = threading.Lock()
+
+def get_url(current_url):
+
+    with print_lock:
+        print(&amp;quot;\nStarting thread {}&amp;quot;.format(threading.current_thread().name))
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
+    current_title = current_page.select(&#39;title&#39;)[0].getText()
+
+    with print_lock:
+        print(&amp;quot;{}\n&amp;quot;.format(threading.current_thread().name))
+        print(&amp;quot;{}\n&amp;quot;.format(current_url))
+        print(&amp;quot;{}\n&amp;quot;.format(current_title))
+        print(&amp;quot;\nFinished fetching : {}&amp;quot;.format(current_url))
+
+def process_queue():
+    while True:
+        current_url = url_queue.get()
+        get_url(current_url)
+        url_queue.task_done()
+
+url_queue = Queue()
+
+url_list = [&amp;quot;https://www.google.com&amp;quot;]*5
+
+for i in range(5):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for current_url in url_list:
+    url_queue.put(current_url)
+
+url_queue.join()
+
+print(threading.enumerate())
+
+print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Single thread : &lt;strong&gt;4 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Two threads : &lt;strong&gt;3 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Five threads : &lt;strong&gt;2 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In network IO, most of the time is spent waiting for the response from the URL, so this is another use case where using threads improves performance.&lt;/p&gt;
+
+&lt;p&gt;Let me demonstrate why it&amp;rsquo;s a bad idea to use threads for CPU bound tasks. In the following program a queue holds numbers. The task is to find the sum of prime number less than or equal to the given number. This is clearly a CPU bound task.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import threading
+from queue import Queue
+import time
+
+list_lock = threading.Lock()
+
+def find_rand(num):
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &amp;lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    sum_primes_list.append(sum_of_primes)
+
+def is_prime(num):
+    if num &amp;lt;= 1:
+        return False
+    elif num &amp;lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &amp;lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+def process_queue():
+    while True:
+        rand_num = min_nums.get()
+        find_rand(rand_num)
+        min_nums.task_done()
+
+min_nums = Queue()
+
+rand_list = [1000000, 2000000, 3000000]
+sum_primes_list = list()
+
+for i in range(2):
+    t = threading.Thread(target=process_queue)
+    t.daemon = True
+    t.start()
+
+start = time.time()
+
+for rand_num in rand_list:
+    min_nums.put(rand_num)
+
+min_nums.join()
+
+end_time = time.time()
+
+sum_primes_list.sort()
+print(sum_primes_list)
+
+print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(end_time - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Single thread : &lt;strong&gt;25.5 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Two threads : &lt;strong&gt;28 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The results are very clear : don&amp;rsquo;t use threads to improve performance of CPU bound tasks. You will always end up with worse performance.&lt;/p&gt;
+
+&lt;p&gt;For parallel execution of tasks, the &lt;code&gt;multiprocessing&lt;/code&gt; module can be used.&lt;/p&gt;
+
+&lt;p&gt;In the following example we take the same task used above and process the inputs in parallel using the &lt;code&gt;multiprocessing&lt;/code&gt; module.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from multiprocessing import Pool
+import time
+
+def sum_prime(num):
+    
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &amp;lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    return sum_of_primes
+
+def is_prime(num):
+    if num &amp;lt;= 1:
+        return False
+    elif num &amp;lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &amp;lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+if __name__ == &#39;__main__&#39;:
+    start = time.time()
+    with Pool(1) as p:
+        print(p.map(sum_prime, [1000000, 2000000, 3000000]))
+    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using a single process : &lt;strong&gt;27 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Using two processes : &lt;strong&gt;19 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Using three processes : &lt;strong&gt;18 seconds&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We see a huge improvement from using a single process to using two processes. But the jump from two processes to three processes is minimal. The reason behind this is my hardware. I have a dual core (laptop) CPU with hyperthreading (the OS detects it as four CPUs due to hyperthreading). On a side note, I knew Intel&amp;rsquo;s hyperthreading was not a replacement for more cores. The above example is a noob verification.&lt;/p&gt;
+
+&lt;p&gt;So using the &lt;code&gt;multiprocessing&lt;/code&gt; module results in the full utilization of the CPU.&lt;/p&gt;
+
+&lt;p&gt;Inter process communication can be achieved using queues or pipes. The &lt;code&gt;Queue&lt;/code&gt; in the &lt;code&gt;multiprocessing&lt;/code&gt; module works similar to the &lt;code&gt;queue&lt;/code&gt; module used to demonstrate how the &lt;code&gt;threading&lt;/code&gt; module works so I won&amp;rsquo;t cover it again.&lt;/p&gt;
+
+&lt;p&gt;Another useful communication mechanism between processes is a pipe. A pipe is a duplex (two way) communication channel. Note : Reading or writing to the same end of the pipe simultaneously can result in data corruption.&lt;/p&gt;
+
+&lt;p&gt;The following is a basic example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import multiprocessing as mp
+import os
+
+def info(conn):
+    conn.send(&amp;quot;Hello from {}\nppid = {}\npid={}&amp;quot;.format(mp.current_process().name, os.getppid(), os.getpid()))
+    conn.close()
+
+if __name__ == &#39;__main__&#39;:
+
+    parent_conn, child_conn = mp.Pipe()
+    p = mp.Process(target=info, args=(child_conn,))
+    p.daemon = True
+    p.start()
+    print(parent_conn.recv())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Hello from Process-1
+ppid = 18621
+pid=18622
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Code:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/tree/master/multiprocess_demo&#34;&gt;Multiprocessing demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/tree/master/multithread_demo&#34;&gt;Multithreading demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/threading.html&#34;&gt;threading docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/multiprocessing.html&#34;&gt;multiprocessing docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/queue.html&#34;&gt;queue docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference&#34;&gt;Stackoverflow question on Concurrency vs Parallelism&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.dabeaz.com/python/UnderstandingGIL.pdf&#34;&gt;Understanding the GIL&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Analyzing programming language statistics of 100,000 Github repositories</title>
@@ -896,6 +1221,8 @@ st2)))
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/&#34;&gt;Scraping my website using requests and BeautifulSoup&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/&#34;&gt;Analyzing programming language statistics of 100,000 Github repositories&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/&#34;&gt;Multiprocessing and multithreading in Python 3&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
@@ -2413,128 +2740,6 @@ I nested a module two levels deep.&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/Python/comments/1bbbwk/whats_your_opinion_on_what_to_include_in_init_py/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Functions in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/functions-in-python-3/</link>
-      <pubDate>Sun, 13 Nov 2016 10:30:06 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/functions-in-python-3/</guid>
-      <description>&lt;p&gt;A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
-example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def hello_function():
-    &#39;&#39;&#39;This is where the function documentation goes&#39;&#39;&#39;
-    print(&#39;Hello from function&#39;)
-
-hello_function()
-print(hello_function)
-#output
-Hello from function
-&amp;lt;function hello_function at 0x7f34bc7db378&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The &lt;code&gt;def&lt;/code&gt; keyword is used to define a function.&lt;/li&gt;
-&lt;li&gt;It is followed by the function name, argument list(if any), and a
-colon &lt;code&gt;:&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;The function body is indented by 4 spaces.&lt;/li&gt;
-&lt;li&gt;The first line of a function body is a
-&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings&#34;&gt;docstring&lt;/a&gt;,
-which is documentation for the function. It&amp;rsquo;s a good practice to always include the docstring.&lt;/li&gt;
-&lt;li&gt;The statements that constitute the function are placed after the docstring.&lt;/li&gt;
-&lt;li&gt;A function is an object, notice the output of &lt;code&gt;print(hello_function)&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;A function can return a value after it finishes execution. If a return value is not specified, the
-default value is &lt;code&gt;None&lt;/code&gt;. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_with_return():
-    &#39;&#39;&#39;This function returns a number&#39;&#39;&#39;
-    return 42
-return_value = function_with_return()
-print(return_value)
-#output
-42
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;return&lt;/code&gt; keyword is used to return a variable or value.&lt;/p&gt;
-
-&lt;p&gt;A function can accept arguments. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_args(arg1):
-    &#39;&#39;&#39;Prints the argument it recieves&#39;&#39;&#39;
-    print(arg1)
-function_args(&#39;My argument&#39;)
-#output
-My argument
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is possible to have default arguments. When an argument is not provided, a default value is used.
-Example :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_default_args(arg1=42):
-    &#39;&#39;&#39;A function with a default argument&#39;&#39;&#39;
-    print(arg1)
-function_default_args(34)
-function_default_args()
-#output
-34
-42
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Keyword arguments are specified by explicitly stating which argument a value belongs to. Very poor
-explanation, let the code speak:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_kwargs(name=&#39;no name&#39;, age=42):
-    &#39;&#39;&#39;Keyword arguments demo&#39;&#39;&#39;
-    print(name, &#39; &#39;, age)
-function_kwargs(age=34,name=&#39;my name&#39;)
-function_kwargs(name=&#39;my name&#39;,age=34)
-#output
-my name   34
-my name   34
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is possible to mix keyword and positional arguments. Keyword arguments should always come after
-positional arguments. The
-&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments&#34;&gt;official ducumentation&lt;/a&gt; explains
-this concept well.&lt;/p&gt;
-
-&lt;p&gt;Arbitrary argument lists are those whose content length can vary. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_variable_args(*args):
-    &#39;&#39;&#39;This function prints a variable number of arguments&#39;&#39;&#39;
-    print(&#39; &#39;.join(*args))
-variable_args1 = &#39;python&#39;, &#39;ruby&#39;, &#39;php&#39;
-function_variable_args(variable_args1)
-variable_args2 = &#39;python&#39;, &#39;ruby&#39;, &#39;php&#39;, &#39;java&#39;
-function_variable_args(variable_args2)
-#output
-python ruby php
-python ruby php java
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I don&amp;rsquo;t understand arbitrary argument lists well. The same result can be achieved by using a normal tuple
-without the &lt;code&gt;*args&lt;/code&gt;. I&amp;rsquo;ll come back to this later.&lt;/p&gt;
-
-&lt;p&gt;The official documentation also contains tl;dr about the coding style in Python. Link
-&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#intermezzo-coding-style&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To understand how arguments are passed to functions and how arguments being mutable or immutable
-affects the values in the outer scope, refer
-&lt;a href=&#34;http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/functions.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#defining-functions&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

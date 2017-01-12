@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>concurrent.futures in Python 3</title>
+
+  <meta name="author" content="Plogging Dev" />
+
+  <meta name="description" content="concurrent.futures in Python 3">
+
+  
+  <meta name="keywords" content="python 3, concurrent.futures, multiprocessing, multithreading">
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+
+  
+  <meta property="og:title" content="concurrent.futures in Python 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/2017/01/concurrent.futures-in-python-3//" />
+  <meta property="og:image" content="/img//avatar.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Archive" href="/archive/">Archive</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Privacy" href="/privacy/">Privacy</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Contact" href="/contact/">Contact</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+              <img class="avatar-img" src="https://www.ploggingdev.com//img//avatar.png" alt="Plogging Dev" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>concurrent.futures in Python 3</h1>
+      
+      
+      
+      <span class="post-meta">Posted on January 12, 2017</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>The concurrent.futures module provides a common high level interface for asynchronously executing callables using pools of threads or processes.</p>
+
+<p>The <code>concurrent.futures.Executor</code> is a class to execute function calls asynchronously. The important methods are <code>submit(function, args)</code>, which calls the specified function passing in the given arguments, and <code>map(function, iterables)</code> which calls the specified function asynchronously passing in each iterable as an argument for a separate function call. This should not be used directly, but is used through its subclasses <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>.</p>
+
+<p>Let&rsquo;s jump into an example. The purpose of the following program is to find the sum of all prime numbers until the given number. There are two functions to demonstrate how to use a pool of threads and how to use a pool of processes. <code>sum_primes_thread(nums)</code> uses threads and <code>sum_primes_process(nums)</code> uses processes. Notice that the only difference between the two functions is that one uses <code>ThreadPoolExecutor</code> while the other uses <code>ProcessPoolExecutor</code>.</p>
+
+<p></p>
+
+<pre><code>import concurrent.futures
+import time
+
+def is_prime(num):
+    if num &lt;= 1:
+        return False
+    elif num &lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+def find_sum(num):
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    return sum_of_primes
+
+def sum_primes_thread(nums):
+    with concurrent.futures.ThreadPoolExecutor(max_workers = 4) as executor:
+        for number, sum_res in zip(nums, executor.map(find_sum, nums)):
+            print(&quot;{} : Sum = {}&quot;.format(number, sum_res))
+
+def sum_primes_process(nums):
+    with concurrent.futures.ProcessPoolExecutor(max_workers = 4) as executor:
+        for number, sum_res in zip(nums, executor.map(find_sum, nums)):
+            print(&quot;{} : Sum = {}&quot;.format(number, sum_res))
+
+if __name__ == '__main__':
+    nums = [100000, 200000, 300000]
+    start = time.time()
+    sum_primes_thread(nums)
+    print(&quot;Time taken = {0:.5f}&quot;.format(time.time() - start))
+</code></pre>
+
+<p>Output when executing <code>sum_primes_process</code>:</p>
+
+<pre><code>100000 : Sum = 454396537
+200000 : Sum = 1709600813
+300000 : Sum = 3709507114
+Time taken = 0.71783
+</code></pre>
+
+<p>Output when executing <code>sum_primes_thread</code>:</p>
+
+<pre><code>100000 : Sum = 454396537
+200000 : Sum = 1709600813
+300000 : Sum = 3709507114
+Time taken = 1.23388
+</code></pre>
+
+<p>This was a simple example to demonstrate how to use pools of threads and processes.</p>
+
+<p><strong>Note</strong> : Don&rsquo;t use threads for CPU intensive tasks.</p>
+
+<p>Though the callables themselves are executed asynchronously, the results are printed in the order they were called. The output can be displayed asynchronously also, as I demonstrate in the following example.</p>
+
+<p>This program just retrieves the titles of web pages.</p>
+
+<p>The output is displayed as and when a request is completed, so the order of the output usually changes between multiple runs of the program.</p>
+
+<p>The <code>concurrent.futures.as_completed(iterable_of_futures)</code> method accepts an iterable of <code>Future</code> objects. The iterable is a dictionary in this program, but other iterables can also be used (eg- list).</p>
+
+<pre><code>import concurrent.futures
+import time
+import requests
+import bs4
+import os
+
+def load_url(current_url):
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&quot;html.parser&quot;)
+    current_title = current_page.select('title')[0].getText()
+    return current_title
+
+def process_urls_thread_alt(urls):
+    with concurrent.futures.ThreadPoolExecutor(max_workers = 4) as executor:
+        future_to_url = {executor.submit(load_url, url): url for url in urls}
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                data = future.result()
+            except Exception as exc:
+                print('%r generated an exception: %s' % (url, exc))
+            else:
+                print(&quot;{} : Url = {}&quot;.format(data, url))
+
+
+def process_urls_process_alt(urls):
+    with concurrent.futures.ProcessPoolExecutor(max_workers = 4) as executor:
+        future_to_url = {executor.submit(load_url, url): url for url in urls}
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                data = future.result()
+            except Exception as exc:
+                print('%r generated an exception: %s' % (url, exc))
+            else:
+                print(&quot;{} : Url = {}&quot;.format(data, url))
+
+if __name__ == '__main__':
+    url_list = [&quot;https://www.google.com&quot;, &quot;https://www.ploggingdev.com/2016/11/beginning-python-3/&quot;, &quot;https://www.ploggingdev.com/archive/&quot;, &quot;https://www.ploggingdev.com/2016/11/data-types-in-python-3/&quot;, &quot;https://www.ploggingdev.com/2016/11/strings-in-python-3/&quot;]
+    start = time.time()
+    process_urls_process_alt(url_list)
+    print(&quot;Time taken = {0:.5f}&quot;.format(time.time() - start))
+</code></pre>
+
+<p>Output of the program (same when using threads or processes):</p>
+
+<pre><code>Google : Url = https://www.google.com
+Beginning Python 3 : Url = https://www.ploggingdev.com/2016/11/beginning-python-3/
+Archive : Url = https://www.ploggingdev.com/archive/
+Strings in Python 3 : Url = https://www.ploggingdev.com/2016/11/strings-in-python-3/
+Data types in Python 3 : Url = https://www.ploggingdev.com/2016/11/data-types-in-python-3/
+Time taken = 1.82259
+</code></pre>
+
+<p>There are three exceptions that can occur:</p>
+
+<ul>
+<li><p><code>concurrent.futures.CancelledError</code> is raised when a future is cancelled</p></li>
+
+<li><p><code>exception concurrent.futures.TimeoutError</code> is raised when a future operation exceeds the given timeout</p></li>
+
+<li><p><code>concurrent.futures.process.BrokenProcessPool</code> is raised when one of the workers of a ProcessPoolExecutor has terminated in a non-clean fashion</p></li>
+</ul>
+
+<p>In the above program they are handled in a catch all <code>except Exception</code> block, but this can be modified depending on the requirements.</p>
+
+<p>Code for todays blog is <a href="https://github.com/ploggingdev/python_learn/blob/master/concurrent_futures.py">here</a>.</p>
+
+<p>Reference : <a href="https://docs.python.org/3/library/concurrent.futures.html">Official library reference</a></p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/" data-toggle="tooltip" data-placement="top" title="Multiprocessing and multithreading in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+      
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ploggingdev';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2017\/01\/concurrent.futures-in-python-3\/';
+    var disqus_title = 'concurrent.futures in Python 3';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2017\/01\/concurrent.futures-in-python-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/ploggingdev" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://twitter.com/ploggingdev" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="mailto:ploggingdev@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="https://www.ploggingdev.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>
+
+        </ul>
+        <p class="copyright text-muted">
+    		  Plogging Dev
+    		  &nbsp;&bull;&nbsp;
+    		  2017
+
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+    		  
+  	    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.ploggingdev.com/js/jquery-1.11.2.min.js"></script>
+<script src="https://www.ploggingdev.com/js/bootstrap.min.js"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>

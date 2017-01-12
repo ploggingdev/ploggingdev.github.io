@@ -8,8 +8,169 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Mon, 09 Jan 2017 23:03:51 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2017 03:14:07 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>concurrent.futures in Python 3</title>
+      <link>https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/</link>
+      <pubDate>Thu, 12 Jan 2017 03:14:07 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/</guid>
+      <description>&lt;p&gt;The concurrent.futures module provides a common high level interface for asynchronously executing callables using pools of threads or processes.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;concurrent.futures.Executor&lt;/code&gt; is a class to execute function calls asynchronously. The important methods are &lt;code&gt;submit(function, args)&lt;/code&gt;, which calls the specified function passing in the given arguments, and &lt;code&gt;map(function, iterables)&lt;/code&gt; which calls the specified function asynchronously passing in each iterable as an argument for a separate function call. This should not be used directly, but is used through its subclasses &lt;code&gt;ThreadPoolExecutor&lt;/code&gt; and &lt;code&gt;ProcessPoolExecutor&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s jump into an example. The purpose of the following program is to find the sum of all prime numbers until the given number. There are two functions to demonstrate how to use a pool of threads and how to use a pool of processes. &lt;code&gt;sum_primes_thread(nums)&lt;/code&gt; uses threads and &lt;code&gt;sum_primes_process(nums)&lt;/code&gt; uses processes. Notice that the only difference between the two functions is that one uses &lt;code&gt;ThreadPoolExecutor&lt;/code&gt; while the other uses &lt;code&gt;ProcessPoolExecutor&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import concurrent.futures
+import time
+
+def is_prime(num):
+    if num &amp;lt;= 1:
+        return False
+    elif num &amp;lt;= 3:
+        return True
+    elif num%2 == 0 or num%3 == 0:
+        return False
+    i = 5
+    while i*i &amp;lt;= num:
+        if num%i == 0 or num%(i+2) == 0:
+            return False
+        i += 6
+    return True
+
+def find_sum(num):
+    sum_of_primes = 0
+
+    ix = 2
+
+    while ix &amp;lt;= num:
+        if is_prime(ix):
+            sum_of_primes += ix
+        ix += 1
+
+    return sum_of_primes
+
+def sum_primes_thread(nums):
+    with concurrent.futures.ThreadPoolExecutor(max_workers = 4) as executor:
+        for number, sum_res in zip(nums, executor.map(find_sum, nums)):
+            print(&amp;quot;{} : Sum = {}&amp;quot;.format(number, sum_res))
+
+def sum_primes_process(nums):
+    with concurrent.futures.ProcessPoolExecutor(max_workers = 4) as executor:
+        for number, sum_res in zip(nums, executor.map(find_sum, nums)):
+            print(&amp;quot;{} : Sum = {}&amp;quot;.format(number, sum_res))
+
+if __name__ == &#39;__main__&#39;:
+    nums = [100000, 200000, 300000]
+    start = time.time()
+    sum_primes_thread(nums)
+    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output when executing &lt;code&gt;sum_primes_process&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;100000 : Sum = 454396537
+200000 : Sum = 1709600813
+300000 : Sum = 3709507114
+Time taken = 0.71783
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output when executing &lt;code&gt;sum_primes_thread&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;100000 : Sum = 454396537
+200000 : Sum = 1709600813
+300000 : Sum = 3709507114
+Time taken = 1.23388
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This was a simple example to demonstrate how to use pools of threads and processes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; : Don&amp;rsquo;t use threads for CPU intensive tasks.&lt;/p&gt;
+
+&lt;p&gt;Though the callables themselves are executed asynchronously, the results are printed in the order they were called. The output can be displayed asynchronously also, as I demonstrate in the following example.&lt;/p&gt;
+
+&lt;p&gt;This program just retrieves the titles of web pages.&lt;/p&gt;
+
+&lt;p&gt;The output is displayed as and when a request is completed, so the order of the output usually changes between multiple runs of the program.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;concurrent.futures.as_completed(iterable_of_futures)&lt;/code&gt; method accepts an iterable of &lt;code&gt;Future&lt;/code&gt; objects. The iterable is a dictionary in this program, but other iterables can also be used (eg- list).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import concurrent.futures
+import time
+import requests
+import bs4
+import os
+
+def load_url(current_url):
+    res = requests.get(current_url)
+    res.raise_for_status()
+
+    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
+    current_title = current_page.select(&#39;title&#39;)[0].getText()
+    return current_title
+
+def process_urls_thread_alt(urls):
+    with concurrent.futures.ThreadPoolExecutor(max_workers = 4) as executor:
+        future_to_url = {executor.submit(load_url, url): url for url in urls}
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                data = future.result()
+            except Exception as exc:
+                print(&#39;%r generated an exception: %s&#39; % (url, exc))
+            else:
+                print(&amp;quot;{} : Url = {}&amp;quot;.format(data, url))
+
+
+def process_urls_process_alt(urls):
+    with concurrent.futures.ProcessPoolExecutor(max_workers = 4) as executor:
+        future_to_url = {executor.submit(load_url, url): url for url in urls}
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                data = future.result()
+            except Exception as exc:
+                print(&#39;%r generated an exception: %s&#39; % (url, exc))
+            else:
+                print(&amp;quot;{} : Url = {}&amp;quot;.format(data, url))
+
+if __name__ == &#39;__main__&#39;:
+    url_list = [&amp;quot;https://www.google.com&amp;quot;, &amp;quot;https://www.ploggingdev.com/2016/11/beginning-python-3/&amp;quot;, &amp;quot;https://www.ploggingdev.com/archive/&amp;quot;, &amp;quot;https://www.ploggingdev.com/2016/11/data-types-in-python-3/&amp;quot;, &amp;quot;https://www.ploggingdev.com/2016/11/strings-in-python-3/&amp;quot;]
+    start = time.time()
+    process_urls_process_alt(url_list)
+    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output of the program (same when using threads or processes):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Google : Url = https://www.google.com
+Beginning Python 3 : Url = https://www.ploggingdev.com/2016/11/beginning-python-3/
+Archive : Url = https://www.ploggingdev.com/archive/
+Strings in Python 3 : Url = https://www.ploggingdev.com/2016/11/strings-in-python-3/
+Data types in Python 3 : Url = https://www.ploggingdev.com/2016/11/data-types-in-python-3/
+Time taken = 1.82259
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are three exceptions that can occur:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;concurrent.futures.CancelledError&lt;/code&gt; is raised when a future is cancelled&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;exception concurrent.futures.TimeoutError&lt;/code&gt; is raised when a future operation exceeds the given timeout&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;concurrent.futures.process.BrokenProcessPool&lt;/code&gt; is raised when one of the workers of a ProcessPoolExecutor has terminated in a non-clean fashion&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In the above program they are handled in a catch all &lt;code&gt;except Exception&lt;/code&gt; block, but this can be modified depending on the requirements.&lt;/p&gt;
+
+&lt;p&gt;Code for todays blog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/concurrent_futures.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Reference : &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;Official library reference&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Multiprocessing and multithreading in Python 3</title>
@@ -2674,128 +2835,6 @@ I nested a module two levels deep.&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/Python/comments/1bbbwk/whats_your_opinion_on_what_to_include_in_init_py/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Functions in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/functions-in-python-3/</link>
-      <pubDate>Sun, 13 Nov 2016 10:30:06 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/functions-in-python-3/</guid>
-      <description>&lt;p&gt;A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
-example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def hello_function():
-    &#39;&#39;&#39;This is where the function documentation goes&#39;&#39;&#39;
-    print(&#39;Hello from function&#39;)
-
-hello_function()
-print(hello_function)
-#output
-Hello from function
-&amp;lt;function hello_function at 0x7f34bc7db378&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The &lt;code&gt;def&lt;/code&gt; keyword is used to define a function.&lt;/li&gt;
-&lt;li&gt;It is followed by the function name, argument list(if any), and a
-colon &lt;code&gt;:&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;The function body is indented by 4 spaces.&lt;/li&gt;
-&lt;li&gt;The first line of a function body is a
-&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings&#34;&gt;docstring&lt;/a&gt;,
-which is documentation for the function. It&amp;rsquo;s a good practice to always include the docstring.&lt;/li&gt;
-&lt;li&gt;The statements that constitute the function are placed after the docstring.&lt;/li&gt;
-&lt;li&gt;A function is an object, notice the output of &lt;code&gt;print(hello_function)&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;A function can return a value after it finishes execution. If a return value is not specified, the
-default value is &lt;code&gt;None&lt;/code&gt;. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_with_return():
-    &#39;&#39;&#39;This function returns a number&#39;&#39;&#39;
-    return 42
-return_value = function_with_return()
-print(return_value)
-#output
-42
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;return&lt;/code&gt; keyword is used to return a variable or value.&lt;/p&gt;
-
-&lt;p&gt;A function can accept arguments. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_args(arg1):
-    &#39;&#39;&#39;Prints the argument it recieves&#39;&#39;&#39;
-    print(arg1)
-function_args(&#39;My argument&#39;)
-#output
-My argument
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is possible to have default arguments. When an argument is not provided, a default value is used.
-Example :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_default_args(arg1=42):
-    &#39;&#39;&#39;A function with a default argument&#39;&#39;&#39;
-    print(arg1)
-function_default_args(34)
-function_default_args()
-#output
-34
-42
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Keyword arguments are specified by explicitly stating which argument a value belongs to. Very poor
-explanation, let the code speak:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_kwargs(name=&#39;no name&#39;, age=42):
-    &#39;&#39;&#39;Keyword arguments demo&#39;&#39;&#39;
-    print(name, &#39; &#39;, age)
-function_kwargs(age=34,name=&#39;my name&#39;)
-function_kwargs(name=&#39;my name&#39;,age=34)
-#output
-my name   34
-my name   34
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is possible to mix keyword and positional arguments. Keyword arguments should always come after
-positional arguments. The
-&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments&#34;&gt;official ducumentation&lt;/a&gt; explains
-this concept well.&lt;/p&gt;
-
-&lt;p&gt;Arbitrary argument lists are those whose content length can vary. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def function_variable_args(*args):
-    &#39;&#39;&#39;This function prints a variable number of arguments&#39;&#39;&#39;
-    print(&#39; &#39;.join(*args))
-variable_args1 = &#39;python&#39;, &#39;ruby&#39;, &#39;php&#39;
-function_variable_args(variable_args1)
-variable_args2 = &#39;python&#39;, &#39;ruby&#39;, &#39;php&#39;, &#39;java&#39;
-function_variable_args(variable_args2)
-#output
-python ruby php
-python ruby php java
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I don&amp;rsquo;t understand arbitrary argument lists well. The same result can be achieved by using a normal tuple
-without the &lt;code&gt;*args&lt;/code&gt;. I&amp;rsquo;ll come back to this later.&lt;/p&gt;
-
-&lt;p&gt;The official documentation also contains tl;dr about the coding style in Python. Link
-&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#intermezzo-coding-style&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To understand how arguments are passed to functions and how arguments being mutable or immutable
-affects the values in the outer scope, refer
-&lt;a href=&#34;http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/functions.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#defining-functions&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

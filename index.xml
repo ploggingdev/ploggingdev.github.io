@@ -8,8 +8,112 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Thu, 12 Jan 2017 03:14:07 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 18 Jan 2017 00:16:32 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Boardpin Part 1 : Setting up Django on Ubuntu 16.04</title>
+      <link>https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/</link>
+      <pubDate>Wed, 18 Jan 2017 00:16:32 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/</guid>
+      <description>&lt;p&gt;Yes, the name is a play on Pinboard, the bookmarking service created by &lt;em&gt;idlewords&lt;/em&gt; (HN username).&lt;/p&gt;
+
+&lt;p&gt;What is Boardpin?&lt;/p&gt;
+
+&lt;p&gt;Boardpin is a website written in Django that stores and organizes bookmarks. It uses PostgreSQL as the database backend.&lt;/p&gt;
+
+&lt;p&gt;I am building Boardpin to learn how to use Django.&lt;/p&gt;
+
+&lt;p&gt;I have not decided all the features that I will implement, but the basic idea is this: users signup and they can add/delete/update their bookmarks.&lt;/p&gt;
+
+&lt;p&gt;The first step is to install the dependencies (Python 3 and PostgreSQL):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;During installation, PostgreSQL creates a user named &lt;code&gt;postgres&lt;/code&gt;. I will login to the postgres shell using this user:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo -u postgres psql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next, I will create a database and associated user for this project:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE DATABASE boardpin;
+CREATE USER ubuntu_username WITH PASSWORD &#39;choose_complex_password&#39;;
+ALTER ROLE ubuntu_username SET client_encoding TO &#39;utf8&#39;;
+ALTER ROLE ubuntu_username SET default_transaction_isolation TO &#39;read committed&#39;;
+ALTER ROLE ubuntu_username SET timezone TO &#39;UTC&#39;;
+GRANT ALL PRIVILEGES ON DATABASE boardpin TO ubuntu_username;
+\q
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The database is called &lt;code&gt;boardpin&lt;/code&gt;. The database username is the same as the current Ubuntu username. I replaced &lt;code&gt;choose_complex_password&lt;/code&gt; with the real password when I executed the command.&lt;/p&gt;
+
+&lt;p&gt;I will use a virtual environment for this Django project.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir venv
+cd venv
+#create venv
+python3 -m venv boardpin
+#activate
+source boardpin/bin/activate
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install Django and &lt;code&gt;psycopg2&lt;/code&gt;, which is an adapter used to connect to PostgreSQL.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install django psycopg2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Creating the Django project:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ../
+django-admin.py startproject boardpin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To avoid committing database connection details and the &lt;code&gt;DJANGO_SECRET_KEY&lt;/code&gt; variable, I will store these details in &lt;code&gt;~/.bashrc&lt;/code&gt; as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export boardpin_secret_key=&amp;quot;SECRET&amp;quot;
+export boardpin_db_name=&amp;quot;boardpin&amp;quot;
+export boardpin_db_user=&amp;quot;UBUNTU_USERNAME&amp;quot;
+export boardpin_db_password=&amp;quot;PASSWORD&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I will read these values in the Django &lt;code&gt;settings.py&lt;/code&gt; located in &lt;code&gt;boardpin/boardpin/boardpin&lt;/code&gt;. I probably should not have created the outer boardpin directory to hold the &lt;code&gt;readme&lt;/code&gt; and &lt;code&gt;LICENSE&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Editing &lt;code&gt;settings.py&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SECRET_KEY = os.environ[&#39;boardpin_secret_key&#39;]
+
+DATABASES = {
+    &#39;default&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,
+        &#39;NAME&#39;: os.environ[&#39;boardpin_db_name&#39;],
+        &#39;USER&#39;: os.environ[&#39;boardpin_db_user&#39;],
+        &#39;PASSWORD&#39;: os.environ[&#39;boardpin_db_password&#39;],
+        &#39;HOST&#39;: &#39;localhost&#39;,
+        &#39;PORT&#39;: &#39;&#39;,
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It&amp;rsquo;s a good idea not to commit credentials to git.&lt;/p&gt;
+
+&lt;p&gt;To run the project, I changed directory into &lt;code&gt;boardpin/boardpin&lt;/code&gt; and ran the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;python manage.py runserver
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The development server started up at &lt;code&gt;http://127.0.0.1:8000/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for today, I will be blogging about learning Django by building Boardpin, so stay tuned for the next post.&lt;/p&gt;
+
+&lt;p&gt;You can view the code &lt;a href=&#34;https://github.com/ploggingdev/boardpin&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Reference used &lt;a href=&#34;https://docs.djangoproject.com/en/1.10/intro/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>concurrent.futures in Python 3</title>
@@ -1335,6 +1439,10 @@ st2)))
 
 &lt;p&gt;This page contains links to all posts on this site.&lt;/p&gt;
 
+&lt;h2 id=&#34;django-building-boardpin&#34;&gt;Django (Building Boardpin)&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/&#34;&gt;Boardpin Part 1 : Setting up Django on Ubuntu 16.04&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&#34;python&#34;&gt;Python&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/beginning-python-3/&#34;&gt;Beginning Python 3&lt;/a&gt;&lt;/p&gt;
@@ -2624,216 +2732,6 @@ Guido
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/venv.html&#34;&gt;Official docs&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://superuser.com/questions/1039369/how-to-create-a-python3-virtual-environment-as-of-2016&#34;&gt;Superuser&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/learnpython/comments/4hsudz/pyvenv_vs_virtualenv/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Classes and inheritance in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</link>
-      <pubDate>Sat, 19 Nov 2016 07:38:24 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</guid>
-      <description>&lt;p&gt;From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).&lt;/p&gt;
-
-&lt;p&gt;Features of classes in Python:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Multiple inheritance permitted&lt;/li&gt;
-&lt;li&gt;Derived class can override base class methods&lt;/li&gt;
-&lt;li&gt;Base class methods can be called using &lt;code&gt;super().method_name()&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Class members are dynamic, can be modified at runtime&lt;/li&gt;
-&lt;li&gt;Class members are public, methods are virtual (can be overridden)&lt;/li&gt;
-&lt;li&gt;The first parameter in a method is a reference to the calling object, usually &lt;code&gt;self&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Operator overloading is supported&lt;/li&gt;
-&lt;li&gt;Aliasing of objects is supported&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Classes are defined as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class ClassName:
-    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
-    statement_1
-    .
-    .
-    .
-    statement_n
-
-#create an instance of the class
-var = ClassName()
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Class variables are common to all instances and are often used to represent immutable data. An example is the &lt;code&gt;details&lt;/code&gt; variable in the below example.&lt;/p&gt;
-
-&lt;p&gt;An instance variable is unique to every instance of the class ie object. Examples are &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; variables in the following class.&lt;/p&gt;
-
-&lt;p&gt;To initialize an object, the &lt;code&gt;__init__(self)&lt;/code&gt; method is used. It&amp;rsquo;s like a constructor, thinking in terms of Java.&lt;/p&gt;
-
-&lt;p&gt;To specify how the contents of an object should be printed, the &lt;code&gt;__str__(self)&lt;/code&gt; method is used. When an object is printed using &lt;code&gt;print(object_variable)&lt;/code&gt;, the &lt;code&gt;__str__(self)&lt;/code&gt; method is called.&lt;/p&gt;
-
-&lt;p&gt;To format strings the &lt;code&gt;string.format()&lt;/code&gt; will be used. The &lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Difference between a function and a method: a function is a named grouping of statements while a method is a function that is associated with a specific class.&lt;/p&gt;
-
-&lt;p&gt;To define a method, it has to be defined inside a class and is called using &lt;code&gt;object.method()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Functions are of two types: pure and modifiers. Pure functions don&amp;rsquo;t modify the data it receives and is the model followed in functional programming. Modifier functions, as the name suggests, modify the data it receives. The cool thing about Python is that it allows different programming paradigms such as functional programming and object oriented programming, and you are free to use whichever programming paradigm suits you.&lt;/p&gt;
-
-&lt;p&gt;Operator overloading is possible in Python by overriding certain methods. Eg- override &lt;code&gt;__add__()&lt;/code&gt; to allow using the &lt;code&gt;+&lt;/code&gt; operator on instances of the class. To learn more refer &lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Objects can be copied using &lt;code&gt;copy.copy()&lt;/code&gt;. A new object is created with the same contents as the original object.&lt;/p&gt;
-
-&lt;p&gt;All these concepts are demonstrated in the following example.&lt;/p&gt;
-
-&lt;p&gt;Point class example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import copy
-
-class Point:
-    &amp;quot;&amp;quot;&amp;quot;A class to represent a point&amp;quot;&amp;quot;&amp;quot;
-
-    details = &amp;quot;Represent points&amp;quot;
-
-    def __init__(self,x=0,y=0):
-        self.x=x
-        self.y=y
-    
-    def __str__(self):
-        return &amp;quot;x={} y={}&amp;quot;.format(self.x,self.y)
-
-    def get_sum(self):
-        &amp;quot;&amp;quot;&amp;quot;Return sum of x and y components&amp;quot;&amp;quot;&amp;quot;
-        return self.x + self.y
-    
-    def add_point(self,to_add):
-        &amp;quot;&amp;quot;&amp;quot;Update self by add x and y component of new_point&amp;quot;&amp;quot;&amp;quot;
-        self.x += to_add.x
-        self.y += to_add.y
-
-    def __add__(self,new_point):
-        self.x += new_point.x
-        self.y += new_point.y
-        return self
-
-def print_point(point):
-    &amp;quot;&amp;quot;&amp;quot;print contents of given point&amp;quot;&amp;quot;&amp;quot;
-    print(&amp;quot;x={} y={}&amp;quot;.format(point.x,point.y))
-
-point = Point(10,20)
-print(point)
-
-print(point.details)
-print(point.get_sum())
-
-new_point = Point(2,4)
-print(new_point)
-
-point.add_point(new_point)
-print(point)
-
-print_point(new_point)
-
-copied_point = copy.copy(point)
-copied_point.x = 5
-copied_point.y = 5
-print(point)
-print(copied_point)
-
-print(copied_point + new_point)
-#output
-x=10 y=20
-Represent points
-30
-x=2 y=4
-x=12 y=24
-x=2 y=4
-x=12 y=24
-x=5 y=5
-x=7 y=9
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A note about namespaces and scopes: a namespace is a mapping of names to objects. Eg- global namespace, module namespace, function namespace. A scope is a textual region where the namespace is accessible.&lt;/p&gt;
-
-&lt;p&gt;During execution, there are at least three nested scopes whose namespaces are directly accessible:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Innermost scope, an &lt;code&gt;if&lt;/code&gt; block or a loop&lt;/li&gt;
-&lt;li&gt;Enclosing function scope&lt;/li&gt;
-&lt;li&gt;Module scope&lt;/li&gt;
-&lt;li&gt;Global scope&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Variables can be declared as &lt;code&gt;nonlocal&lt;/code&gt; or &lt;code&gt;global&lt;/code&gt;. If they are not specified, he defualt is the current scope (need to check). A &lt;code&gt;nonlocal&lt;/code&gt; statement is used to indicate a variable has to be rebound in the enclosing scope. A &lt;code&gt;global&lt;/code&gt; statement indicates that a variable has to be rebound in the global scope. Note that this is applicable only for rebinding variables, not for modifying mutable data types. To learn more refer &lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Inheritance is supported. Syntax is as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class BaseClass:
-    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
-    statement_1
-    .
-    .
-    .
-    statement_n
-
-class DerivedClass(BaseClass):
-    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
-    statement_1
-    .
-    .
-    .
-    statement_n
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Multiple inheritance is supprted using &lt;code&gt;class Derived(Base1,Base2):&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;It should be noted that multiple inheritance can introduce a situation where multiple base classes inherit from the same base class. To learn more about how method resolution works refer &lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#multiple-inheritance&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A simple example of inheritance:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class Vehicle(object):
-    &amp;quot;&amp;quot;&amp;quot;Represents a vehicle&amp;quot;&amp;quot;&amp;quot;
-
-    def __init__(self,engine_power=100):
-        self.engine_power = engine_power
-    
-    def __str__(self):
-        return &amp;quot;Engine power : {}HP&amp;quot;.format(self.engine_power)
-    
-    def print_name(self):
-        print(&amp;quot;From vehicle&amp;quot;)
-    
-class Car(Vehicle):
-    &amp;quot;&amp;quot;&amp;quot;Represents a car&amp;quot;&amp;quot;&amp;quot;
-
-    def __init__(self,wheels=4):
-        super().__init__()
-        self.wheels = wheels
-    
-    def __str__(self):
-        return &amp;quot;Engine power : {}HP , Wheels = {}&amp;quot;.format(self.engine_power,self.wheels)
-    
-    def print_name(self):
-        print(&amp;quot;From vehicle&amp;quot;)
-
-car = Car()
-print(car)
-car.print_name()
-#output
-Engine power : 100HP , Wheels = 4
-From vehicle
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/classes.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;Reference&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Class_(computer_programming)&#34;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;String formatting&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

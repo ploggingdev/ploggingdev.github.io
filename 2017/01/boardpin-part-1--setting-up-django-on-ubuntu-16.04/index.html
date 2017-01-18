@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Archive</title>
+  <title>Boardpin Part 1 : Setting up Django on Ubuntu 16.04</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Archive">
+  <meta name="description" content="Boardpin Part 1 : Setting up Django on Ubuntu 16.04">
 
+  
+  <meta name="keywords" content="python 3, django, ubuntu">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -26,9 +28,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Archive" />
+  <meta property="og:title" content="Boardpin Part 1 : Setting up Django on Ubuntu 16.04" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/archive//" />
+  <meta property="og:url" content="/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -114,10 +116,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Archive</h1>
+        <div class="post-heading">
+          <h1>Boardpin Part 1 : Setting up Django on Ubuntu 16.04</h1>
       
       
+      
+      <span class="post-meta">Posted on January 18, 2017</span>
       
         </div>
       </div>
@@ -129,81 +133,125 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Yes, the name is a play on Pinboard, the bookmarking service created by <em>idlewords</em> (HN username).</p>
+
+<p>What is Boardpin?</p>
+
+<p>Boardpin is a website written in Django that stores and organizes bookmarks. It uses PostgreSQL as the database backend.</p>
+
+<p>I am building Boardpin to learn how to use Django.</p>
+
+<p>I have not decided all the features that I will implement, but the basic idea is this: users signup and they can add/delete/update their bookmarks.</p>
+
+<p>The first step is to install the dependencies (Python 3 and PostgreSQL):</p>
+
+<pre><code>sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
+</code></pre>
+
+<p></p>
+
+<p>During installation, PostgreSQL creates a user named <code>postgres</code>. I will login to the postgres shell using this user:</p>
+
+<pre><code>sudo -u postgres psql
+</code></pre>
+
+<p>Next, I will create a database and associated user for this project:</p>
+
+<pre><code>CREATE DATABASE boardpin;
+CREATE USER ubuntu_username WITH PASSWORD 'choose_complex_password';
+ALTER ROLE ubuntu_username SET client_encoding TO 'utf8';
+ALTER ROLE ubuntu_username SET default_transaction_isolation TO 'read committed';
+ALTER ROLE ubuntu_username SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE boardpin TO ubuntu_username;
+\q
+</code></pre>
+
+<p>The database is called <code>boardpin</code>. The database username is the same as the current Ubuntu username. I replaced <code>choose_complex_password</code> with the real password when I executed the command.</p>
+
+<p>I will use a virtual environment for this Django project.</p>
+
+<pre><code>mkdir venv
+cd venv
+#create venv
+python3 -m venv boardpin
+#activate
+source boardpin/bin/activate
+</code></pre>
+
+<p>Install Django and <code>psycopg2</code>, which is an adapter used to connect to PostgreSQL.</p>
+
+<pre><code>pip install django psycopg2
+</code></pre>
+
+<p>Creating the Django project:</p>
+
+<pre><code>cd ../
+django-admin.py startproject boardpin
+</code></pre>
+
+<p>To avoid committing database connection details and the <code>DJANGO_SECRET_KEY</code> variable, I will store these details in <code>~/.bashrc</code> as follows:</p>
+
+<pre><code>export boardpin_secret_key=&quot;SECRET&quot;
+export boardpin_db_name=&quot;boardpin&quot;
+export boardpin_db_user=&quot;UBUNTU_USERNAME&quot;
+export boardpin_db_password=&quot;PASSWORD&quot;
+</code></pre>
+
+<p>I will read these values in the Django <code>settings.py</code> located in <code>boardpin/boardpin/boardpin</code>. I probably should not have created the outer boardpin directory to hold the <code>readme</code> and <code>LICENSE</code>.</p>
+
+<p>Editing <code>settings.py</code>:</p>
+
+<pre><code>SECRET_KEY = os.environ['boardpin_secret_key']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ['boardpin_db_name'],
+        'USER': os.environ['boardpin_db_user'],
+        'PASSWORD': os.environ['boardpin_db_password'],
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+</code></pre>
+
+<p>It&rsquo;s a good idea not to commit credentials to git.</p>
+
+<p>To run the project, I changed directory into <code>boardpin/boardpin</code> and ran the following command:</p>
+
+<pre><code>python manage.py runserver
+</code></pre>
+
+<p>The development server started up at <code>http://127.0.0.1:8000/</code>.</p>
+
+<p>That&rsquo;s it for today, I will be blogging about learning Django by building Boardpin, so stay tuned for the next post.</p>
+
+<p>You can view the code <a href="https://github.com/ploggingdev/boardpin">here</a>.</p>
+
+<p>Reference used <a href="https://docs.djangoproject.com/en/1.10/intro/">here</a>.</p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/" data-toggle="tooltip" data-placement="top" title="concurrent.futures in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
       
-
-<p>This page contains links to all posts on this site.</p>
-
-<h2 id="django-building-boardpin">Django (Building Boardpin)</h2>
-
-<p><a href="/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/">Boardpin Part 1 : Setting up Django on Ubuntu 16.04</a></p>
-
-<h2 id="python">Python</h2>
-
-<p><a href="/2016/11/beginning-python-3/">Beginning Python 3</a></p>
-
-<p><a href="/2016/11/data-types-in-python-3/">Data types in Python 3</a></p>
-
-<p><a href="/2016/11/strings-in-python-3/">Strings in Python 3</a></p>
-
-<p><a href="/2016/11/lists-in-python-3/">Lists in Python 3</a></p>
-
-<p><a href="/2016/11/tuples-in-python-3/">Tuples in Python 3</a></p>
-
-<p><a href="/2016/11/ranges-in-python-3/">Ranges in Python 3</a></p>
-
-<p><a href="/2016/11/sets-in-python-3/">Sets in Python 3</a></p>
-
-<p><a href="/2016/11/dictionaries-in-python-3/">Dictionaries in Python 3</a></p>
-
-<p><a href="/2016/11/control-flow-tools-in-python-3/">Control flow tools in Python 3</a></p>
-
-<p><a href="/2016/11/functions-in-python-3/">Functions in Python 3</a></p>
-
-<p><a href="/2016/11/modules-and-packages-in-python-3/">Modules and packages in Python 3</a></p>
-
-<p><a href="/2016/11/classes-and-inheritance-in-python-3/">Classes and inheritance in Python 3</a></p>
-
-<p><a href="/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></p>
-
-<p><a href="/2016/11/file-io-and-json-in-python-3/">File IO and JSON in Python 3</a></p>
-
-<p><a href="/2016/11/errors-and-exceptions-in-python-3/">Errors and exceptions in Python 3</a></p>
-
-<p><a href="/2016/11/unit-testing-in-python-3/">Unit testing in Python 3</a></p>
-
-<p><a href="/2016/11/floating-point-arithmetic-issues-in-python-3/">Floating point arithmetic issues in Python 3</a></p>
-
-<p><a href="/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></p>
-
-<p><a href="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">List comprehensions, iterators, generators and generator expressions in Python 3</a></p>
-
-<p><a href="/2016/12/performance-measurement-in-python-3/">Performance measurement in Python 3</a></p>
-
-<p><a href="/2016/12/decorators-in-python-3/">Decorators in Python 3</a></p>
-
-<p><a href="/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">Scraping my website using requests and BeautifulSoup</a></p>
-
-<p><a href="/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">Analyzing programming language statistics of 100,000 Github repositories</a></p>
-
-<p><a href="/2017/01/multiprocessing-and-multithreading-in-python-3/">Multiprocessing and multithreading in Python 3</a></p>
-
-<p><a href="/2017/01/concurrent.futures-in-python-3/">concurrent.futures in Python 3</a></p>
-
-<h1 id="miscellaneous">Miscellaneous</h1>
-
-<p><a href="/2016/11/hello-world/">Hello World</a></p>
-
       
-        <div class="disqus-comments">
+      <div class="disqus-comments">
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ploggingdev';
-    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/archive\/';
-    var disqus_title = 'Archive';
-    var disqus_url = 'https:\/\/www.ploggingdev.com\/archive\/';
+    var disqus_identifier = 'https:\/\/www.ploggingdev.com\/2017\/01\/boardpin-part-1--setting-up-django-on-ubuntu-16.04\/';
+    var disqus_title = 'Boardpin Part 1 : Setting up Django on Ubuntu 16.04';
+    var disqus_url = 'https:\/\/www.ploggingdev.com\/2017\/01\/boardpin-part-1--setting-up-django-on-ubuntu-16.04\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -213,8 +261,9 @@
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        </div>
+      </div>
       
+
     </div>
   </div>
 </div>

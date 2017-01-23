@@ -8,112 +8,8 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Wed, 18 Jan 2017 00:16:32 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2017 03:14:07 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>Boardpin Part 1 : Setting up Django on Ubuntu 16.04</title>
-      <link>https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/</link>
-      <pubDate>Wed, 18 Jan 2017 00:16:32 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/</guid>
-      <description>&lt;p&gt;Yes, the name is a play on Pinboard, the bookmarking service created by &lt;em&gt;idlewords&lt;/em&gt; (HN username).&lt;/p&gt;
-
-&lt;p&gt;What is Boardpin?&lt;/p&gt;
-
-&lt;p&gt;Boardpin is a website written in Django that stores and organizes bookmarks. It uses PostgreSQL as the database backend.&lt;/p&gt;
-
-&lt;p&gt;I am building Boardpin to learn how to use Django.&lt;/p&gt;
-
-&lt;p&gt;I have not decided all the features that I will implement, but the basic idea is this: users signup and they can add/delete/update their bookmarks.&lt;/p&gt;
-
-&lt;p&gt;The first step is to install the dependencies (Python 3 and PostgreSQL):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;During installation, PostgreSQL creates a user named &lt;code&gt;postgres&lt;/code&gt;. I will login to the postgres shell using this user:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo -u postgres psql
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Next, I will create a database and associated user for this project:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CREATE DATABASE boardpin;
-CREATE USER ubuntu_username WITH PASSWORD &#39;choose_complex_password&#39;;
-ALTER ROLE ubuntu_username SET client_encoding TO &#39;utf8&#39;;
-ALTER ROLE ubuntu_username SET default_transaction_isolation TO &#39;read committed&#39;;
-ALTER ROLE ubuntu_username SET timezone TO &#39;UTC&#39;;
-GRANT ALL PRIVILEGES ON DATABASE boardpin TO ubuntu_username;
-\q
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The database is called &lt;code&gt;boardpin&lt;/code&gt;. The database username is the same as the current Ubuntu username. I replaced &lt;code&gt;choose_complex_password&lt;/code&gt; with the real password when I executed the command.&lt;/p&gt;
-
-&lt;p&gt;I will use a virtual environment for this Django project.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir venv
-cd venv
-#create venv
-python3 -m venv boardpin
-#activate
-source boardpin/bin/activate
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install Django and &lt;code&gt;psycopg2&lt;/code&gt;, which is an adapter used to connect to PostgreSQL.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pip install django psycopg2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Creating the Django project:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd ../
-django-admin.py startproject boardpin
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To avoid committing database connection details and the &lt;code&gt;DJANGO_SECRET_KEY&lt;/code&gt; variable, I will store these details in &lt;code&gt;~/.bashrc&lt;/code&gt; as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export boardpin_secret_key=&amp;quot;SECRET&amp;quot;
-export boardpin_db_name=&amp;quot;boardpin&amp;quot;
-export boardpin_db_user=&amp;quot;UBUNTU_USERNAME&amp;quot;
-export boardpin_db_password=&amp;quot;PASSWORD&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I will read these values in the Django &lt;code&gt;settings.py&lt;/code&gt; located in &lt;code&gt;boardpin/boardpin/boardpin&lt;/code&gt;. I probably should not have created the outer boardpin directory to hold the &lt;code&gt;readme&lt;/code&gt; and &lt;code&gt;LICENSE&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Editing &lt;code&gt;settings.py&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;SECRET_KEY = os.environ[&#39;boardpin_secret_key&#39;]
-
-DATABASES = {
-    &#39;default&#39;: {
-        &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,
-        &#39;NAME&#39;: os.environ[&#39;boardpin_db_name&#39;],
-        &#39;USER&#39;: os.environ[&#39;boardpin_db_user&#39;],
-        &#39;PASSWORD&#39;: os.environ[&#39;boardpin_db_password&#39;],
-        &#39;HOST&#39;: &#39;localhost&#39;,
-        &#39;PORT&#39;: &#39;&#39;,
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It&amp;rsquo;s a good idea not to commit credentials to git.&lt;/p&gt;
-
-&lt;p&gt;To run the project, I changed directory into &lt;code&gt;boardpin/boardpin&lt;/code&gt; and ran the following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;python manage.py runserver
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The development server started up at &lt;code&gt;http://127.0.0.1:8000/&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s it for today, I will be blogging about learning Django by building Boardpin, so stay tuned for the next post.&lt;/p&gt;
-
-&lt;p&gt;You can view the code &lt;a href=&#34;https://github.com/ploggingdev/boardpin&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Reference used &lt;a href=&#34;https://docs.djangoproject.com/en/1.10/intro/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
     
     <item>
       <title>concurrent.futures in Python 3</title>
@@ -2870,6 +2766,75 @@ From vehicle
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;Reference&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Class_(computer_programming)&#34;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;String formatting&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modules and packages in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</link>
+      <pubDate>Wed, 16 Nov 2016 14:13:24 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</guid>
+      <description>&lt;p&gt;A module is a file that contains Python definitions and statements with a &lt;code&gt;.py&lt;/code&gt; extension. So technically,
+all the code that I posted so far has been in the form of modules. Modules are a way to organize code
+in Python so that closely related functions and definitions are grouped together into a module.
+It makes code reusable.&lt;/p&gt;
+
+&lt;p&gt;A related concept is packages. Packages are just a way to organize modules into a namespace. A package
+can be thought of as a directory that contains modules and subpackages. For Python to treat a directory as
+a package, a file named &lt;code&gt;__init__.py&lt;/code&gt; is required in the directory. The &lt;code&gt;__init__.py&lt;/code&gt; can also contain
+code that will be executed when the package is first imported, typically initialization code.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The following example clarifies these concepts:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A file named &lt;code&gt;module_demo.py&lt;/code&gt; is created.&lt;/li&gt;
+&lt;li&gt;A directory named &lt;code&gt;modules&lt;/code&gt; is created.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;modules&lt;/code&gt; directory contains an empty &lt;code&gt;__init__.py&lt;/code&gt; to signify that it is a package.&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;modules&lt;/code&gt; package, a &lt;code&gt;useless_print.py&lt;/code&gt; file is created, which is a module.&lt;/li&gt;
+&lt;li&gt;To demonstrate submodules, a &lt;code&gt;submodule&lt;/code&gt; directory is created inside &lt;code&gt;modules&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Inside &lt;code&gt;submodule&lt;/code&gt;, an &lt;code&gt;__init__.py&lt;/code&gt; file is created to signify that it is a package.&lt;/li&gt;
+&lt;li&gt;Inside &lt;code&gt;submodule&lt;/code&gt;, a module named &lt;code&gt;another_print.py&lt;/code&gt; is created.&lt;/li&gt;
+&lt;li&gt;The functions &lt;code&gt;useless_print&lt;/code&gt; and &lt;code&gt;another_print&lt;/code&gt; from the modules by the same name are imported
+into &lt;code&gt;module_demo.py&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The imported functions are invoked from &lt;code&gt;module_demo.py&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;text
+some more text
+some more text
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;By adding&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:
+    import sys
+    #pass sys.argv to relevant function
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;a module can be used as a script and a module. Executing the module with &lt;code&gt;python module.py arguments&lt;/code&gt; , the code in the module will be executed, just as if you imported it, but with the &lt;code&gt;__name__&lt;/code&gt; set to &lt;code&gt;__main__&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The source code can be found in the &lt;a href=&#34;https://github.com/ploggingdev/python_learn&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A few notes about modules and packages in Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Be explicit: import only what is required.&lt;/li&gt;
+&lt;li&gt;Avoid &lt;code&gt;from modules import *&lt;/code&gt;. It clutters the namespace and can result in namespace clashes.&lt;/li&gt;
+&lt;li&gt;Avoiding nesting modules as far as possible, prefer a flat structure. For the purpose of demonstration,
+I nested a module two levels deep.&lt;/li&gt;
+&lt;li&gt;Intra package references &lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html#intra-package-references&#34;&gt;info&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/Python/comments/1bbbwk/whats_your_opinion_on_what_to_include_in_init_py/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

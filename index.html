@@ -122,39 +122,6 @@
             
             
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/">
-          	  <h2 class="post-title">Boardpin Part 1 : Setting up Django on Ubuntu 16.04</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on January 18, 2017
-              </p>
-
-              <div class="post-entry">
-                <p>Yes, the name is a play on Pinboard, the bookmarking service created by <em>idlewords</em> (HN username).</p>
-
-<p>What is Boardpin?</p>
-
-<p>Boardpin is a website written in Django that stores and organizes bookmarks. It uses PostgreSQL as the database backend.</p>
-
-<p>I am building Boardpin to learn how to use Django.</p>
-
-<p>I have not decided all the features that I will implement, but the basic idea is this: users signup and they can add/delete/update their bookmarks.</p>
-
-<p>The first step is to install the dependencies (Python 3 and PostgreSQL):</p>
-
-<pre><code>sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
-</code></pre>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2017/01/boardpin-part-1--setting-up-django-on-ubuntu-16.04/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/">
           	  <h2 class="post-title">concurrent.futures in Python 3</h2>
 
@@ -286,6 +253,49 @@ for link in urls:
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/">
+          	  <h2 class="post-title">Decorators in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on December 4, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.</p>
+
+<p>Example:</p>
+
+<pre><code>def my_decorator(func):
+    def inner():
+        print(&quot;Decoration before function call&quot;)
+        func()
+        print(&quot;Decoration after function call&quot;)
+
+    return inner
+
+@my_decorator
+def simple_print():
+    print(&quot;Hello from simple_print&quot;)
+
+simple_print()
+print()
+
+#output
+Decoration before function call
+Hello from simple_print
+Decoration after function call
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

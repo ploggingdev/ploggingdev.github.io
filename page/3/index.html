@@ -122,50 +122,6 @@
             
             
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/">
-          	  <h2 class="post-title">Unit testing in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 27, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.</p>
-
-<p>The <code>unittest</code> framework is a built-in unit testing framework in Python.</p>
-
-<p>Some terminology:</p>
-
-<ul>
-<li>test fixture: the preparation needed to perform one or more tests, and any associate cleanup actions</li>
-<li>test case: individual unit of testing which checks for the correct response for a given input</li>
-</ul>
-
-<p>I will be covering a minimal subset of <code>unittest</code> that will be enough to understand what unit testing is and how to go about writing test cases. To learn more, refer to the <a href="https://docs.python.org/3/library/unittest.html">official docs</a>.</p>
-
-<p>A simple example:</p>
-
-<pre><code>import unittest
-
-class Test2(unittest.TestCase):
-    
-    def test_simple(self):
-        self.assertEqual(2+2,4)
-
-if __name__ == '__main__':
-    unittest.main()
-</code></pre>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/">
           	  <h2 class="post-title">Errors and exceptions in Python 3</h2>
 
@@ -305,6 +261,34 @@ Age?
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/">
+          	  <h2 class="post-title">Modules and packages in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on November 16, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>A module is a file that contains Python definitions and statements with a <code>.py</code> extension. So technically,
+all the code that I posted so far has been in the form of modules. Modules are a way to organize code
+in Python so that closely related functions and definitions are grouped together into a module.
+It makes code reusable.</p>
+
+<p>A related concept is packages. Packages are just a way to organize modules into a namespace. A package
+can be thought of as a directory that contains modules and subpackages. For Python to treat a directory as
+a package, a file named <code>__init__.py</code> is required in the directory. The <code>__init__.py</code> can also contain
+code that will be executed when the package is first imported, typically initialization code.</p>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

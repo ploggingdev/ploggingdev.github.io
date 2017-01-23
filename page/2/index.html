@@ -122,49 +122,6 @@
             
             
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/">
-          	  <h2 class="post-title">Decorators in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on December 4, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.</p>
-
-<p>Example:</p>
-
-<pre><code>def my_decorator(func):
-    def inner():
-        print(&quot;Decoration before function call&quot;)
-        func()
-        print(&quot;Decoration after function call&quot;)
-
-    return inner
-
-@my_decorator
-def simple_print():
-    print(&quot;Hello from simple_print&quot;)
-
-simple_print()
-print()
-
-#output
-Decoration before function call
-Hello from simple_print
-Decoration after function call
-</code></pre>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/">
           	  <h2 class="post-title">Performance measurement in Python 3</h2>
 
@@ -314,6 +271,50 @@ False
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/">
+          	  <h2 class="post-title">Unit testing in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on November 27, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.</p>
+
+<p>The <code>unittest</code> framework is a built-in unit testing framework in Python.</p>
+
+<p>Some terminology:</p>
+
+<ul>
+<li>test fixture: the preparation needed to perform one or more tests, and any associate cleanup actions</li>
+<li>test case: individual unit of testing which checks for the correct response for a given input</li>
+</ul>
+
+<p>I will be covering a minimal subset of <code>unittest</code> that will be enough to understand what unit testing is and how to go about writing test cases. To learn more, refer to the <a href="https://docs.python.org/3/library/unittest.html">official docs</a>.</p>
+
+<p>A simple example:</p>
+
+<pre><code>import unittest
+
+class Test2(unittest.TestCase):
+    
+    def test_simple(self):
+        self.assertEqual(2+2,4)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

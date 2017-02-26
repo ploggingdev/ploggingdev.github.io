@@ -8,8 +8,67 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Thu, 12 Jan 2017 03:14:07 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 26 Feb 2017 02:04:45 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>FizzBuzz</title>
+      <link>https://www.ploggingdev.com/2017/02/fizzbuzz/</link>
+      <pubDate>Sun, 26 Feb 2017 02:04:45 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/02/fizzbuzz/</guid>
+      <description>&lt;p&gt;What is the Fizz-Buzz test?&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s a programming interview question designed to filter out candidates who can&amp;rsquo;t program.&lt;/p&gt;
+
+&lt;p&gt;Problem statement : Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.&lt;/p&gt;
+
+&lt;p&gt;Out of curiousity, I decided to solve this problem.&lt;/p&gt;
+
+&lt;p&gt;My first attempt :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for ix in range(1,101):
+	if ix%3 == 0 and ix%5 == 0:
+		print(&amp;quot;FizzBuzz&amp;quot;)
+	elif ix%5 == 0:
+		print(&amp;quot;Buzz&amp;quot;)
+	elif ix%3 == 0:
+		print(&amp;quot;Fizz&amp;quot;)
+	else:
+		print(ix)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Output after running &lt;code&gt;python3 sol1.py&lt;/code&gt; can be found &lt;a href=&#34;https://gist.github.com/ploggingdev/319de9494a9c7c7006c171413989eaa3&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The above code be improved by removing redundant checking of divisibility by 3 and 5. Also important to note that FizzBuzz = Fizz + Buzz.&lt;/p&gt;
+
+&lt;p&gt;Improved version :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for ix in range(1,101):
+    res = &#39;&#39;
+    if ix%3 == 0:
+        res += &#39;Fizz&#39;
+    if ix%5 == 0:
+        res += &amp;quot;Buzz&amp;quot;
+    print(res or ix)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let me explain the &lt;code&gt;print(res or ix)&lt;/code&gt; part : the &lt;code&gt;or&lt;/code&gt; operator is a short circuit operator, so &lt;code&gt;res&lt;/code&gt; is printed if it is not empty (it&amp;rsquo;s either a multiple of 3, 5 or both), otherwise &lt;code&gt;ix&lt;/code&gt; is printed.&lt;/p&gt;
+
+&lt;p&gt;Links :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://wiki.c2.com/?FizzBuzzTest&#34;&gt;Source&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://blog.codinghorror.com/why-cant-programmers-program/&#34;&gt;Why Can&amp;rsquo;t Programmers.. Program?&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol1.py&#34;&gt;sol1.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol2.py&#34;&gt;sol2.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>concurrent.futures in Python 3</title>
@@ -2766,75 +2825,6 @@ From vehicle
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;Reference&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Class_(computer_programming)&#34;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;String formatting&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Modules and packages in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</link>
-      <pubDate>Wed, 16 Nov 2016 14:13:24 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</guid>
-      <description>&lt;p&gt;A module is a file that contains Python definitions and statements with a &lt;code&gt;.py&lt;/code&gt; extension. So technically,
-all the code that I posted so far has been in the form of modules. Modules are a way to organize code
-in Python so that closely related functions and definitions are grouped together into a module.
-It makes code reusable.&lt;/p&gt;
-
-&lt;p&gt;A related concept is packages. Packages are just a way to organize modules into a namespace. A package
-can be thought of as a directory that contains modules and subpackages. For Python to treat a directory as
-a package, a file named &lt;code&gt;__init__.py&lt;/code&gt; is required in the directory. The &lt;code&gt;__init__.py&lt;/code&gt; can also contain
-code that will be executed when the package is first imported, typically initialization code.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;The following example clarifies these concepts:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;A file named &lt;code&gt;module_demo.py&lt;/code&gt; is created.&lt;/li&gt;
-&lt;li&gt;A directory named &lt;code&gt;modules&lt;/code&gt; is created.&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;modules&lt;/code&gt; directory contains an empty &lt;code&gt;__init__.py&lt;/code&gt; to signify that it is a package.&lt;/li&gt;
-&lt;li&gt;In the &lt;code&gt;modules&lt;/code&gt; package, a &lt;code&gt;useless_print.py&lt;/code&gt; file is created, which is a module.&lt;/li&gt;
-&lt;li&gt;To demonstrate submodules, a &lt;code&gt;submodule&lt;/code&gt; directory is created inside &lt;code&gt;modules&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Inside &lt;code&gt;submodule&lt;/code&gt;, an &lt;code&gt;__init__.py&lt;/code&gt; file is created to signify that it is a package.&lt;/li&gt;
-&lt;li&gt;Inside &lt;code&gt;submodule&lt;/code&gt;, a module named &lt;code&gt;another_print.py&lt;/code&gt; is created.&lt;/li&gt;
-&lt;li&gt;The functions &lt;code&gt;useless_print&lt;/code&gt; and &lt;code&gt;another_print&lt;/code&gt; from the modules by the same name are imported
-into &lt;code&gt;module_demo.py&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;The imported functions are invoked from &lt;code&gt;module_demo.py&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;text
-some more text
-some more text
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;By adding&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:
-    import sys
-    #pass sys.argv to relevant function
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;a module can be used as a script and a module. Executing the module with &lt;code&gt;python module.py arguments&lt;/code&gt; , the code in the module will be executed, just as if you imported it, but with the &lt;code&gt;__name__&lt;/code&gt; set to &lt;code&gt;__main__&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;The source code can be found in the &lt;a href=&#34;https://github.com/ploggingdev/python_learn&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A few notes about modules and packages in Python:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Be explicit: import only what is required.&lt;/li&gt;
-&lt;li&gt;Avoid &lt;code&gt;from modules import *&lt;/code&gt;. It clutters the namespace and can result in namespace clashes.&lt;/li&gt;
-&lt;li&gt;Avoiding nesting modules as far as possible, prefer a flat structure. For the purpose of demonstration,
-I nested a module two levels deep.&lt;/li&gt;
-&lt;li&gt;Intra package references &lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html#intra-package-references&#34;&gt;info&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/modules.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/Python/comments/1bbbwk/whats_your_opinion_on_what_to_include_in_init_py/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

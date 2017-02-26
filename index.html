@@ -110,6 +110,45 @@
             
             
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2017/02/fizzbuzz/">
+          	  <h2 class="post-title">FizzBuzz</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on February 26, 2017
+              </p>
+
+              <div class="post-entry">
+                <p>What is the Fizz-Buzz test?</p>
+
+<p>It&rsquo;s a programming interview question designed to filter out candidates who can&rsquo;t program.</p>
+
+<p>Problem statement : Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.</p>
+
+<p>Out of curiousity, I decided to solve this problem.</p>
+
+<p>My first attempt :</p>
+
+<pre><code>for ix in range(1,101):
+	if ix%3 == 0 and ix%5 == 0:
+		print(&quot;FizzBuzz&quot;)
+	elif ix%5 == 0:
+		print(&quot;Buzz&quot;)
+	elif ix%3 == 0:
+		print(&quot;Fizz&quot;)
+	else:
+		print(ix)
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2017/02/fizzbuzz/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/">
           	  <h2 class="post-title">concurrent.futures in Python 3</h2>
 
@@ -241,49 +280,6 @@ for link in urls:
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/">
-          	  <h2 class="post-title">Decorators in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on December 4, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.</p>
-
-<p>Example:</p>
-
-<pre><code>def my_decorator(func):
-    def inner():
-        print(&quot;Decoration before function call&quot;)
-        func()
-        print(&quot;Decoration after function call&quot;)
-
-    return inner
-
-@my_decorator
-def simple_print():
-    print(&quot;Hello from simple_print&quot;)
-
-simple_print()
-print()
-
-#output
-Decoration before function call
-Hello from simple_print
-Decoration after function call
-</code></pre>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

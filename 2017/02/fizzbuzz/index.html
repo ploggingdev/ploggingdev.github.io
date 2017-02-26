@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Archive</title>
+  <title>FizzBuzz</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Archive">
+  <meta name="description" content="FizzBuzz">
 
+  
+  <meta name="keywords" content="python 3, fizzbuzz">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -26,9 +28,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Archive" />
+  <meta property="og:title" content="FizzBuzz" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/archive//" />
+  <meta property="og:url" content="/2017/02/fizzbuzz//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -102,10 +104,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Archive</h1>
+        <div class="post-heading">
+          <h1>FizzBuzz</h1>
       
       
+      
+      <span class="post-meta">Posted on February 26, 2017</span>
       
         </div>
       </div>
@@ -117,72 +121,74 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>What is the Fizz-Buzz test?</p>
+
+<p>It&rsquo;s a programming interview question designed to filter out candidates who can&rsquo;t program.</p>
+
+<p>Problem statement : Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.</p>
+
+<p>Out of curiousity, I decided to solve this problem.</p>
+
+<p>My first attempt :</p>
+
+<pre><code>for ix in range(1,101):
+	if ix%3 == 0 and ix%5 == 0:
+		print(&quot;FizzBuzz&quot;)
+	elif ix%5 == 0:
+		print(&quot;Buzz&quot;)
+	elif ix%3 == 0:
+		print(&quot;Fizz&quot;)
+	else:
+		print(ix)
+</code></pre>
+
+<p></p>
+
+<p>Output after running <code>python3 sol1.py</code> can be found <a href="https://gist.github.com/ploggingdev/319de9494a9c7c7006c171413989eaa3">here</a>.</p>
+
+<p>The above code be improved by removing redundant checking of divisibility by 3 and 5. Also important to note that FizzBuzz = Fizz + Buzz.</p>
+
+<p>Improved version :</p>
+
+<pre><code>for ix in range(1,101):
+    res = ''
+    if ix%3 == 0:
+        res += 'Fizz'
+    if ix%5 == 0:
+        res += &quot;Buzz&quot;
+    print(res or ix)
+</code></pre>
+
+<p>Let me explain the <code>print(res or ix)</code> part : the <code>or</code> operator is a short circuit operator, so <code>res</code> is printed if it is not empty (it&rsquo;s either a multiple of 3, 5 or both), otherwise <code>ix</code> is printed.</p>
+
+<p>Links :</p>
+
+<ul>
+<li><p><a href="http://wiki.c2.com/?FizzBuzzTest">Source</a></p></li>
+
+<li><p><a href="https://blog.codinghorror.com/why-cant-programmers-program/">Why Can&rsquo;t Programmers.. Program?</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol1.py">sol1.py</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol2.py">sol2.py</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/" data-toggle="tooltip" data-placement="top" title="concurrent.futures in Python 3">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+      
       
 
-<p>This page contains links to all posts on this site.</p>
-
-<h2 id="python">Python</h2>
-
-<p><a href="/2016/11/beginning-python-3/">Beginning Python 3</a></p>
-
-<p><a href="/2016/11/data-types-in-python-3/">Data types in Python 3</a></p>
-
-<p><a href="/2016/11/strings-in-python-3/">Strings in Python 3</a></p>
-
-<p><a href="/2016/11/lists-in-python-3/">Lists in Python 3</a></p>
-
-<p><a href="/2016/11/tuples-in-python-3/">Tuples in Python 3</a></p>
-
-<p><a href="/2016/11/ranges-in-python-3/">Ranges in Python 3</a></p>
-
-<p><a href="/2016/11/sets-in-python-3/">Sets in Python 3</a></p>
-
-<p><a href="/2016/11/dictionaries-in-python-3/">Dictionaries in Python 3</a></p>
-
-<p><a href="/2016/11/control-flow-tools-in-python-3/">Control flow tools in Python 3</a></p>
-
-<p><a href="/2016/11/functions-in-python-3/">Functions in Python 3</a></p>
-
-<p><a href="/2016/11/modules-and-packages-in-python-3/">Modules and packages in Python 3</a></p>
-
-<p><a href="/2016/11/classes-and-inheritance-in-python-3/">Classes and inheritance in Python 3</a></p>
-
-<p><a href="/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></p>
-
-<p><a href="/2016/11/file-io-and-json-in-python-3/">File IO and JSON in Python 3</a></p>
-
-<p><a href="/2016/11/errors-and-exceptions-in-python-3/">Errors and exceptions in Python 3</a></p>
-
-<p><a href="/2016/11/unit-testing-in-python-3/">Unit testing in Python 3</a></p>
-
-<p><a href="/2016/11/floating-point-arithmetic-issues-in-python-3/">Floating point arithmetic issues in Python 3</a></p>
-
-<p><a href="/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></p>
-
-<p><a href="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">List comprehensions, iterators, generators and generator expressions in Python 3</a></p>
-
-<p><a href="/2016/12/performance-measurement-in-python-3/">Performance measurement in Python 3</a></p>
-
-<p><a href="/2016/12/decorators-in-python-3/">Decorators in Python 3</a></p>
-
-<p><a href="/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">Scraping my website using requests and BeautifulSoup</a></p>
-
-<p><a href="/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">Analyzing programming language statistics of 100,000 Github repositories</a></p>
-
-<p><a href="/2017/01/multiprocessing-and-multithreading-in-python-3/">Multiprocessing and multithreading in Python 3</a></p>
-
-<p><a href="/2017/01/concurrent.futures-in-python-3/">concurrent.futures in Python 3</a></p>
-
-<h1 id="miscellaneous">Miscellaneous</h1>
-
-<p><a href="/2016/11/hello-world/">Hello World</a></p>
-
-<p><a href="/2017/02/fizzbuzz/">FizzBuzz</a></p>
-
-      
     </div>
   </div>
 </div>

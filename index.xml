@@ -8,8 +8,67 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Thu, 12 Jan 2017 03:14:07 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 26 Feb 2017 02:04:45 -0800</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>FizzBuzz</title>
+      <link>https://www.ploggingdev.com/2017/02/fizzbuzz/</link>
+      <pubDate>Sun, 26 Feb 2017 02:04:45 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/02/fizzbuzz/</guid>
+      <description>&lt;p&gt;What is the Fizz-Buzz test?&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s a programming interview question designed to filter out candidates who can&amp;rsquo;t program.&lt;/p&gt;
+
+&lt;p&gt;Problem statement : Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.&lt;/p&gt;
+
+&lt;p&gt;Out of curiousity, I decided to solve this problem.&lt;/p&gt;
+
+&lt;p&gt;My first attempt :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for ix in range(1,101):
+	if ix%3 == 0 and ix%5 == 0:
+		print(&amp;quot;FizzBuzz&amp;quot;)
+	elif ix%5 == 0:
+		print(&amp;quot;Buzz&amp;quot;)
+	elif ix%3 == 0:
+		print(&amp;quot;Fizz&amp;quot;)
+	else:
+		print(ix)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Output after running &lt;code&gt;python3 sol1.py&lt;/code&gt; can be found &lt;a href=&#34;https://gist.github.com/ploggingdev/319de9494a9c7c7006c171413989eaa3&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The above code be improved by removing redundant checking of divisibility by 3 and 5. Also important to note that FizzBuzz = Fizz + Buzz.&lt;/p&gt;
+
+&lt;p&gt;Improved version :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for ix in range(1,101):
+    res = &#39;&#39;
+    if ix%3 == 0:
+        res += &#39;Fizz&#39;
+    if ix%5 == 0:
+        res += &amp;quot;Buzz&amp;quot;
+    print(res or ix)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let me explain the &lt;code&gt;print(res or ix)&lt;/code&gt; part : the &lt;code&gt;or&lt;/code&gt; operator is a short circuit operator, so &lt;code&gt;res&lt;/code&gt; is printed if it is not empty (it&amp;rsquo;s either a multiple of 3, 5 or both), otherwise &lt;code&gt;ix&lt;/code&gt; is printed.&lt;/p&gt;
+
+&lt;p&gt;Links :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://wiki.c2.com/?FizzBuzzTest&#34;&gt;Source&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://blog.codinghorror.com/why-cant-programmers-program/&#34;&gt;Why Can&amp;rsquo;t Programmers.. Program?&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol1.py&#34;&gt;sol1.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol2.py&#34;&gt;sol2.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>concurrent.futures in Python 3</title>
@@ -1390,6 +1449,8 @@ st2)))
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/hello-world/&#34;&gt;Hello World&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/02/fizzbuzz/&#34;&gt;FizzBuzz&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -2624,216 +2685,6 @@ Guido
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/venv.html&#34;&gt;Official docs&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://superuser.com/questions/1039369/how-to-create-a-python3-virtual-environment-as-of-2016&#34;&gt;Superuser&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.reddit.com/r/learnpython/comments/4hsudz/pyvenv_vs_virtualenv/&#34;&gt;Reddit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Classes and inheritance in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</link>
-      <pubDate>Sat, 19 Nov 2016 07:38:24 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</guid>
-      <description>&lt;p&gt;From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).&lt;/p&gt;
-
-&lt;p&gt;Features of classes in Python:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Multiple inheritance permitted&lt;/li&gt;
-&lt;li&gt;Derived class can override base class methods&lt;/li&gt;
-&lt;li&gt;Base class methods can be called using &lt;code&gt;super().method_name()&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Class members are dynamic, can be modified at runtime&lt;/li&gt;
-&lt;li&gt;Class members are public, methods are virtual (can be overridden)&lt;/li&gt;
-&lt;li&gt;The first parameter in a method is a reference to the calling object, usually &lt;code&gt;self&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Operator overloading is supported&lt;/li&gt;
-&lt;li&gt;Aliasing of objects is supported&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Classes are defined as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class ClassName:
-    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
-    statement_1
-    .
-    .
-    .
-    statement_n
-
-#create an instance of the class
-var = ClassName()
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Class variables are common to all instances and are often used to represent immutable data. An example is the &lt;code&gt;details&lt;/code&gt; variable in the below example.&lt;/p&gt;
-
-&lt;p&gt;An instance variable is unique to every instance of the class ie object. Examples are &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; variables in the following class.&lt;/p&gt;
-
-&lt;p&gt;To initialize an object, the &lt;code&gt;__init__(self)&lt;/code&gt; method is used. It&amp;rsquo;s like a constructor, thinking in terms of Java.&lt;/p&gt;
-
-&lt;p&gt;To specify how the contents of an object should be printed, the &lt;code&gt;__str__(self)&lt;/code&gt; method is used. When an object is printed using &lt;code&gt;print(object_variable)&lt;/code&gt;, the &lt;code&gt;__str__(self)&lt;/code&gt; method is called.&lt;/p&gt;
-
-&lt;p&gt;To format strings the &lt;code&gt;string.format()&lt;/code&gt; will be used. The &lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Difference between a function and a method: a function is a named grouping of statements while a method is a function that is associated with a specific class.&lt;/p&gt;
-
-&lt;p&gt;To define a method, it has to be defined inside a class and is called using &lt;code&gt;object.method()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Functions are of two types: pure and modifiers. Pure functions don&amp;rsquo;t modify the data it receives and is the model followed in functional programming. Modifier functions, as the name suggests, modify the data it receives. The cool thing about Python is that it allows different programming paradigms such as functional programming and object oriented programming, and you are free to use whichever programming paradigm suits you.&lt;/p&gt;
-
-&lt;p&gt;Operator overloading is possible in Python by overriding certain methods. Eg- override &lt;code&gt;__add__()&lt;/code&gt; to allow using the &lt;code&gt;+&lt;/code&gt; operator on instances of the class. To learn more refer &lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Objects can be copied using &lt;code&gt;copy.copy()&lt;/code&gt;. A new object is created with the same contents as the original object.&lt;/p&gt;
-
-&lt;p&gt;All these concepts are demonstrated in the following example.&lt;/p&gt;
-
-&lt;p&gt;Point class example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import copy
-
-class Point:
-    &amp;quot;&amp;quot;&amp;quot;A class to represent a point&amp;quot;&amp;quot;&amp;quot;
-
-    details = &amp;quot;Represent points&amp;quot;
-
-    def __init__(self,x=0,y=0):
-        self.x=x
-        self.y=y
-    
-    def __str__(self):
-        return &amp;quot;x={} y={}&amp;quot;.format(self.x,self.y)
-
-    def get_sum(self):
-        &amp;quot;&amp;quot;&amp;quot;Return sum of x and y components&amp;quot;&amp;quot;&amp;quot;
-        return self.x + self.y
-    
-    def add_point(self,to_add):
-        &amp;quot;&amp;quot;&amp;quot;Update self by add x and y component of new_point&amp;quot;&amp;quot;&amp;quot;
-        self.x += to_add.x
-        self.y += to_add.y
-
-    def __add__(self,new_point):
-        self.x += new_point.x
-        self.y += new_point.y
-        return self
-
-def print_point(point):
-    &amp;quot;&amp;quot;&amp;quot;print contents of given point&amp;quot;&amp;quot;&amp;quot;
-    print(&amp;quot;x={} y={}&amp;quot;.format(point.x,point.y))
-
-point = Point(10,20)
-print(point)
-
-print(point.details)
-print(point.get_sum())
-
-new_point = Point(2,4)
-print(new_point)
-
-point.add_point(new_point)
-print(point)
-
-print_point(new_point)
-
-copied_point = copy.copy(point)
-copied_point.x = 5
-copied_point.y = 5
-print(point)
-print(copied_point)
-
-print(copied_point + new_point)
-#output
-x=10 y=20
-Represent points
-30
-x=2 y=4
-x=12 y=24
-x=2 y=4
-x=12 y=24
-x=5 y=5
-x=7 y=9
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A note about namespaces and scopes: a namespace is a mapping of names to objects. Eg- global namespace, module namespace, function namespace. A scope is a textual region where the namespace is accessible.&lt;/p&gt;
-
-&lt;p&gt;During execution, there are at least three nested scopes whose namespaces are directly accessible:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Innermost scope, an &lt;code&gt;if&lt;/code&gt; block or a loop&lt;/li&gt;
-&lt;li&gt;Enclosing function scope&lt;/li&gt;
-&lt;li&gt;Module scope&lt;/li&gt;
-&lt;li&gt;Global scope&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Variables can be declared as &lt;code&gt;nonlocal&lt;/code&gt; or &lt;code&gt;global&lt;/code&gt;. If they are not specified, he defualt is the current scope (need to check). A &lt;code&gt;nonlocal&lt;/code&gt; statement is used to indicate a variable has to be rebound in the enclosing scope. A &lt;code&gt;global&lt;/code&gt; statement indicates that a variable has to be rebound in the global scope. Note that this is applicable only for rebinding variables, not for modifying mutable data types. To learn more refer &lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Inheritance is supported. Syntax is as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class BaseClass:
-    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
-    statement_1
-    .
-    .
-    .
-    statement_n
-
-class DerivedClass(BaseClass):
-    &amp;quot;&amp;quot;&amp;quot;Docstring&amp;quot;&amp;quot;&amp;quot;
-    statement_1
-    .
-    .
-    .
-    statement_n
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Multiple inheritance is supprted using &lt;code&gt;class Derived(Base1,Base2):&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;It should be noted that multiple inheritance can introduce a situation where multiple base classes inherit from the same base class. To learn more about how method resolution works refer &lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#multiple-inheritance&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A simple example of inheritance:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class Vehicle(object):
-    &amp;quot;&amp;quot;&amp;quot;Represents a vehicle&amp;quot;&amp;quot;&amp;quot;
-
-    def __init__(self,engine_power=100):
-        self.engine_power = engine_power
-    
-    def __str__(self):
-        return &amp;quot;Engine power : {}HP&amp;quot;.format(self.engine_power)
-    
-    def print_name(self):
-        print(&amp;quot;From vehicle&amp;quot;)
-    
-class Car(Vehicle):
-    &amp;quot;&amp;quot;&amp;quot;Represents a car&amp;quot;&amp;quot;&amp;quot;
-
-    def __init__(self,wheels=4):
-        super().__init__()
-        self.wheels = wheels
-    
-    def __str__(self):
-        return &amp;quot;Engine power : {}HP , Wheels = {}&amp;quot;.format(self.engine_power,self.wheels)
-    
-    def print_name(self):
-        print(&amp;quot;From vehicle&amp;quot;)
-
-car = Car()
-print(car)
-car.print_name()
-#output
-Engine power : 100HP , Wheels = 4
-From vehicle
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/classes.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types&#34;&gt;Reference&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Class_(computer_programming)&#34;&gt;Wikipedia&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/string.html#formatstrings&#34;&gt;String formatting&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

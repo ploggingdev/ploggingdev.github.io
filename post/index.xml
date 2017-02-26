@@ -42,7 +42,7 @@
 
 &lt;p&gt;Output after running &lt;code&gt;python3 sol1.py&lt;/code&gt; can be found &lt;a href=&#34;https://gist.github.com/ploggingdev/319de9494a9c7c7006c171413989eaa3&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;The above code be improved by removing redundant checking of divisibility by 3 and 5. Also important to note that FizzBuzz = Fizz + Buzz.&lt;/p&gt;
+&lt;p&gt;The above code can be improved by removing redundant checking of divisibility by 3 and 5. Also important to note that FizzBuzz = Fizz + Buzz.&lt;/p&gt;
 
 &lt;p&gt;Improved version :&lt;/p&gt;
 

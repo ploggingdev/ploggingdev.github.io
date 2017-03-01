@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Plogging Dev</title>
+  <title>Bubblesort</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Plogging Dev">
+  <meta name="description" content="Bubblesort">
 
+  
+  <meta name="keywords" content="python 3, bubblesort, algorithm">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -26,9 +28,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Plogging Dev" />
+  <meta property="og:title" content="Bubblesort" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="//" />
+  <meta property="og:url" content="/2017/03/bubblesort//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -87,129 +89,111 @@
 </nav>
 
 
-    <header class="header-section ">
-      <div class="intro-header no-img">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              <div class="page-heading">
-                <h1>Plogging Dev</h1>
-                
-              </div>
-            </div>
-          </div>
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Bubblesort</h1>
+      
+      
+      
+      <span class="post-meta">Posted on March 1, 2017</span>
+      
         </div>
       </div>
-    </header>
+    </div>
+  </div>
+</div>
+</header>
 
 
-    <div role="main" class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="posts-list">
-            
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/data-types-in-python-3/">
-          	  <h2 class="post-title">Data types in Python 3</h2>
 
-          	  
-              </a>
 
-              <p class="post-meta">
-                Posted on November 5, 2016
-              </p>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Bubble sort is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted.</p>
 
-              <div class="post-entry">
-                <p>Python is a dynamically typed programming language, so you don&rsquo;t need to explicitly specify the data type of a variable before usage. A variable can be rebound to objects of different data types at runtime and the Python interpreter will not complain.</p>
+<p>Time complexity:</p>
 
-<p>An example:</p>
+<p>Average case : <strong>n<sup>2</sup></strong></p>
 
-<pre><code class="language-python3">var=10
-print(var)
-10
-var='string'
-print(var)
-string
+<p>Worst case : <strong>n<sup>2</sup></strong></p>
+
+<p>Best case : <strong>n</strong></p>
+
+<p></p>
+
+<p>Bubble sort is considered a very slow sorting algorithm and is mainly used in academic settings to illustrate time complexity with an example. One case where Bubble sort performs very well is when the list is already sorted. The best case has a time complexity of <code>n</code>.</p>
+
+<p>Implementation of Bubble sort:</p>
+
+<pre><code>def bubblesort(to_sort):
+    list_len = len(to_sort)
+    while list_len&gt;0:
+        new_n = 0
+        for ix in range(1,list_len): #checks till n-1
+            if to_sort[ix-1] &gt; to_sort[ix]:
+                temp = to_sort[ix-1]
+                to_sort[ix-1] = to_sort[ix]
+                to_sort[ix] = temp
+                new_n = ix
+        list_len = new_n
+    return to_sort
+    
+if __name__ == &quot;__main__&quot;:
+    to_sort = [1,3,2,0,-1,4,5]
+    print(bubblesort(to_sort))
 </code></pre>
 
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/data-types-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
+<p>Output:</p>
 
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/beginning-python-3/">
-          	  <h2 class="post-title">Beginning Python 3</h2>
+<pre><code>[-1, 0, 1, 2, 3, 4, 5]
+</code></pre>
 
-          	  
-              </a>
+<p>The above implementation has an optimization : <code>new_n</code> keeps track of the last index at which a swap occured and in the next iteration <code>list_len</code> is set to <code>new_n</code>, so if more than one value bubbles up to it&rsquo;s correct position, there is no need to check if it&rsquo;s in the correct position in the next iteration. (Ignore the poor naming of variables).</p>
 
-              <p class="post-meta">
-                Posted on November 4, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>In this series of plogs, I will be sharing my journey of learning Python.</p>
-
-<p>What are my motivations behind deciding to learn Python?</p>
+<p>References :</p>
 
 <ul>
-<li>I plan to build web apps, so I was looking for a language which has a mature ecosystem around it. Coming from a Java and PHP background, Python seemed attractive.</li>
-<li>A little later, I plan on getting into Machine Learning, and the most popular language in the industry seems to be Python. It&rsquo;s actually Python 2.7 as of writing this, but Python 3 support is growing. Oh, I did not mention it, but this plog series is going to focus on Python 3 only.</li>
-<li>Python can be used for web scraping with ease, which is of great interest to me.</li>
-<li>It is respected among the hacker community. Just to be clear, hacker means an expert in their field, not the negative association that is triggered more often than not.</li>
+<li><p><a href="https://en.wikipedia.org/wiki/Bubble_sort">Wikipedia</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/practice/blob/master/algos/bubblesort.py">bubblesort.py</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/practice/blob/master/algos/tests/bubblesort_tests.py">bubblesort_tests.py</a></p></li>
 </ul>
+      </article>
 
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/beginning-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2017/02/fizzbuzz/" data-toggle="tooltip" data-placement="top" title="FizzBuzz">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+      
+      
 
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/hello-world/">
-          	  <h2 class="post-title">Hello World</h2>
+    </div>
+  </div>
+</div>
 
-          	  
-              </a>
+      
 
-              <p class="post-meta">
-                Posted on November 4, 2016
-              </p>
-
-              <div class="post-entry">
-                <p><strong>Hi!</strong></p>
-
-<p><strong>Why is it called Plogging Dev?</strong></p>
-
-<p>Plog is supposed to mean programming blog (it&rsquo;s a real word with a made up meaning). The Dev part is for developer.</p>
-
-<p><strong>What is this blog about?</strong></p>
-
-<p>I will be sharing my programming related blogs here, mostly Python and Django to start with, then blogs about machine learning. You can expect the occasional non-tech blog post, mostly whatever I am interested in.</p>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/hello-world/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-          </div>
-
-          
-          <ul class="pager main-pager">
-            
-            <li class="previous">
-              <a href="/page/5">&larr; Newer Posts</a>
-            </li>
-            
-            
-          </ul>
-          
-        </div>
-      </div>
     </div>
 
     <footer>

@@ -110,6 +110,42 @@
             
             
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">
+          	  <h2 class="post-title">Analyzing programming language statistics of 100,000 Github repositories</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on December 25, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>The first step is to gather data about 100,000 repositories using the Github api. I used <code>scrapy</code> for this.</p>
+
+<p>A high level overview of how I did this:</p>
+
+<ol>
+<li><p>Start from the id of my <code>scrape_github</code> repo <code>https://api.github.com/repositories?since=76761293&amp;access_token=MY_TOKEN</code></p></li>
+
+<li><p>Save only the <code>id</code>, <code>name</code> and <code>languages_url</code> for each repo. The <code>languages_url</code> is the api endpoint which contains the programming language statistics of the current repo.</p></li>
+
+<li><p>Extract the link to the next page from the <code>Link</code> header and follow it repeating the above steps.</p></li>
+</ol>
+
+<p>Each api call returns a list of 100 repositories, so to retrieve data about 100,000 repositories, 1000 api calls are required.</p>
+
+<p>All the output is saved to a file called <code>all_repos.jsonl</code> which came to around 13MB.</p>
+
+<p>The next step is to follow the <code>languages_url</code> api endpoint for each repository and save the data.</p>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">
           	  <h2 class="post-title">Scraping my website using requests and BeautifulSoup</h2>
 
@@ -260,36 +296,6 @@ print(list2)
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/">
-          	  <h2 class="post-title">N queens solver in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 30, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>What is the N queens problem?</p>
-
-<p>The N queens problem is the problem of placing N non-attacking queens on an NxN chessboard, for which solutions exist for all natural numbers N with the exception of N=2 and N=3.</p>
-
-<p>When N=1, the solution is trivial so the program will ask for a value of N such that <code>N &gt;= 4</code>.</p>
-
-<p>I will solve this problem using backtracking. There are more efficient ways to solve this problem, but I will use backtracking since it&rsquo;s the most intuitive way to arrive at the solution without getting into the mathematics of arriving at efficient solutions. Through solving these problems, I aim to better understand Python.</p>
-
-<p>What is backtracking?</p>
-
-<p>Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons each partial candidate <em>c</em> (&ldquo;backtracks&rdquo;) as soon as it determines that <em>c</em> cannot possibly be completed to a valid solution.</p>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

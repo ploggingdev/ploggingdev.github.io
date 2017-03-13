@@ -8,8 +8,72 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Wed, 01 Mar 2017 07:38:58 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 12 Mar 2017 23:27:52 -0700</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Selection sort</title>
+      <link>https://www.ploggingdev.com/2017/03/selection-sort/</link>
+      <pubDate>Sun, 12 Mar 2017 23:27:52 -0700</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/03/selection-sort/</guid>
+      <description>&lt;p&gt;Selection sort is an in-place sorting algorithm.&lt;/p&gt;
+
+&lt;p&gt;Time complexity :&lt;/p&gt;
+
+&lt;p&gt;Average case : &lt;strong&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Best case : &lt;strong&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Worst case : &lt;strong&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Worst case space complexity : &lt;strong&gt;O(n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;How the algorithm works:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The algorithm divides the input list into two parts: the sublist of items already sorted, which is built up from left to right in the list.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Initially, the sorted sublist (starting at the left side) is empty and the unsorted sublist is the entire input list.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;On every iteration, the algorithm finds the smallest element in the unsorted sublist and swaps it with the leftmost unsorted element (putting it in sorted order), and increments the sorted sublist boundary one element to the right.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Implementation in Python :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def selectionsort(list):
+    for jx in range(0,len(list)-1):
+        min = jx
+        for ix in range(jx+1,len(list)):
+            if list[ix] &amp;lt; list[min]:
+                min = ix
+        if min != jx:
+            temp = list[jx]
+            list[jx] = list[min]
+            list[min] = temp
+    
+    return list
+if __name__ == &amp;quot;__main__&amp;quot;:
+    print(selectionsort([2,1,3,0,-1,-3,-2,5,6,4]))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Selection_sort&#34;&gt;Wikipedia entry about selection sort&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/selectionsort.py&#34;&gt;Code&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/selectionsort_tests.py&#34;&gt;Tests&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Quicksort</title>
@@ -1596,6 +1660,8 @@ st2)))
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/03/quicksort/&#34;&gt;Quicksort&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/03/selection-sort/&#34;&gt;Selection sort&lt;/a&gt;&lt;/p&gt;
+
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/hello-world/&#34;&gt;Hello World&lt;/a&gt;&lt;/p&gt;
@@ -2313,196 +2379,6 @@ OK (skipped=1)
 &lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/tests.py&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/test_2.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Reference: &lt;a href=&#34;https://docs.python.org/3/library/unittest.html&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Errors and exceptions in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/</link>
-      <pubDate>Thu, 24 Nov 2016 23:42:14 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/</guid>
-      <description>&lt;p&gt;There are two kinds of errors:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Syntax errors, where the program contains invalid syntax&lt;/li&gt;
-&lt;li&gt;Exceptions, errors that occur during runtime, though the syntax is valid&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The list of built-in exceptions can be found &lt;a href=&#34;https://docs.python.org/3/library/exceptions.html#bltin-exceptions&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Syntax errors can be avoided by writing valid code and exceptions can be handled using &lt;code&gt;try&lt;/code&gt; and &lt;code&gt;except&lt;/code&gt;. An example of handling an exception:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def division(num1, num2):
-    &amp;quot;&amp;quot;&amp;quot;Return num1/num2&amp;quot;&amp;quot;&amp;quot;
-    return num1/num2
-
-try:
-    print(division(10,0))
-except ZeroDivisionError:
-    print(&amp;quot;You can&#39;t divide by zero&amp;quot;)
-#output
-You can&#39;t divide by zero
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;How &lt;code&gt;try&lt;/code&gt; and &lt;code&gt;except&lt;/code&gt; statements work:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The code inside the &lt;code&gt;try&lt;/code&gt; block is executed&lt;/li&gt;
-&lt;li&gt;If no exception occurs, the &lt;code&gt;except&lt;/code&gt; block is skipped&lt;/li&gt;
-&lt;li&gt;If an exception occurs, execution of remaining &lt;code&gt;try&lt;/code&gt; block is skipped and the &lt;code&gt;except&lt;/code&gt; block matching the raised exception is executed. If the exception has not been handled, it is passed to an outer &lt;code&gt;try&lt;/code&gt; block. If there is no outer &lt;code&gt;try&lt;/code&gt; block, it is an unhandled exception and execution stops.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In the above example, note that I am not handling the exception inside the &lt;code&gt;division&lt;/code&gt; function. Instead I am handling the exception when the function is called.&lt;/p&gt;
-
-&lt;p&gt;An &lt;code&gt;except&lt;/code&gt; clause can handle multiple exceptions using the following syntax:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;except Exception1, Exception2 :
-    #code to handle Exception1 and Exception2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;An exception can be raised as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;raise ExceptionName(args)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The arguments are optional. If an exception class is present, it is instantiated by calling its constructor without arguments.&lt;/p&gt;
-
-&lt;p&gt;A class in an except clause is compatible with an exception if it is the same class or a base class thereof. The following example demonstrates this concept:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class Base(Exception):
-    &amp;quot;&amp;quot;&amp;quot;Base class&amp;quot;&amp;quot;&amp;quot;
-    pass
-
-class Derived(Base):
-    &amp;quot;&amp;quot;&amp;quot;Inherits from Base class&amp;quot;&amp;quot;&amp;quot;
-    pass
-
-for to_raise in [Base,Derived]:
-    try:
-        raise to_raise()
-    except Derived:
-        print(&amp;quot;Derived class&amp;quot;)
-    except Base:
-        print(&amp;quot;Base class&amp;quot;)
-
-#output
-Base class
-Derived class
-
-for to_raise in [Base,Derived]:
-    try:
-        raise to_raise()
-    except Base:
-        print(&amp;quot;Base class&amp;quot;)
-    except Derived:
-        print(&amp;quot;Derived class&amp;quot;)
-
-#output
-Base class
-Base class
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is possible to catch wildcard exceptions as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try:
-    raise Exception(&amp;quot;An exception occurred&amp;quot;)
-except:
-    print(&amp;quot;All exceptions are caught here&amp;quot;)
-#output
-All exceptions are caught here
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;So every exception that is raised inside the &lt;code&gt;try&lt;/code&gt; block is caught by the wildcard &lt;code&gt;except&lt;/code&gt; by omitting the exception names. This should be avoided since it can hide any real programming errors.&lt;/p&gt;
-
-&lt;p&gt;An optional &lt;code&gt;else&lt;/code&gt; clause is available, which executes the code inside when no exception is raised. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try:
-    #some code
-except ExceptionName:
-    #handle exception
-else:
-    #executed when exception is not raised inside try
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When an exception is raised, it is possible to have data associated with the exception. This is useful for debugging purposes to understand under what circumstances the exception was raised. The arguments passed while raising an exception depend on the type of exception. The following is an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try:
-    raise Exception(&#39;arg1&#39;, &#39;arg2&#39;)
-except Exception as inst:
-    print(type(inst))
-    print(inst.args)
-    print(inst)
-
-    x,y = inst.args #unpacking arguments
-    print(&amp;quot;x = {} y = {}&amp;quot;.format(x,y))
-#output
-&amp;lt;class &#39;Exception&#39;&amp;gt;
-(&#39;arg1&#39;, &#39;arg2&#39;)
-(&#39;arg1&#39;, &#39;arg2&#39;)
-x = arg1 y = arg2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is possible to have user defined exceptions in Python by creating a new class. The new class has to be derived from The &lt;code&gt;Exception&lt;/code&gt; class either directly or indirectly. Though it is possible for exception classes to do anything a normal class can do, they are usually kept simple by only having a few attributes that contain information about the exception.&lt;/p&gt;
-
-&lt;p&gt;If a module can raise different custom exceptions, it is a good practice to have a base class that inherits from &lt;code&gt;Exception&lt;/code&gt; and other classes that raise exceptions inherit from the base class. The following is a simple example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class Error(Exception):
-    &amp;quot;&amp;quot;&amp;quot;Base class for all exceptions in the module&amp;quot;&amp;quot;&amp;quot;
-    name = &amp;quot;exceptions.py&amp;quot;
-
-class FirstError(Error):
-    &amp;quot;&amp;quot;&amp;quot;Specific exception class inherits from Error&amp;quot;&amp;quot;&amp;quot;
-    
-    def __init__(self,message):
-        self.message = message
-
-try:
-    raise FirstError(&amp;quot;First custom exception&amp;quot;)
-except FirstError as custom_exception:
-    print(&amp;quot;FirstError has been raise with message: &amp;quot;,custom_exception.message, &amp;quot;\ncurrent module: &amp;quot;, custom_exception.name)
-
-#output
-FirstError has been raise with message:  First custom exception
-current module:  exceptions.py
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It&amp;rsquo;s standard practice to have all exception classes end with Error.&lt;/p&gt;
-
-&lt;p&gt;A &lt;code&gt;finally&lt;/code&gt; clause is available which can be used to define clean up actions. It is always executed, whether an exception occurred or not. The following is an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def proper_divide(x,y):
-    &amp;quot;&amp;quot;&amp;quot;Returns x/y and handles exceptions&amp;quot;&amp;quot;&amp;quot;
-    try:
-        result = x/y
-    except ZeroDivisionError:
-        print(&amp;quot;Division by zero handled&amp;quot;)
-    else:
-        print(&amp;quot;Result is &amp;quot;, result)
-    finally:
-        print(&amp;quot;This is always executed&amp;quot;)
-
-proper_divide(10,5)
-#output
-Result is  2.0
-This is always executed
-proper_divide(10,0)
-#output
-Division by zero handled
-This is always executed
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The above example also shows how to use &lt;code&gt;try&lt;/code&gt;, &lt;code&gt;except&lt;/code&gt;, &lt;code&gt;else&lt;/code&gt; and &lt;code&gt;finally&lt;/code&gt; together.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog can be found &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/exceptions.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/errors.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/exceptions.html#bltin-exceptions&#34;&gt;Built-in exceptions&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

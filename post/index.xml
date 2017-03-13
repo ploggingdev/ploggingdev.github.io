@@ -8,8 +8,96 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sun, 12 Mar 2017 23:54:19 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 13 Mar 2017 00:09:59 -0700</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Merge sort</title>
+      <link>https://www.ploggingdev.com/2017/03/merge-sort/</link>
+      <pubDate>Mon, 13 Mar 2017 00:09:59 -0700</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/03/merge-sort/</guid>
+      <description>&lt;p&gt;Merge sort is a divide and conquer algorithm. It is a fast, general purpose sorting algorithm.&lt;/p&gt;
+
+&lt;p&gt;Time complexity:&lt;/p&gt;
+
+&lt;p&gt;Average case : &lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Best case : &lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Worst case : &lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Worst case space complexity : &lt;strong&gt;O(n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;It works as follows :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;If the length of the list is 0 or 1, it is considered as sorted.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The unsorted list is divided into two lists of approximately the same size.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Each list (left and right) is sorted recursively by re-applying the merge sort algorithm.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once both the left and right lists are sorted they are merged to produce a sorted list&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Implementation in Python :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def mergesort(list):
+	if len(list) &amp;lt; 2:
+		return list
+	
+	mid = int(len(list)/2)
+
+	left = mergesort(list[:mid])
+	right = mergesort(list[mid:])
+
+	return merge(left, right)
+
+def merge(left, right):
+	result = list()
+	il = 0
+	ir = 0
+
+	for ix in range(len(left) + len(right)):
+
+		if il &amp;lt; len(left) and ir &amp;lt; len(right):
+			if left[il] &amp;lt;= right[ir]:
+				result.append(left[il])
+				il += 1
+			else:
+				result.append(right[ir])
+				ir += 1
+		elif ir &amp;gt;= len(right):
+			result.append(left[il])
+			il += 1
+		else:
+			result.append(right[ir])
+			ir += 1
+	
+	return result
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    print(mergesort([3,2,1,4,-1,-2,0]))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[-2, -1, 0, 1, 2, 3, 4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Merge_sort&#34;&gt;Wikipedia entry on merge sort&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/mergesort.py&#34;&gt;Code&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/mergesort_tests.py&#34;&gt;Tests&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Insertion sort</title>
@@ -2103,264 +2191,6 @@ num1 = 2/3 and num2 = 1/3
 &lt;li&gt;&lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Unit testing in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/</link>
-      <pubDate>Sun, 27 Nov 2016 01:57:31 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/</guid>
-      <description>&lt;p&gt;Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;unittest&lt;/code&gt; framework is a built-in unit testing framework in Python.&lt;/p&gt;
-
-&lt;p&gt;Some terminology:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;test fixture: the preparation needed to perform one or more tests, and any associate cleanup actions&lt;/li&gt;
-&lt;li&gt;test case: individual unit of testing which checks for the correct response for a given input&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I will be covering a minimal subset of &lt;code&gt;unittest&lt;/code&gt; that will be enough to understand what unit testing is and how to go about writing test cases. To learn more, refer to the &lt;a href=&#34;https://docs.python.org/3/library/unittest.html&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A simple example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import unittest
-
-class Test2(unittest.TestCase):
-    
-    def test_simple(self):
-        self.assertEqual(2+2,4)
-
-if __name__ == &#39;__main__&#39;:
-    unittest.main()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Run the test using the following command&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;python -m unittest -v test_2.py
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;test_simple (test_2.Test) ... ok
-
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-OK
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If the module name is not provided, by default all unit tests in the current project are executed. The &lt;code&gt;-v&lt;/code&gt; argument is used to display verbose output.&lt;/p&gt;
-
-&lt;p&gt;A few notes:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The &lt;code&gt;unittest&lt;/code&gt; module is imported&lt;/li&gt;
-&lt;li&gt;Testcases are created by subclassing &lt;code&gt;unittest.TestCase&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;The function that contains the tests begins with &lt;code&gt;test&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The TestCase class provides methods to check for and report failures.&lt;/p&gt;
-
-&lt;p&gt;Some of the methods are listed below:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;assertEqual(a,b)&lt;/li&gt;
-&lt;li&gt;assertNotEqual(a,b)&lt;/li&gt;
-&lt;li&gt;assertTrue(x)&lt;/li&gt;
-&lt;li&gt;assertFalse(x)&lt;/li&gt;
-&lt;li&gt;assertIs(a,b)&lt;/li&gt;
-&lt;li&gt;assertIn(a,b)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Another example of writing test cases:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import unittest
-
-def division(x,y):
-    &amp;quot;&amp;quot;&amp;quot;Return result of division&amp;quot;&amp;quot;&amp;quot;
-    try:
-        return x/y
-    except ZeroDivisionError:
-        print(&amp;quot;Division by zero&amp;quot;)
-
-class Testexceptions(unittest.TestCase):
-
-    def test_basic(self):
-        self.assertEqual(division(10,5), 2.0)
-        self.assertEqual(division(10,-2), -5.0)
-
-    def test_type_exceptions(self):
-        with self.assertRaises(TypeError):
-            division(10,&#39;a&#39;)
-    
-    def test_zero_division(self):
-        try:
-            division(10,0)
-        except ZeroDivisionError:
-            self.fail(&amp;quot;ZeroDivisionError&amp;quot;)
-
-if __name__ == &#39;__main__&#39;:
-    unittest.main()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;test_basic (t.Testexceptions) ... ok
-test_type_exceptions (t.Testexceptions) ... ok
-test_zero_division (t.Testexceptions) ... Division by zero
-ok
-
-----------------------------------------------------------------------
-Ran 3 tests in 0.000s
-
-OK
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The above example introduces &lt;code&gt;assertRaises&lt;/code&gt; which is used to verify that an exception is raised. There is no &lt;code&gt;assertNotRaises&lt;/code&gt;, so one way to achieve that is by using &lt;code&gt;try&lt;/code&gt; and &lt;code&gt;except&lt;/code&gt; as shown in the &lt;code&gt;test_zero_division&lt;/code&gt; method above.&lt;/p&gt;
-
-&lt;p&gt;There are cases where there is a lot of repetitive code shared by tests, such as connecting to databases or fetching data from a URL. To factor out common code, there are a few methods that we can implement:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;setUp()&lt;/code&gt; is called before the execution of every test method&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tearDown()&lt;/code&gt; is called after the execution of every test method&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;setUpClass()&lt;/code&gt; is called before tests in an individual class are run&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tearDownClass()&lt;/code&gt; is called after the tests in a class are run&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;setUpModule()&lt;/code&gt; is called before code in a module is run&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tearDownModule()&lt;/code&gt; is called after all tests are run inside the module&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The following example demonstrates the order in which the methods are called.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;tests.py&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import unittest
-
-def setUpModule():
-    print(&amp;quot;setUpModule() from tests.py&amp;quot;)
-
-def tearDownModule():
-    print(&amp;quot;tearDownModule() from tests.py&amp;quot;)
-
-def division(x,y):
-    &amp;quot;&amp;quot;&amp;quot;Return result of division&amp;quot;&amp;quot;&amp;quot;
-    try:
-        return x/y
-    except ZeroDivisionError:
-        print(&amp;quot;Division by zero&amp;quot;)
-
-class Testexceptions(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        print(&amp;quot;setUpClass() from Testexceptions class in tests.py&amp;quot;)
-    
-    @classmethod
-    def tearDownClass(cls):
-        print(&amp;quot;tearDownClass() from Testexceptions class in tests.py&amp;quot;)
-
-    def setUp(self):
-        print(&amp;quot;setUp() from Testexceptions in tests.py&amp;quot;)
-    def tearDown(self):
-        print(&amp;quot;tearDown() from Testexceptions in tests.py&amp;quot;)
-    
-    def test_basic(self):
-        self.assertEqual(division(10,5), 2.0)
-        self.assertEqual(division(10,-2), -5.0)
-
-    def test_type_exceptions(self):
-        with self.assertRaises(TypeError):
-            division(10,&#39;a&#39;)
-    
-    def test_zero_division(self):
-        try:
-            division(10,0)
-        except ZeroDivisionError:
-            self.fail(&amp;quot;ZeroDivisionError&amp;quot;)
-
-if __name__ == &#39;__main__&#39;:
-    unittest.main()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;test_2.py&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import unittest
-
-def setUpModule():
-    print(&amp;quot;setUpModule() from test_2.py&amp;quot;)
-
-def tearDownModule():
-    print(&amp;quot;tearDownModule() from test_2.py&amp;quot;)
-
-class Test2(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        print(&amp;quot;setUpClass() from Test2 class in test_2.py&amp;quot;)
-
-    
-    def setUp(self):
-        print(&amp;quot;setUp() from Test2 in test_2.py&amp;quot;)
-    
-    def test_simple(self):
-        self.assertEqual(2+2,4)
-
-    @unittest.skip(&amp;quot;Skipping a test demo&amp;quot;)
-    def test_skip(self):
-        self.fail(&amp;quot;Never happens&amp;quot;)
-
-    def tearDown(self):
-        print(&amp;quot;tearDown() from Test2 in test_2.py&amp;quot;)
-    
-    @classmethod
-    def tearDownClass(cls):
-        print(&amp;quot;tearDownClass() from Test2 class in test_2.py&amp;quot;)
-
-
-if __name__ == &#39;__main__&#39;:
-    unittest.main()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;setUpModule() from test_2.py
-setUpClass() from Test2 class in test_2.py
-test_simple (test_2.Test2) ... setUp() from Test2 in test_2.py
-tearDown() from Test2 in test_2.py
-ok
-test_skip (test_2.Test2) ... skipped &#39;Skipping a test demo&#39;
-tearDownClass() from Test2 class in test_2.py
-tearDownModule() from test_2.py
-setUpModule() from tests.py
-setUpClass() from Testexceptions class in tests.py
-test_basic (tests.Testexceptions) ... setUp() from Testexceptions in tests.py
-tearDown() from Testexceptions in tests.py
-ok
-test_type_exceptions (tests.Testexceptions) ... setUp() from Testexceptions in tests.py
-tearDown() from Testexceptions in tests.py
-ok
-test_zero_division (tests.Testexceptions) ... setUp() from Testexceptions in tests.py
-Division by zero
-tearDown() from Testexceptions in tests.py
-ok
-tearDownClass() from Testexceptions class in tests.py
-tearDownModule() from tests.py
-
-----------------------------------------------------------------------
-Ran 5 tests in 0.001s
-
-OK (skipped=1)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;unittest.skip(msg)&lt;/code&gt; decorator can be used to skip a test. This is useful when a test is known to fail and it needs to be fixed.&lt;/p&gt;
-
-&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/tests.py&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/test_2.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Reference: &lt;a href=&#34;https://docs.python.org/3/library/unittest.html&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

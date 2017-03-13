@@ -8,8 +8,96 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Sun, 12 Mar 2017 23:54:19 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 13 Mar 2017 00:09:59 -0700</lastBuildDate>
     <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Merge sort</title>
+      <link>https://www.ploggingdev.com/2017/03/merge-sort/</link>
+      <pubDate>Mon, 13 Mar 2017 00:09:59 -0700</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/03/merge-sort/</guid>
+      <description>&lt;p&gt;Merge sort is a divide and conquer algorithm. It is a fast, general purpose sorting algorithm.&lt;/p&gt;
+
+&lt;p&gt;Time complexity:&lt;/p&gt;
+
+&lt;p&gt;Average case : &lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Best case : &lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Worst case : &lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Worst case space complexity : &lt;strong&gt;O(n)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;It works as follows :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;If the length of the list is 0 or 1, it is considered as sorted.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The unsorted list is divided into two lists of approximately the same size.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Each list (left and right) is sorted recursively by re-applying the merge sort algorithm.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once both the left and right lists are sorted they are merged to produce a sorted list&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Implementation in Python :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def mergesort(list):
+	if len(list) &amp;lt; 2:
+		return list
+	
+	mid = int(len(list)/2)
+
+	left = mergesort(list[:mid])
+	right = mergesort(list[mid:])
+
+	return merge(left, right)
+
+def merge(left, right):
+	result = list()
+	il = 0
+	ir = 0
+
+	for ix in range(len(left) + len(right)):
+
+		if il &amp;lt; len(left) and ir &amp;lt; len(right):
+			if left[il] &amp;lt;= right[ir]:
+				result.append(left[il])
+				il += 1
+			else:
+				result.append(right[ir])
+				ir += 1
+		elif ir &amp;gt;= len(right):
+			result.append(left[il])
+			il += 1
+		else:
+			result.append(right[ir])
+			ir += 1
+	
+	return result
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    print(mergesort([3,2,1,4,-1,-2,0]))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[-2, -1, 0, 1, 2, 3, 4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Merge_sort&#34;&gt;Wikipedia entry on merge sort&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/mergesort.py&#34;&gt;Code&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/mergesort_tests.py&#34;&gt;Tests&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Insertion sort</title>
@@ -1724,6 +1812,8 @@ st2)))
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/03/insertion-sort/&#34;&gt;Insertion sort&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2017/03/merge-sort/&#34;&gt;Merge sort&lt;/a&gt;&lt;/p&gt;
+
 &lt;h1 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2016/11/hello-world/&#34;&gt;Hello World&lt;/a&gt;&lt;/p&gt;
@@ -2037,151 +2127,6 @@ for i in range(N):
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Eight_queens_puzzle&#34;&gt;Eight queens problem on Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Backtracking&#34;&gt;Backtracking on Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Floating point arithmetic issues in Python 3</title>
-      <link>https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/</link>
-      <pubDate>Sun, 27 Nov 2016 21:54:01 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
-      <guid>https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/</guid>
-      <description>&lt;p&gt;By default, numbers having a decimal point are represented as floating point numbers.&lt;/p&gt;
-
-&lt;p&gt;Verification:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(type(1.5))
-#output
-&amp;lt;class &#39;float&#39;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Floating point numbers are represented in computer hardware in base 2. Floating point numbers are used to represent decimal (base 10) numbers in the most common use cases. But most decimal fractions cannot be represented exactly as binary fractions.&lt;/p&gt;
-
-&lt;p&gt;To understand this problem, consider the conversion of a decimal fraction to a decimal number: &lt;code&gt;1/3&lt;/code&gt; is equal to &lt;code&gt;0.333...&lt;/code&gt; with repeating 3&amp;rsquo;s. When represented as a decimal number, it will never be equal to &lt;code&gt;1/3&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Similarly, many decimal numbers cannot be represented accurately in base 2.&lt;/p&gt;
-
-&lt;p&gt;Some examples:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&amp;quot;0.1 + 0.2 = {}&amp;quot;.format(0.1+0.2))
-#output
-0.1 + 0.2 = 0.30000000000000004
-
-print(&amp;quot;0.1 + 0.4 = {}&amp;quot;.format(0.1+0.4))
-#output
-0.1 + 0.4 = 0.5
-
-print(&amp;quot;1/10 = {}&amp;quot;.format(1/10))
-#output
-1/10 = 0.1
-
-print(&amp;quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&amp;quot;)
-print(0.1 + 0.1 + 0.1 == 0.3)
-#output
-Is (0.1 + 0.1 + 0.1 == 0.3) ?
-False
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;In the above examples, notice that some decimal numbers can be represented accurately in base 2 while others cannot be represented accurately.&lt;/p&gt;
-
-&lt;p&gt;I won&amp;rsquo;t pretend that I understand the intricate details behind why this happens, so I will link to some resources if you are interested to learn more: &lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt; and &lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;How can we overcome this issue in Python? Some solutions are:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;using &lt;code&gt;round()&lt;/code&gt; function&lt;/li&gt;
-&lt;li&gt;using the &lt;code&gt;decimal&lt;/code&gt; module&lt;/li&gt;
-&lt;li&gt;using the &lt;code&gt;fractions&lt;/code&gt; module&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Let me explain each of these solutions a little more:&lt;/p&gt;
-
-&lt;p&gt;Using &lt;code&gt;round()&lt;/code&gt;, floating point numbers can be rounded to a specified number of decimal places. If it&amp;rsquo;s used for post rounding a result (round after performing all operations on floats), working with floats will work as expected. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&amp;quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&amp;quot;)
-print(round(0.1 + 0.1 + 0.1, 5) == round(0.3, 5))
-#output
-Is (0.1 + 0.1 + 0.1 == 0.3) ?
-True
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;round()&lt;/code&gt; function accepts a number as the first parameter and another number to specify the precision after the decimal point as the second parameter. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(round(10.33333, 3))
-#output
-10.333
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Edit:&lt;/strong&gt; It has been pointed out to me that using &lt;code&gt;round()&lt;/code&gt; may not be the best solution in certain cases where the rounded number will be used in calculations further in the program. Using &lt;code&gt;round()&lt;/code&gt; in such cases will lead to accuracy issues. An option is to use string formatting to display the required number of digits since this will not round the numbers. Syntax is as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;print(&#39;{: .3f}&#39;.format(10.34123))
-#output
-10.341
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Another alternative is to use the &lt;code&gt;decimal&lt;/code&gt; module when dealing with decimal numbers and accuracy is very important. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from decimal import getcontext, Decimal
-from math import pi
-
-print(getcontext())
-
-getcontext().prec = 5
-print(Decimal(1)/Decimal(3))
-
-getcontext().prec = 30
-print(Decimal(pi))
-
-#output
-Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[], traps=
-[InvalidOperation, DivisionByZero, Overflow])
-0.33333
-3.141592653589793115997963468544185161590576171875
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;getcontext()&lt;/code&gt; allows us to specify the precision and the rounding technique to be used, The default rounding technique is &lt;code&gt;ROUND_HALF_EVEN&lt;/code&gt; which rounds to nearest with ties going to nearest even integer.&lt;/p&gt;
-
-&lt;p&gt;To deal directly with fractions, the &lt;code&gt;fractions&lt;/code&gt; module can be used which supports rational number arithmetic. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from fractions import Fraction
-
-num1 = Fraction(2,3)
-num2 = Fraction(1,3)
-
-print(&amp;quot;num1 = {} and num2 = {}&amp;quot;.format(num1,num2))
-
-print(num1 + num2)
-
-print(num1 - num2)
-
-print(num1*10)
-
-print(num1/num2)
-
-#output
-num1 = 2/3 and num2 = 1/3
-1
-1/3
-20/3
-2
-&amp;lt;class &#39;fractions.Fraction&#39;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There are multiple ways to construct fractions and the details can be found in the official documentation which is linked below.&lt;/p&gt;
-
-&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/funny_floats.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/floatingpoint.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/functions.html#round&#34;&gt;round() documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/decimal.html#module-decimal&#34;&gt;decimal module&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/fractions.html#module-fractions&#34;&gt;fractions module&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Archive</title>
+  <title>Merge sort</title>
 
   <meta name="author" content="Plogging Dev" />
 
-  <meta name="description" content="Archive">
+  <meta name="description" content="Merge sort">
 
+  
+  <meta name="keywords" content="python 3, merge sort, algorithm">
   
 
   <meta name="generator" content="Hugo 0.17" />
@@ -26,9 +28,9 @@
   <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
 
   
-  <meta property="og:title" content="Archive" />
+  <meta property="og:title" content="Merge sort" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/archive//" />
+  <meta property="og:url" content="/2017/03/merge-sort//" />
   <meta property="og:image" content="/img//avatar.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -102,10 +104,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Archive</h1>
+        <div class="post-heading">
+          <h1>Merge sort</h1>
       
       
+      
+      <span class="post-meta">Posted on March 13, 2017</span>
       
         </div>
       </div>
@@ -117,84 +121,103 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          <p>Merge sort is a divide and conquer algorithm. It is a fast, general purpose sorting algorithm.</p>
+
+<p>Time complexity:</p>
+
+<p>Average case : <strong>O(n log n)</strong></p>
+
+<p>Best case : <strong>O(n log n)</strong></p>
+
+<p>Worst case : <strong>O(n log n)</strong></p>
+
+<p>Worst case space complexity : <strong>O(n)</strong></p>
+
+<p></p>
+
+<p>It works as follows :</p>
+
+<ul>
+<li><p>If the length of the list is 0 or 1, it is considered as sorted.</p></li>
+
+<li><p>The unsorted list is divided into two lists of approximately the same size.</p></li>
+
+<li><p>Each list (left and right) is sorted recursively by re-applying the merge sort algorithm.</p></li>
+
+<li><p>Once both the left and right lists are sorted they are merged to produce a sorted list</p></li>
+</ul>
+
+<p>Implementation in Python :</p>
+
+<pre><code>def mergesort(list):
+	if len(list) &lt; 2:
+		return list
+	
+	mid = int(len(list)/2)
+
+	left = mergesort(list[:mid])
+	right = mergesort(list[mid:])
+
+	return merge(left, right)
+
+def merge(left, right):
+	result = list()
+	il = 0
+	ir = 0
+
+	for ix in range(len(left) + len(right)):
+
+		if il &lt; len(left) and ir &lt; len(right):
+			if left[il] &lt;= right[ir]:
+				result.append(left[il])
+				il += 1
+			else:
+				result.append(right[ir])
+				ir += 1
+		elif ir &gt;= len(right):
+			result.append(left[il])
+			il += 1
+		else:
+			result.append(right[ir])
+			ir += 1
+	
+	return result
+
+if __name__ == &quot;__main__&quot;:
+    print(mergesort([3,2,1,4,-1,-2,0]))
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>[-2, -1, 0, 1, 2, 3, 4]
+</code></pre>
+
+<p>Links:</p>
+
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Merge_sort">Wikipedia entry on merge sort</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/practice/blob/master/algos/mergesort.py">Code</a></p></li>
+
+<li><p><a href="https://github.com/ploggingdev/practice/blob/master/algos/tests/mergesort_tests.py">Tests</a></p></li>
+</ul>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://www.ploggingdev.com/2017/03/insertion-sort/" data-toggle="tooltip" data-placement="top" title="Insertion sort">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+      
       
 
-<p>This page contains links to all posts on this site.</p>
-
-<h2 id="python">Python</h2>
-
-<p><a href="/2016/11/beginning-python-3/">Beginning Python 3</a></p>
-
-<p><a href="/2016/11/data-types-in-python-3/">Data types in Python 3</a></p>
-
-<p><a href="/2016/11/strings-in-python-3/">Strings in Python 3</a></p>
-
-<p><a href="/2016/11/lists-in-python-3/">Lists in Python 3</a></p>
-
-<p><a href="/2016/11/tuples-in-python-3/">Tuples in Python 3</a></p>
-
-<p><a href="/2016/11/ranges-in-python-3/">Ranges in Python 3</a></p>
-
-<p><a href="/2016/11/sets-in-python-3/">Sets in Python 3</a></p>
-
-<p><a href="/2016/11/dictionaries-in-python-3/">Dictionaries in Python 3</a></p>
-
-<p><a href="/2016/11/control-flow-tools-in-python-3/">Control flow tools in Python 3</a></p>
-
-<p><a href="/2016/11/functions-in-python-3/">Functions in Python 3</a></p>
-
-<p><a href="/2016/11/modules-and-packages-in-python-3/">Modules and packages in Python 3</a></p>
-
-<p><a href="/2016/11/classes-and-inheritance-in-python-3/">Classes and inheritance in Python 3</a></p>
-
-<p><a href="/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></p>
-
-<p><a href="/2016/11/file-io-and-json-in-python-3/">File IO and JSON in Python 3</a></p>
-
-<p><a href="/2016/11/errors-and-exceptions-in-python-3/">Errors and exceptions in Python 3</a></p>
-
-<p><a href="/2016/11/unit-testing-in-python-3/">Unit testing in Python 3</a></p>
-
-<p><a href="/2016/11/floating-point-arithmetic-issues-in-python-3/">Floating point arithmetic issues in Python 3</a></p>
-
-<p><a href="/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></p>
-
-<p><a href="/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">List comprehensions, iterators, generators and generator expressions in Python 3</a></p>
-
-<p><a href="/2016/12/performance-measurement-in-python-3/">Performance measurement in Python 3</a></p>
-
-<p><a href="/2016/12/decorators-in-python-3/">Decorators in Python 3</a></p>
-
-<p><a href="/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">Scraping my website using requests and BeautifulSoup</a></p>
-
-<p><a href="/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">Analyzing programming language statistics of 100,000 Github repositories</a></p>
-
-<p><a href="/2017/01/multiprocessing-and-multithreading-in-python-3/">Multiprocessing and multithreading in Python 3</a></p>
-
-<p><a href="/2017/01/concurrent.futures-in-python-3/">concurrent.futures in Python 3</a></p>
-
-<h1 id="algorithms">Algorithms</h1>
-
-<p><a href="/2017/03/bubblesort/">Bubblesort</a></p>
-
-<p><a href="/2017/03/quicksort/">Quicksort</a></p>
-
-<p><a href="/2017/03/selection-sort/">Selection sort</a></p>
-
-<p><a href="/2017/03/insertion-sort/">Insertion sort</a></p>
-
-<p><a href="/2017/03/merge-sort/">Merge sort</a></p>
-
-<h1 id="miscellaneous">Miscellaneous</h1>
-
-<p><a href="/2016/11/hello-world/">Hello World</a></p>
-
-<p><a href="/2017/02/fizzbuzz/">FizzBuzz</a></p>
-
-      
     </div>
   </div>
 </div>

@@ -110,6 +110,50 @@
             
             
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/">
+          	  <h2 class="post-title">Functions in Python 3</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on November 13, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
+example:</p>
+
+<pre><code>def hello_function():
+    '''This is where the function documentation goes'''
+    print('Hello from function')
+
+hello_function()
+print(hello_function)
+#output
+Hello from function
+&lt;function hello_function at 0x7f34bc7db378&gt;
+</code></pre>
+
+<ul>
+<li>The <code>def</code> keyword is used to define a function.</li>
+<li>It is followed by the function name, argument list(if any), and a
+colon <code>:</code>.</li>
+<li>The function body is indented by 4 spaces.</li>
+<li>The first line of a function body is a
+<a href="https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings">docstring</a>,
+which is documentation for the function. It&rsquo;s a good practice to always include the docstring.</li>
+<li>The statements that constitute the function are placed after the docstring.</li>
+<li>A function is an object, notice the output of <code>print(hello_function)</code>.</li>
+</ul>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
+            
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/">
           	  <h2 class="post-title">Control flow tools in Python 3</h2>
 
@@ -259,57 +303,6 @@ parameter. When step is not specified, what we end up with is <code>range(start,
 
 <p></p>
           	  <a href="https://www.ploggingdev.com/2016/11/ranges-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/tuples-in-python-3/">
-          	  <h2 class="post-title">Tuples in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 8, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>Tuples are immutable sequences of values. The values can be heterogeneous.
-The values in a tuple are indexed by integers.</p>
-
-<p>Tuple construction:</p>
-
-<ul>
-<li><code>()</code> for empty tuple</li>
-<li>Single value in a tuple requires a trailing comma: <code>1,</code></li>
-<li>Comma separated values: <code>1,2,3</code></li>
-<li>using <code>tuple()</code> function</li>
-</ul>
-
-<p>Examples:</p>
-
-<p>Empty tuple.</p>
-
-<pre><code>t0=() 
-</code></pre>
-
-<p>Single value in a tuple(singleton). Notice the trailing comma.</p>
-
-<pre><code>t1='a',
-print(t1)
-('a',) 
-</code></pre>
-
-<p>Comma separated values.</p>
-
-<pre><code>t2=1,2,3
-print(t2)
-(1, 2, 3)
-</code></pre>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/tuples-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
 
              </article>

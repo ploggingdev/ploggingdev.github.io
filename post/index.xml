@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Post-rsses on Plogging Dev</title>
-    <link>https://www.ploggingdev.com/post/index.xml</link>
-    <description>Recent content in Post-rsses on Plogging Dev</description>
+    <title>Posts on Plogging Dev</title>
+    <link>https://www.ploggingdev.com/post/</link>
+    <description>Recent content in Posts on Plogging Dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Mon, 13 Mar 2017 00:09:59 -0700</lastBuildDate>
-    <atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 May 2017 23:16:24 -0700</lastBuildDate>
+    
+	<atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A model for a privacy oriented ad network that profiles content, not users</title>
+      <link>https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/</link>
+      <pubDate>Mon, 22 May 2017 23:16:24 -0700</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/</guid>
+      <description>A few days ago I came across a talk by Maciej Ceglowski titled Notes from an Emergency. If you have not watched the talk, stop reading this and go watch it. In the talk, he makes a suggestion that the Government should regulate ads to target content, not users. There was a discussion about the talk on Hacker News where Maciej, in response to a comment that implied ads that target content will be worse than ads that target users, said that&amp;rsquo;s why he feels it&amp;rsquo;s a regulatory argument and not a business argument.</description>
+    </item>
     
     <item>
       <title>Merge sort</title>
@@ -29,74 +40,7 @@
 
 &lt;p&gt;Worst case space complexity : &lt;strong&gt;O(n)&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;It works as follows :&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;If the length of the list is 0 or 1, it is considered as sorted.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;The unsorted list is divided into two lists of approximately the same size.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Each list (left and right) is sorted recursively by re-applying the merge sort algorithm.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Once both the left and right lists are sorted they are merged to produce a sorted list&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Implementation in Python :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def mergesort(list):
-	if len(list) &amp;lt; 2:
-		return list
-	
-	mid = int(len(list)/2)
-
-	left = mergesort(list[:mid])
-	right = mergesort(list[mid:])
-
-	return merge(left, right)
-
-def merge(left, right):
-	result = list()
-	il = 0
-	ir = 0
-
-	for ix in range(len(left) + len(right)):
-
-		if il &amp;lt; len(left) and ir &amp;lt; len(right):
-			if left[il] &amp;lt;= right[ir]:
-				result.append(left[il])
-				il += 1
-			else:
-				result.append(right[ir])
-				ir += 1
-		elif ir &amp;gt;= len(right):
-			result.append(left[il])
-			il += 1
-		else:
-			result.append(right[ir])
-			ir += 1
-	
-	return result
-
-if __name__ == &amp;quot;__main__&amp;quot;:
-    print(mergesort([3,2,1,4,-1,-2,0]))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[-2, -1, 0, 1, 2, 3, 4]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Links:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Merge_sort&#34;&gt;Wikipedia entry on merge sort&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/mergesort.py&#34;&gt;Code&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/mergesort_tests.py&#34;&gt;Tests&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -117,46 +61,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 
 &lt;p&gt;Worst case space complexity : &lt;strong&gt;O(n)&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;How the algorithm works:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;In each iteration, an item to the right of the sorted list (initially empty) is picked.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Starting from the rightmost element, swapping between the current item and preceeding item are made, if the preceeding item is smaller. This process stops if the preceeding item is greater than or equal to the current item.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Implementation in Python :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def insertionsort(list):
-    for ix in range(1, len(list)):
-        jx = ix
-        while jx &amp;gt; 0 and list[jx-1] &amp;gt; list[jx]:
-            temp = list[jx]
-            list[jx] = list[jx-1]
-            list[jx-1] = temp
-            jx -= 1
-    return list
-
-if __name__ == &amp;quot;__main__&amp;quot;:
-    print(insertionsort([2,1,3,0,-1,-3,-2,5,6,4]))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Links:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Insertion_sort&#34;&gt;Wikipedia entry about insertion sort&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/insertionsort.py&#34;&gt;Code&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/insertionsort_tests.py&#34;&gt;Tests&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -177,50 +82,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 
 &lt;p&gt;Worst case space complexity : &lt;strong&gt;O(n)&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;How the algorithm works:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The algorithm divides the input list into two parts: the sublist of items already sorted, which is built up from left to right in the list.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Initially, the sorted sublist (starting at the left side) is empty and the unsorted sublist is the entire input list.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;On every iteration, the algorithm finds the smallest element in the unsorted sublist and swaps it with the leftmost unsorted element (putting it in sorted order), and increments the sorted sublist boundary one element to the right.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Implementation in Python :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def selectionsort(list):
-    for jx in range(0,len(list)-1):
-        min = jx
-        for ix in range(jx+1,len(list)):
-            if list[ix] &amp;lt; list[min]:
-                min = ix
-        if min != jx:
-            temp = list[jx]
-            list[jx] = list[min]
-            list[min] = temp
-    
-    return list
-if __name__ == &amp;quot;__main__&amp;quot;:
-    print(selectionsort([2,1,3,0,-1,-3,-2,5,6,4]))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Links:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Selection_sort&#34;&gt;Wikipedia entry about selection sort&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/selectionsort.py&#34;&gt;Code&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/selectionsort_tests.py&#34;&gt;Tests&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -241,72 +103,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 
 &lt;p&gt;Worst case : &lt;strong&gt;n&lt;sup&gt;2&lt;/sup&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;How does the algorithm work?&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Pick an element, called a pivot, from the array.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Partitioning: reorder the array so that all elements with values less than the pivot come before the pivot, while all elements with values greater than the pivot come after it (equal values can go either way). After this partitioning, the pivot is in its final position.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Recursively apply the above steps to the sub-array of elements with smaller values and separately to the sub-array of elements with greater values.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The base case of the recursion is arrays of size zero or one, which never need to be sorted.&lt;/p&gt;
-
-&lt;p&gt;I will use the Hoare partition scheme for this implementation. It uses two indices that start at the ends of the array being partitioned, then move toward each other, until they detect an inversion: a pair of elements, one greater than or equal to the pivot, one lesser or equal, that are in the wrong order relative to each other. The inverted elements are then swapped. When the indices meet, the algorithm stops and returns the final index.&lt;/p&gt;
-
-&lt;p&gt;Implementation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;
-def quicksort(to_sort, lo, hi):
-    if lo &amp;lt; hi:
-        p = partition(to_sort, lo, hi)
-        quicksort(to_sort, lo, p)
-        quicksort(to_sort, p + 1, hi)
-
-def partition(to_sort, lo, hi):
-    pivot = to_sort[lo]
-    i = lo - 1
-    j = hi + 1
-    while True:
-        
-        i = i + 1
-        while to_sort[i] &amp;lt; pivot:
-            i = i + 1
-
-        j = j - 1
-        while to_sort[j] &amp;gt; pivot:
-            j = j - 1
-
-        if i &amp;gt;= j:
-            return j
-        
-        temp = to_sort[i]
-        to_sort[i] = to_sort[j]
-        to_sort[j] = temp
-    
-if __name__ == &amp;quot;__main__&amp;quot;:
-    to_sort = [1,3,2,0,-1,4,5,1,-2,-3,1,7]
-    quicksort(to_sort, 0 ,len(to_sort)-1)
-    print(to_sort)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[-3, -2, -1, 0, 1, 1, 1, 2, 3, 4, 5, 7]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;References/code:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Quicksort&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/quicksort.py&#34;&gt;quicksort.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/quicksort_tests.py&#34;&gt;quicksort_tests.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -325,46 +122,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 
 &lt;p&gt;Best case : &lt;strong&gt;n&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Bubble sort is considered a very slow sorting algorithm and is mainly used in academic settings to illustrate time complexity with an example. One case where Bubble sort performs very well is when the list is already sorted. The best case has a time complexity of &lt;code&gt;n&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Implementation of Bubble sort:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def bubblesort(to_sort):
-    list_len = len(to_sort)
-    while list_len&amp;gt;0:
-        new_n = 0
-        for ix in range(1,list_len): #checks till n-1
-            if to_sort[ix-1] &amp;gt; to_sort[ix]:
-                temp = to_sort[ix-1]
-                to_sort[ix-1] = to_sort[ix]
-                to_sort[ix] = temp
-                new_n = ix
-        list_len = new_n
-    return to_sort
-    
-if __name__ == &amp;quot;__main__&amp;quot;:
-    to_sort = [1,3,2,0,-1,4,5]
-    print(bubblesort(to_sort))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[-1, 0, 1, 2, 3, 4, 5]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The above implementation has an optimization : &lt;code&gt;new_n&lt;/code&gt; keeps track of the last index at which a swap occured and in the next iteration &lt;code&gt;list_len&lt;/code&gt; is set to &lt;code&gt;new_n&lt;/code&gt;, so if more than one value bubbles up to it&amp;rsquo;s correct position, there is no need to check if it&amp;rsquo;s in the correct position in the next iteration. (Ignore the poor naming of variables).&lt;/p&gt;
-
-&lt;p&gt;References :&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Bubble_sort&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/bubblesort.py&#34;&gt;bubblesort.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/algos/tests/bubblesort_tests.py&#34;&gt;bubblesort_tests.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -394,36 +152,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 		print(ix)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Output after running &lt;code&gt;python3 sol1.py&lt;/code&gt; can be found &lt;a href=&#34;https://gist.github.com/ploggingdev/319de9494a9c7c7006c171413989eaa3&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The above code can be improved by removing redundant checking of divisibility by 3 and 5. Also important to note that FizzBuzz = Fizz + Buzz.&lt;/p&gt;
-
-&lt;p&gt;Improved version :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;for ix in range(1,101):
-    res = &#39;&#39;
-    if ix%3 == 0:
-        res += &#39;Fizz&#39;
-    if ix%5 == 0:
-        res += &amp;quot;Buzz&amp;quot;
-    print(res or ix)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let me explain the &lt;code&gt;print(res or ix)&lt;/code&gt; part : the &lt;code&gt;or&lt;/code&gt; operator is a short circuit operator, so &lt;code&gt;res&lt;/code&gt; is printed if it is not empty (it&amp;rsquo;s either a multiple of 3, 5 or both), otherwise &lt;code&gt;ix&lt;/code&gt; is printed.&lt;/p&gt;
-
-&lt;p&gt;Links :&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://wiki.c2.com/?FizzBuzzTest&#34;&gt;Source&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://blog.codinghorror.com/why-cant-programmers-program/&#34;&gt;Why Can&amp;rsquo;t Programmers.. Program?&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol1.py&#34;&gt;sol1.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/practice/blob/master/fizzbuzz/sol2.py&#34;&gt;sol2.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -438,153 +167,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 
 &lt;p&gt;Let&amp;rsquo;s jump into an example. The purpose of the following program is to find the sum of all prime numbers until the given number. There are two functions to demonstrate how to use a pool of threads and how to use a pool of processes. &lt;code&gt;sum_primes_thread(nums)&lt;/code&gt; uses threads and &lt;code&gt;sum_primes_process(nums)&lt;/code&gt; uses processes. Notice that the only difference between the two functions is that one uses &lt;code&gt;ThreadPoolExecutor&lt;/code&gt; while the other uses &lt;code&gt;ProcessPoolExecutor&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import concurrent.futures
-import time
-
-def is_prime(num):
-    if num &amp;lt;= 1:
-        return False
-    elif num &amp;lt;= 3:
-        return True
-    elif num%2 == 0 or num%3 == 0:
-        return False
-    i = 5
-    while i*i &amp;lt;= num:
-        if num%i == 0 or num%(i+2) == 0:
-            return False
-        i += 6
-    return True
-
-def find_sum(num):
-    sum_of_primes = 0
-
-    ix = 2
-
-    while ix &amp;lt;= num:
-        if is_prime(ix):
-            sum_of_primes += ix
-        ix += 1
-
-    return sum_of_primes
-
-def sum_primes_thread(nums):
-    with concurrent.futures.ThreadPoolExecutor(max_workers = 4) as executor:
-        for number, sum_res in zip(nums, executor.map(find_sum, nums)):
-            print(&amp;quot;{} : Sum = {}&amp;quot;.format(number, sum_res))
-
-def sum_primes_process(nums):
-    with concurrent.futures.ProcessPoolExecutor(max_workers = 4) as executor:
-        for number, sum_res in zip(nums, executor.map(find_sum, nums)):
-            print(&amp;quot;{} : Sum = {}&amp;quot;.format(number, sum_res))
-
-if __name__ == &#39;__main__&#39;:
-    nums = [100000, 200000, 300000]
-    start = time.time()
-    sum_primes_thread(nums)
-    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output when executing &lt;code&gt;sum_primes_process&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;100000 : Sum = 454396537
-200000 : Sum = 1709600813
-300000 : Sum = 3709507114
-Time taken = 0.71783
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output when executing &lt;code&gt;sum_primes_thread&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;100000 : Sum = 454396537
-200000 : Sum = 1709600813
-300000 : Sum = 3709507114
-Time taken = 1.23388
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This was a simple example to demonstrate how to use pools of threads and processes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; : Don&amp;rsquo;t use threads for CPU intensive tasks.&lt;/p&gt;
-
-&lt;p&gt;Though the callables themselves are executed asynchronously, the results are printed in the order they were called. The output can be displayed asynchronously also, as I demonstrate in the following example.&lt;/p&gt;
-
-&lt;p&gt;This program just retrieves the titles of web pages.&lt;/p&gt;
-
-&lt;p&gt;The output is displayed as and when a request is completed, so the order of the output usually changes between multiple runs of the program.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;concurrent.futures.as_completed(iterable_of_futures)&lt;/code&gt; method accepts an iterable of &lt;code&gt;Future&lt;/code&gt; objects. The iterable is a dictionary in this program, but other iterables can also be used (eg- list).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import concurrent.futures
-import time
-import requests
-import bs4
-import os
-
-def load_url(current_url):
-    res = requests.get(current_url)
-    res.raise_for_status()
-
-    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
-    current_title = current_page.select(&#39;title&#39;)[0].getText()
-    return current_title
-
-def process_urls_thread_alt(urls):
-    with concurrent.futures.ThreadPoolExecutor(max_workers = 4) as executor:
-        future_to_url = {executor.submit(load_url, url): url for url in urls}
-        for future in concurrent.futures.as_completed(future_to_url):
-            url = future_to_url[future]
-            try:
-                data = future.result()
-            except Exception as exc:
-                print(&#39;%r generated an exception: %s&#39; % (url, exc))
-            else:
-                print(&amp;quot;{} : Url = {}&amp;quot;.format(data, url))
-
-
-def process_urls_process_alt(urls):
-    with concurrent.futures.ProcessPoolExecutor(max_workers = 4) as executor:
-        future_to_url = {executor.submit(load_url, url): url for url in urls}
-        for future in concurrent.futures.as_completed(future_to_url):
-            url = future_to_url[future]
-            try:
-                data = future.result()
-            except Exception as exc:
-                print(&#39;%r generated an exception: %s&#39; % (url, exc))
-            else:
-                print(&amp;quot;{} : Url = {}&amp;quot;.format(data, url))
-
-if __name__ == &#39;__main__&#39;:
-    url_list = [&amp;quot;https://www.google.com&amp;quot;, &amp;quot;https://www.ploggingdev.com/2016/11/beginning-python-3/&amp;quot;, &amp;quot;https://www.ploggingdev.com/archive/&amp;quot;, &amp;quot;https://www.ploggingdev.com/2016/11/data-types-in-python-3/&amp;quot;, &amp;quot;https://www.ploggingdev.com/2016/11/strings-in-python-3/&amp;quot;]
-    start = time.time()
-    process_urls_process_alt(url_list)
-    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output of the program (same when using threads or processes):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Google : Url = https://www.google.com
-Beginning Python 3 : Url = https://www.ploggingdev.com/2016/11/beginning-python-3/
-Archive : Url = https://www.ploggingdev.com/archive/
-Strings in Python 3 : Url = https://www.ploggingdev.com/2016/11/strings-in-python-3/
-Data types in Python 3 : Url = https://www.ploggingdev.com/2016/11/data-types-in-python-3/
-Time taken = 1.82259
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There are three exceptions that can occur:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;concurrent.futures.CancelledError&lt;/code&gt; is raised when a future is cancelled&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;exception concurrent.futures.TimeoutError&lt;/code&gt; is raised when a future operation exceeds the given timeout&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;concurrent.futures.process.BrokenProcessPool&lt;/code&gt; is raised when one of the workers of a ProcessPoolExecutor has terminated in a non-clean fashion&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In the above program they are handled in a catch all &lt;code&gt;except Exception&lt;/code&gt; block, but this can be modified depending on the requirements.&lt;/p&gt;
-
-&lt;p&gt;Code for todays blog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/concurrent_futures.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Reference : &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;Official library reference&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -609,307 +192,7 @@ Time taken = 1.82259
 
 &lt;p&gt;The CPython implementation has a Global Interpreter Lock (GIL) which allows only one thread to be active in the interpreter at once. This means that threads cannot be used for parallel execution of Python code. While parallel CPU computation is not possible, parallel IO operations are possible using threads. This is because performing IO operations releases the GIL. To learn more about the GIL refer &lt;a href=&#34;http://www.dabeaz.com/python/UnderstandingGIL.pdf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;What are threads used for in Python?&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;In GUI applications to keep the UI thread responsive&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;IO tasks (network IO or filesystem IO)&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Threads should not be used for CPU bound tasks. Using threads for CPU bound tasks will actually result in worse performance compared to using a single thread.&lt;/p&gt;
-
-&lt;p&gt;The following example demonstrates the use of threads for filesystem IO.&lt;/p&gt;
-
-&lt;p&gt;A queue is used to store the files that need to be processed. A dictionary is used to store the input and output file names. The &lt;code&gt;process_queue()&lt;/code&gt; function is used to retrieve items from the queue and perform the copy operation. The copy operation is done in the &lt;code&gt;copy_op&lt;/code&gt; function using the &lt;code&gt;shutil&lt;/code&gt; module.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import threading
-from queue import Queue
-import time
-import shutil
-
-print_lock = threading.Lock()
-
-def copy_op(file_data):
-    with print_lock:
-        print(&amp;quot;Starting thread : {}&amp;quot;.format(threading.current_thread().name))
-
-    mydata = threading.local()
-    mydata.ip, mydata.op = next(iter(file_data.items()))
-
-    shutil.copy(mydata.ip, mydata.op)
-
-    with print_lock:
-        print(&amp;quot;Finished thread : {}&amp;quot;.format(threading.current_thread().name))
-
-def process_queue():
-    while True:
-        file_data = compress_queue.get()
-        copy_op(file_data)
-        compress_queue.task_done()
-
-compress_queue = Queue()
-
-output_names = [{&#39;v1.mp4&#39; : &#39;v11.mp4&#39;},{&#39;v2.mp4&#39; : &#39;v22.mp4&#39;}]
-
-for i in range(2):
-    t = threading.Thread(target=process_queue)
-    t.daemon = True
-    t.start()
-
-start = time.time()
-
-for file_data in output_names:
-    compress_queue.put(file_data)
-
-compress_queue.join()
-
-print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(time.time() - start))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note : The v1.mp4 and v2.mp4 were 250MB each.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;7 to 10 seconds&lt;/strong&gt; was the time taken when using one thread&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;4.5 to 5.5 seconds&lt;/strong&gt; was the time taken when using two threads&lt;/p&gt;
-
-&lt;p&gt;So it&amp;rsquo;s clear that threads can be used for parallel filesystem IO.&lt;/p&gt;
-
-&lt;p&gt;The following example demonstrates the use of threads for network IO using the &lt;code&gt;requests&lt;/code&gt; library. This is a toy example use case of threads for networking IO.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import threading
-from queue import Queue
-import requests
-import bs4
-import time
-
-print_lock = threading.Lock()
-
-def get_url(current_url):
-
-    with print_lock:
-        print(&amp;quot;\nStarting thread {}&amp;quot;.format(threading.current_thread().name))
-    res = requests.get(current_url)
-    res.raise_for_status()
-
-    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
-    current_title = current_page.select(&#39;title&#39;)[0].getText()
-
-    with print_lock:
-        print(&amp;quot;{}\n&amp;quot;.format(threading.current_thread().name))
-        print(&amp;quot;{}\n&amp;quot;.format(current_url))
-        print(&amp;quot;{}\n&amp;quot;.format(current_title))
-        print(&amp;quot;\nFinished fetching : {}&amp;quot;.format(current_url))
-
-def process_queue():
-    while True:
-        current_url = url_queue.get()
-        get_url(current_url)
-        url_queue.task_done()
-
-url_queue = Queue()
-
-url_list = [&amp;quot;https://www.google.com&amp;quot;]*5
-
-for i in range(5):
-    t = threading.Thread(target=process_queue)
-    t.daemon = True
-    t.start()
-
-start = time.time()
-
-for current_url in url_list:
-    url_queue.put(current_url)
-
-url_queue.join()
-
-print(threading.enumerate())
-
-print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(time.time() - start))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Single thread : &lt;strong&gt;4 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Two threads : &lt;strong&gt;3 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Five threads : &lt;strong&gt;2 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In network IO, most of the time is spent waiting for the response from the URL, so this is another use case where using threads improves performance.&lt;/p&gt;
-
-&lt;p&gt;Let me demonstrate why it&amp;rsquo;s a bad idea to use threads for CPU bound tasks. In the following program a queue holds numbers. The task is to find the sum of prime number less than or equal to the given number. This is clearly a CPU bound task.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import threading
-from queue import Queue
-import time
-
-list_lock = threading.Lock()
-
-def find_rand(num):
-    sum_of_primes = 0
-
-    ix = 2
-
-    while ix &amp;lt;= num:
-        if is_prime(ix):
-            sum_of_primes += ix
-        ix += 1
-
-    sum_primes_list.append(sum_of_primes)
-
-def is_prime(num):
-    if num &amp;lt;= 1:
-        return False
-    elif num &amp;lt;= 3:
-        return True
-    elif num%2 == 0 or num%3 == 0:
-        return False
-    i = 5
-    while i*i &amp;lt;= num:
-        if num%i == 0 or num%(i+2) == 0:
-            return False
-        i += 6
-    return True
-
-def process_queue():
-    while True:
-        rand_num = min_nums.get()
-        find_rand(rand_num)
-        min_nums.task_done()
-
-min_nums = Queue()
-
-rand_list = [1000000, 2000000, 3000000]
-sum_primes_list = list()
-
-for i in range(2):
-    t = threading.Thread(target=process_queue)
-    t.daemon = True
-    t.start()
-
-start = time.time()
-
-for rand_num in rand_list:
-    min_nums.put(rand_num)
-
-min_nums.join()
-
-end_time = time.time()
-
-sum_primes_list.sort()
-print(sum_primes_list)
-
-print(&amp;quot;Execution time = {0:.5f}&amp;quot;.format(end_time - start))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Single thread : &lt;strong&gt;25.5 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Two threads : &lt;strong&gt;28 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The results are very clear : don&amp;rsquo;t use threads to improve performance of CPU bound tasks. You will always end up with worse performance.&lt;/p&gt;
-
-&lt;p&gt;For parallel execution of tasks, the &lt;code&gt;multiprocessing&lt;/code&gt; module can be used.&lt;/p&gt;
-
-&lt;p&gt;In the following example we take the same task used above and process the inputs in parallel using the &lt;code&gt;multiprocessing&lt;/code&gt; module.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from multiprocessing import Pool
-import time
-
-def sum_prime(num):
-    
-    sum_of_primes = 0
-
-    ix = 2
-
-    while ix &amp;lt;= num:
-        if is_prime(ix):
-            sum_of_primes += ix
-        ix += 1
-
-    return sum_of_primes
-
-def is_prime(num):
-    if num &amp;lt;= 1:
-        return False
-    elif num &amp;lt;= 3:
-        return True
-    elif num%2 == 0 or num%3 == 0:
-        return False
-    i = 5
-    while i*i &amp;lt;= num:
-        if num%i == 0 or num%(i+2) == 0:
-            return False
-        i += 6
-    return True
-
-if __name__ == &#39;__main__&#39;:
-    start = time.time()
-    with Pool(1) as p:
-        print(p.map(sum_prime, [1000000, 2000000, 3000000]))
-    print(&amp;quot;Time taken = {0:.5f}&amp;quot;.format(time.time() - start))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Using a single process : &lt;strong&gt;27 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Using two processes : &lt;strong&gt;19 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Using three processes : &lt;strong&gt;18 seconds&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;We see a huge improvement from using a single process to using two processes. But the jump from two processes to three processes is minimal. The reason behind this is my hardware. I have a dual core (laptop) CPU with hyperthreading (the OS detects it as four CPUs due to hyperthreading). On a side note, I knew Intel&amp;rsquo;s hyperthreading was not a replacement for more cores. The above example is a noob verification.&lt;/p&gt;
-
-&lt;p&gt;So using the &lt;code&gt;multiprocessing&lt;/code&gt; module results in the full utilization of the CPU.&lt;/p&gt;
-
-&lt;p&gt;Inter process communication can be achieved using queues or pipes. The &lt;code&gt;Queue&lt;/code&gt; in the &lt;code&gt;multiprocessing&lt;/code&gt; module works similar to the &lt;code&gt;queue&lt;/code&gt; module used to demonstrate how the &lt;code&gt;threading&lt;/code&gt; module works so I won&amp;rsquo;t cover it again.&lt;/p&gt;
-
-&lt;p&gt;Another useful communication mechanism between processes is a pipe. A pipe is a duplex (two way) communication channel. Note : Reading or writing to the same end of the pipe simultaneously can result in data corruption.&lt;/p&gt;
-
-&lt;p&gt;The following is a basic example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import multiprocessing as mp
-import os
-
-def info(conn):
-    conn.send(&amp;quot;Hello from {}\nppid = {}\npid={}&amp;quot;.format(mp.current_process().name, os.getppid(), os.getpid()))
-    conn.close()
-
-if __name__ == &#39;__main__&#39;:
-
-    parent_conn, child_conn = mp.Pipe()
-    p = mp.Process(target=info, args=(child_conn,))
-    p.daemon = True
-    p.start()
-    print(parent_conn.recv())
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Hello from Process-1
-ppid = 18621
-pid=18622
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Code:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/tree/master/multiprocess_demo&#34;&gt;Multiprocessing demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/tree/master/multithread_demo&#34;&gt;Multithreading demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/threading.html&#34;&gt;threading docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/multiprocessing.html&#34;&gt;multiprocessing docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/queue.html&#34;&gt;queue docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference&#34;&gt;Stackoverflow question on Concurrency vs Parallelism&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.dabeaz.com/python/UnderstandingGIL.pdf&#34;&gt;Understanding the GIL&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -936,65 +219,7 @@ pid=18622
 
 &lt;p&gt;The next step is to follow the &lt;code&gt;languages_url&lt;/code&gt; api endpoint for each repository and save the data.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;A high level overview of how I did this:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Read a line from &lt;code&gt;all_repos.jsonl&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Retrieve data from the &lt;code&gt;languages_url&lt;/code&gt; endpoint&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;If an exception occurred, output an empty json object to &lt;code&gt;lang_data.jsonl&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Otherwise save the response to &lt;code&gt;lang_data.jsonl&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Check headers to see if api limit has been reached&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;If api limit is reached, sleep until the api limit is reset&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Otherwise go to step 1 and repeat until all lines have been read&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;There were a few HTTPError exceptions (returned HTTP 403 and 404 status codes) since Github blocked a few repositories for violating their Terms of Service. Around 3 such exceptions in the first 5000 repositories. There were also a lot of empty repositories.&lt;/p&gt;
-
-&lt;p&gt;The api limit for Github is 5000 calls per hour. The headers include &lt;code&gt;X-RateLimit-Remaining&lt;/code&gt; which specifies how many api calls are remaining in the current hour. The &lt;code&gt;X-RateLimit-Reset&lt;/code&gt; header contains a number which specifies when the ratelimit will be reset. It is respresented as the seconds since the Unix epoch. These headers are used to check if the api limit has been reached and how much time to sleep for, if the limit has been reached.&lt;/p&gt;
-
-&lt;p&gt;The total number of api calls made in this step is 100,000 which took a little over 20 hours to complete. I ran this in a VPS.&lt;/p&gt;
-
-&lt;p&gt;Interesting to note that it takes around 5 minutes to make the 5000 api calls on the VPS. So the script is sleeping for the remaining 55+ minutes per hour. I took a screenshot of the bandwidth usage of the VPS the script was running on and it was nice to see a spike every hour (script is calling the Github api) and then go back to zero usage (script is sleeping) until the next spike. Here is the screenshot.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/clockwork_code.png&#34; alt=&#34;Bandwidth usage over 24 hours&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once all the relevant data was retrieved, the next step was to plot some graphs. Note that a single repository can include code using multiple programming languages.&lt;/p&gt;
-
-&lt;p&gt;I was interested in the following data:&lt;/p&gt;
-
-&lt;p&gt;Size of code vs programming language:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/size_vs_lang.png&#34; alt=&#34;Size of code vs programming language&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Repos appeared in vs programming language:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/repos_vs_lang.png&#34; alt=&#34;Repos appeared in vs programming language:&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Megabytes/repo vs programming language:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/mb_per_repo_vs_lang.png&#34; alt=&#34;Megabytes/repo vs programming language:&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Take this data with a pinch of salt as it only represents the repositories created approximately over a 2 day perioid. Initially I planned to consider all repos created in 2016, but the sheer scale of Github made me rethink my plans. Extrapolating the number of repos created over 2 days to the the entire year, the number comes to around 18 million repos created in 2016. Besides, the point of the project was to learn a little about &lt;code&gt;scrapy&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Here is the &lt;a href=&#34;https://github.com/ploggingdev/scrape_github&#34;&gt;code&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The installation instructions are on the readme file.&lt;/p&gt;
-
-&lt;p&gt;The repo also includes the data I gathered from the github api:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/scrape_github/blob/master/lang_data.jsonl&#34;&gt;lang_data.jsonl (3MB)&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/scrape_github/blob/master/github_scraper/all_repos.jsonl&#34;&gt;all_repos.jsonl (13MB)&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1027,184 +252,7 @@ for link in urls:
    webbrowser.open(link)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;The above code opens the links in the default browser. It should be noted that running the above code when no browser is open will cause an error message in Firefox. The message is something like &amp;ldquo;Firefox is already running&amp;rdquo;. This happens because the &lt;code&gt;webbrowser&lt;/code&gt; module detects that there is no browser open, and tries to open a new window for both links. Why both links? Probably because the second &lt;code&gt;webbrowser.open(url)&lt;/code&gt; method is called before the first call causes Firefox to start. How can this be avoided? A hacky solution is to use &lt;code&gt;time.sleep(n seconds)&lt;/code&gt; only after the first call to &lt;code&gt;webbrowser.open()&lt;/code&gt;. Another way is to just keep a Firefox window open, so all calls to &lt;code&gt;webbrowser.open()&lt;/code&gt; will open the link in a new tab. There are probably more elegant ways around this problem, let me know if you aware of any.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;requests&lt;/code&gt; library lets us make HTTP requests without worrying about network errors, connection problems, and data compression. It can make &lt;code&gt;get&lt;/code&gt;, &lt;code&gt;put&lt;/code&gt;, and &lt;code&gt;delete&lt;/code&gt; requests among others.&lt;/p&gt;
-
-&lt;p&gt;In the following example, &lt;code&gt;requests&lt;/code&gt; is used to get the homepage of this website and print some basic information about the response. The html response is saved to &lt;code&gt;mysite.html&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import requests
-
-res = requests.get(&#39;https://www.ploggingdev.com&#39;)
-res.raise_for_status()
-
-#print(res.text)
-print(&amp;quot;{} bytes&amp;quot;.format(len(res.text)))
-print(&amp;quot;HTTP status code: {}&amp;quot;.format(res.status_code))
-print(&amp;quot;response object type: {}&amp;quot;.format(type(res)))
-
-mysite = open(&amp;quot;mysite.html&amp;quot;, &amp;quot;wb&amp;quot;)
-
-print(&amp;quot;Writing the response content to mysite.html&amp;quot;)
-
-for chunk in res.iter_content(10000):
-    mysite.write(chunk)
-
-mysite.close()
-
-print(&amp;quot;Done writing&amp;quot;)
-
-#output
-11681 bytes
-HTTP status code: 200
-response object type: &amp;lt;class &#39;requests.models.Response&#39;&amp;gt;
-Writing the response content to mysite.html
-Done writing
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Some points to note:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;res.raise_for_status()&lt;/code&gt; is used to raise an exception if an error occurs while downloading&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;When writing the response html to a file, the file is opened in &lt;code&gt;wb&lt;/code&gt; mode to maintain the Unicode encoding of the text.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;res.iter_content(bytes)&lt;/code&gt; returns the specified number of bytes of the response content. This is useful when working with large responses.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;If you don&amp;rsquo;t already know about Unicode and character sets, read this &lt;a href=&#34;https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/&#34;&gt;post&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once the html content of a webpage has been retrieved, we need a library to parse the html. This is where &lt;code&gt;BeautifulSoup&lt;/code&gt; comes in.&lt;/p&gt;
-
-&lt;p&gt;A &lt;code&gt;BeautifulSoup&lt;/code&gt; object is created by passing in html content. The html content can be in the form of &lt;code&gt;res.text&lt;/code&gt; using the &lt;code&gt;requests&lt;/code&gt; module or can be a text file.&lt;/p&gt;
-
-&lt;p&gt;Briefly, &lt;code&gt;BeautifulSoup&lt;/code&gt; lets us:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;find elements in html using the &lt;code&gt;select()&lt;/code&gt; method. The selection can be made using html tags, ids. Additionally attributes can also be specified.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Data associated with an attribute can be retieved.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Learn more about how to use &lt;code&gt;BeautifulSoup&lt;/code&gt; by following the links at the end of this post.&lt;/p&gt;
-
-&lt;p&gt;Coming to webscraping this website, what am I going to scrape? The url, title and keywords associated with every article.&lt;/p&gt;
-
-&lt;p&gt;How will I accomplish this?&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Hard code the url of the first blog post&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;create lists to hold urls, keywords and titles for every article&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Inside a &lt;code&gt;while True:&lt;/code&gt; loop, record the current blog url&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;fetch the content hosted at the current blog url using &lt;code&gt;requests&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Use &lt;code&gt;BeautifulSoup&lt;/code&gt; to parse the current page and extract the title and keywords for the current page&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Store the title and keywords for the current post&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;try to locate the link that leads to the next post and follow it&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;if the link to the next page is not found, it means that we have reached the latest blog and it&amp;rsquo;s time to stop scraping.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I added keywords to all blog posts recently and this will be an oppurtunity to check if the keywords have made it into all blogs. Why wouldn&amp;rsquo;t the keywords make it into the blogs if I added them? I use Hugo for this site. Sometimes if there is a typo while specifying the keywords (eg- an extra comma) then the &lt;code&gt;&amp;lt;meta name=&amp;quot;keywords&amp;quot;&lt;/code&gt; tag won&amp;rsquo;t be generated.&lt;/p&gt;
-
-&lt;p&gt;Code:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import requests
-import bs4
-
-print(&amp;quot;Fetching all blog posts&amp;quot;)
-
-current_url = &#39;https://www.ploggingdev.com/2016/11/hello-world/&#39;
-
-urls = list()
-titles = list()
-keywords = list()
-
-while True:
-    urls.append(current_url)
-
-    res = requests.get(current_url)
-    res.raise_for_status()
-
-    current_page = bs4.BeautifulSoup(res.text,&amp;quot;html.parser&amp;quot;)
-    
-    current_title = current_page.select(&#39;title&#39;)[0].getText()
-    titles.append(current_title)
-
-    current_keywords = current_page.select(&#39;meta[name=&amp;quot;keywords&amp;quot;]&#39;)[0].get(&#39;content&#39;)
-    keywords.append(current_keywords)
-
-    #url for next blog post
-    try:
-        current_url = current_page.select(&#39;ul[class=&amp;quot;pager blog-pager&amp;quot;] &amp;gt; li[class=&amp;quot;next&amp;quot;] &amp;gt; a&#39;)[0].get(&#39;href&#39;)
-    except IndexError as ie:
-        break
-
-#printing all my blog posts with urls. It&#39;s number from 1 to n
-
-zipped = zip(range(1, len(urls)+1), titles, urls, keywords)
-
-for blog_num, blog_title, blog_url, blog_keywords in zipped:
-    print(blog_num)
-    print(blog_title)
-    print(blog_url)
-    print(blog_keywords)
-    print()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Fetching all blog posts
-1
-Hello World
-https://www.ploggingdev.com/2016/11/hello-world/
-plogging dev, hello world
-
-2
-Beginning Python 3
-https://www.ploggingdev.com/2016/11/beginning-python-3/
-python 3, Beginning python 3
-
-3
-Data types in Python 3
-https://www.ploggingdev.com/2016/11/data-types-in-python-3/
-python 3, beginning python 3, data types in python 3, datatypes in python 3, boolean in python 3, ints in p
-ython 3, floats in python 3
-
-4
-Strings in Python 3
-https://www.ploggingdev.com/2016/11/strings-in-python-3/
-python 3, data types in python 3, datatypes in python 3, strings in python 3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I won&amp;rsquo;t include the complete output here, but the program successfully scraped all the blog posts. You can find the output &lt;a href=&#34;https://gist.github.com/ploggingdev/343a0636e9696eac6799211d4f4385f8&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/webbrowser_demo.py&#34;&gt;Using webbrowser module&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/webscraping.py&#34;&gt;Code for requests and BeautifulSoup demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://automatetheboringstuff.com/chapter11/&#34;&gt;automatetheboringstuff&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://docs.python-requests.org/en/master/&#34;&gt;Requests docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/bs4/doc/&#34;&gt;BeautifulSoup docs&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/&#34;&gt;Unicode by Joel Spolsky&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1238,124 +286,7 @@ Hello from simple_print
 Decoration after function call
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;The function &lt;code&gt;my_decorator(func)&lt;/code&gt; is the decorator function. To use a decorator, place &lt;code&gt;@decorator_function_name&lt;/code&gt; before the function definition that you want to decorate.&lt;/p&gt;
-
-&lt;p&gt;Doing the following&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@my_decorator
-def simple_print():
-    print(&amp;quot;Hello from simple_print&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;is equivalent to doing&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def simple_print():
-    print(&amp;quot;Hello from simple_print&amp;quot;)
-simple_print = my_decorator(simple_print)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Decorators can also work with functions that accept arguments.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def check_valid_division(func):
-    def inner(a,b):
-        if b == 0:
-            print(&amp;quot;Division by zero is not allowed&amp;quot;)
-        else:
-            func(a,b)
-    
-    return inner
-
-@check_valid_division
-def divide(a, b):
-    print(a/b)
-
-divide(10,5)
-divide(10,0)
-
-#output
-2.0
-Division by zero is not allowed
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice how we decorated the &lt;code&gt;divide(a,b)&lt;/code&gt; function to prevent throwing a &lt;code&gt;ZeroDivisionError&lt;/code&gt; which would have been raised  if it was not decorated.&lt;/p&gt;
-
-&lt;p&gt;It is also possible to chain multiple decorators together.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def print_star(func):
-    def inner(val):
-        print(&amp;quot;*&amp;quot; * 20)
-        func(val)
-        print(&amp;quot;*&amp;quot; * 20)
-    
-    return inner
-
-def print_percent(func):
-    def inner(val):
-        print(&amp;quot;%&amp;quot; * 20)
-        func(val)
-        print(&amp;quot;%&amp;quot; * 20)
-    
-    return inner
-
-@print_star
-@print_percent
-def fancy_print(val):
-    print(val)
-
-fancy_print(&amp;quot;Hello World&amp;quot;)
-print()
-
-@print_percent
-@print_star
-def fancy_print_different(val):
-    print(val)
-
-fancy_print_different(&amp;quot;Different decoration&amp;quot;)
-
-#output
-********************
-%%%%%%%%%%%%%%%%%%%%
-Hello World
-%%%%%%%%%%%%%%%%%%%%
-********************
-
-%%%%%%%%%%%%%%%%%%%%
-********************
-Different decoration
-********************
-%%%%%%%%%%%%%%%%%%%%
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The syntax&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@print_star
-@print_percent
-def fancy_print(val):
-    print(val)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;is equivalent to&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def fancy_print(val):
-    print(val)
-fancy_print = print_star(print_percent(fancy_print))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/decorators.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.python.org/dev/peps/pep-0318/&#34;&gt;PEP 318&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.programiz.com/python-programming/decorator&#34;&gt;Programiz&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1380,364 +311,7 @@ fancy_print = print_star(print_percent(fancy_print))
 &lt;li&gt;&lt;p&gt;&lt;code&gt;line_profiler&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;I will start with the &lt;code&gt;timeit&lt;/code&gt; module. This module enables us to time small pieces of code.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import timeit
-
-res1 = timeit.timeit(&#39;&#39;&#39;
-a = [i for i in range(50000)]
-for i in a:
-    pass
-&#39;&#39;&#39;, number = 100)
-
-res2 = timeit.timeit(&#39;&#39;&#39;
-a = (i for i in range(50000))
-for i in a:
-    pass
-&#39;&#39;&#39;, number = 100)
-
-print(res1)
-
-print(res2)
-
-#output
-0.26830113399955735
-0.3227190840007097
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Running &lt;code&gt;timeit.timeit(args)&lt;/code&gt; returns a float which represents the time taken to execute the given code. In the above example, the first argument is the code to be executed and the second argument is the number of times the code should be run. Executing the code multiple times and taking the average gives a more accurate result than running it a single time.&lt;/p&gt;
-
-&lt;p&gt;Interestingly, the above example also demonstrates that list comprehensions are faster than using generator expressions to iterate over a range of values, but the memory consumption is higher which is not profiled in the above example.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;cProfile&lt;/code&gt; module provides deterministic profiling of a python program. Calling &lt;code&gt;cProfile.run(func_name, output_file_name)&lt;/code&gt; profiles the given function and writes the output to a specified file.&lt;/p&gt;
-
-&lt;p&gt;The following columns are included in the output:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;ncalls&lt;/code&gt; : for the number of calls&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;tottime&lt;/code&gt; : for the total time spent in the given function (and excluding time made in calls to sub-functions)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;percall&lt;/code&gt; : is the quotient of tottime divided by ncalls&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;cumtime&lt;/code&gt; : is the cumulative time spent in this and all subfunctions (from invocation till exit). This figure is accurate even for recursive functions&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;percall&lt;/code&gt; : is the quotient of cumtime divided by primitive calls&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;filename:lineno(function)&lt;/code&gt; : provides the respective data of each function&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The &lt;code&gt;pstats.Stats&lt;/code&gt; class is used to read the profiled data and format the results as required.&lt;/p&gt;
-
-&lt;p&gt;The following example profiles &lt;code&gt;to_be_profiled()&lt;/code&gt; and writes the profile data into the file called &lt;code&gt;cprofile_results&lt;/code&gt;. The &lt;code&gt;pstats.Stats&lt;/code&gt; class is then used to format the profile results in commonly used formats (check the comments in the program).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import cProfile
-import pstats
-import time
-import sys
-
-def to_be_profiled():
-    my_list1 = [i**2 for i in range(50000)]
-
-    my_list2 = (i**2 for i in range(100000, 150000))
-
-    sum = 0
-
-    print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
-    print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
-
-    for i in my_list2:
-        sum += i
-        time.sleep(0.00001)
-        my_list1.append(i)
-    print(sum)
-
-cProfile.run(&#39;to_be_profiled()&#39;, &#39;cprofile_results&#39;)
-
-p = pstats.Stats(&#39;cprofile_results&#39;)
-#sort by standard name
-p.strip_dirs().sort_stats(-1).print_stats(10)
-#sort by function name
-p.sort_stats(&#39;name&#39;).print_stats(10)
-#sort by cumulative time in a function
-p.sort_stats(&#39;cumulative&#39;).print_stats(10)
-#sort by time spent in a function
-p.sort_stats(&#39;time&#39;).print_stats(10)
-
-#output
-my_list1 = 406496 bytes
-my_list2 = 88 bytes
-791660416675000
-Sat Dec  3 21:23:38 2016    cprofile_results
-
-         150013 function calls in 3.580 seconds
-
-   Ordered by: standard name
-   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
-
-   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
-        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
-        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
-    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
-        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
-        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
-        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
-    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
-    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
-        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}
-
-
-Sat Dec  3 21:23:38 2016    cprofile_results
-
-         150013 function calls in 3.580 seconds
-
-   Ordered by: function name
-   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
-
-   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
-        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
-        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
-    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
-    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
-        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
-    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
-        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}
-        2    0.000    0.000    0.000    0.000 {method &#39;format&#39; of &#39;str&#39; objects}
-        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
-
-Sat Dec  3 21:23:38 2016    cprofile_results
-
-         150013 function calls in 3.580 seconds
-
-   Ordered by: cumulative time
-   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
-
-   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
-        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
-        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
-    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
-    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
-        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
-    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
-        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
-        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
-        2    0.000    0.000    0.000    0.000 {method &#39;format&#39; of &#39;str&#39; objects}
-
-Sat Dec  3 21:23:38 2016    cprofile_results
-
-         150013 function calls in 3.580 seconds
-
-   Ordered by: internal time
-   List reduced from 11 to 10 due to restriction &amp;lt;10&amp;gt;
-
-   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-    50000    3.357    0.000    3.357    0.000 {built-in method time.sleep}
-        1    0.117    0.117    3.578    3.578 performance.py:23(to_be_profiled)
-    50001    0.078    0.000    0.078    0.000 performance.py:26(&amp;lt;genexpr&amp;gt;)
-        1    0.014    0.014    0.014    0.014 performance.py:24(&amp;lt;listcomp&amp;gt;)
-    50000    0.011    0.000    0.011    0.000 {method &#39;append&#39; of &#39;list&#39; objects}
-        1    0.002    0.002    3.580    3.580 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
-        3    0.001    0.000    0.001    0.000 {built-in method builtins.print}
-        1    0.000    0.000    3.580    3.580 {built-in method builtins.exec}
-        2    0.000    0.000    0.000    0.000 {built-in method sys.getsizeof}
-        2    0.000    0.000    0.000    0.000 {method &#39;format&#39; of &#39;str&#39; objects}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Moving on to the &lt;code&gt;memory_profiler&lt;/code&gt;, the installation procedure is as follows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#install memory_profiler module
-pip install memory_profiler
-
-#install psutil
-
-pip install psutil
-
-#install matplotlib
-pip install matplotlib
-
-sudo apt-get install python3-matplotlib
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To install &lt;code&gt;matplotlib&lt;/code&gt;, I first tried &lt;code&gt;pip install matplotlib&lt;/code&gt;, but I was still facing issues plotting graphs. Then I tried, &lt;code&gt;sudo apt-get install python-matplotlib&lt;/code&gt; which installed &lt;code&gt;matplotlib&lt;/code&gt; for Python 2. Finally I tried &lt;code&gt;sudo apt-get install python3-matplotlib&lt;/code&gt; and was able to plot graphs. So my installation procedure installed a lot of unnecessay modules and packages.&lt;/p&gt;
-
-&lt;p&gt;To see a line by line memory profile of a function, the &lt;code&gt;memory_profiler&lt;/code&gt; is used. Importing is done using &lt;code&gt;from memory_profiler import profile&lt;/code&gt;. To specify which function needs to be memory profiled, use the &lt;code&gt;@profile&lt;/code&gt; decorator.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import sys
-import cProfile
-from memory_profiler import profile
-
-@profile()
-def mem_to_be_profiled():
-    
-    my_list1 = [i**2 for i in range(50000)]
-
-    my_list2 = (i**2 for i in range(100000, 150000))
-
-    sum = 0
-
-    print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
-    print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
-
-    for i in my_list2:
-        sum += i
-        my_list1.append(i)
-    print(sum)
-
-mem_to_be_profiled()
-
-#output
-my_list1 = 406496 bytes
-my_list2 = 88 bytes
-791660416675000
-Filename: mem.py
-
-Line #    Mem usage    Increment   Line Contents
-================================================
-     5     30.4 MiB      0.0 MiB   @profile()
-     6                             def mem_to_be_profiled():
-     7
-     8     32.1 MiB      1.7 MiB       my_list1 = [i**2 for i in range(50000)]
-     9
-    10     34.8 MiB      2.7 MiB       my_list2 = (i**2 for i in range(100000, 150000))
-    11
-    12     32.1 MiB     -2.7 MiB       sum = 0
-    13
-    14     32.1 MiB      0.0 MiB       print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
-    15     32.1 MiB      0.0 MiB       print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
-    16
-    17     34.8 MiB      2.7 MiB       for i in my_list2:
-    18     34.8 MiB      0.0 MiB           sum += i
-    19     34.8 MiB      0.0 MiB           my_list1.append(i)
-    20     34.8 MiB      0.0 MiB       print(sum)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I was hoping to demonstrate that list comprehensions use more memory than generator expressions using memory profiling, but for some reason &lt;code&gt;2.7 MB&lt;/code&gt; of memory is allocated during the creation of a generator object and then it&amp;rsquo;s immediately released in the next line. If you know why this happens everytime, let me know in the comments.&lt;/p&gt;
-
-&lt;p&gt;Now comes the interesting part: plotting a graph of memory usage vs time. We will use the &lt;code&gt;mprof&lt;/code&gt; executable for this.&lt;/p&gt;
-
-&lt;p&gt;Run the script and collect memory profile data:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mprof run mem.py
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The above command stores the result in a file in the current directory.&lt;/p&gt;
-
-&lt;p&gt;Plot a graph of memory usage vs time:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mprof plot
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The above command uses the most recently generated memory profile data.&lt;/p&gt;
-
-&lt;p&gt;Output screenshot:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://www.ploggingdev.com/images/mem_profile.png&#34; alt=&#34;Memory profile graph&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Next I will cover the &lt;code&gt;line_profiler&lt;/code&gt; module.&lt;/p&gt;
-
-&lt;p&gt;Installation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pip install line_profiler
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Use the &lt;code&gt;@profile&lt;/code&gt; decorator to specify the function that needs to be profiled.&lt;/p&gt;
-
-&lt;p&gt;Running the script directly using &lt;code&gt;python file.py&lt;/code&gt; throws an error since &lt;code&gt;@profile&lt;/code&gt; is not defined,&lt;/p&gt;
-
-&lt;p&gt;To see the line by line profile of the function, use :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;kernprof -l -v line.py
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There are ways to get around this issue and run it as a normal script as well as profiling it using &lt;code&gt;kernprof&lt;/code&gt;. Here is a &lt;a href=&#34;http://stackoverflow.com/questions/18229628/python-profiling-using-line-profiler-clever-way-to-remove-profile-statements&#34;&gt;Stackoverflow answer&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import sys
-
-@profile
-def to_be_profiled():
-    
-    my_list1 = [i**2 for i in range(50000)]
-
-    my_list2 = (i**2 for i in range(100000, 150000))
-    sum = 0
-    print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_list1)))
-    print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_list2)))
-
-    for i in my_list2:
-        sum += i
-        my_list1.append(i)
-    print(sum)
-
-
-to_be_profiled()
-
-#output
-my_list1 = 406496 bytes
-my_list2 = 88 bytes
-791660416675000
-Wrote profile results to line.py.lprof
-Timer unit: 1e-06 s
-
-Total time: 0.17311 s
-File: line.py
-Function: to_be_profiled at line 3
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-     3                                           @profile
-     4                                           def to_be_profiled():
-     5
-     6         1        17575  17575.0     10.2      my_list1 = [i**2 for i in range(50000)]
-     7
-     8         1            7      7.0      0.0      my_list2 = (i**2 for i in range(100000, 150000))
-     9         1            1      1.0      0.0      sum = 0
-    10         1           43     43.0      0.0      print(&amp;quot;my_list1 = {} bytes&amp;quot;.format(sys.getsizeof(my_li
-st1)))
-    11         1           24     24.0      0.0      print(&amp;quot;my_list2 = {} bytes&amp;quot;.format(sys.getsizeof(my_li
-st2)))
-    12
-    13     50001        68438      1.4     39.5      for i in my_list2:
-    14     50000        42867      0.9     24.8          sum += i
-    15     50000        44122      0.9     25.5          my_list1.append(i)
-    16         1           33     33.0      0.0      print(sum)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I only covered the basic usage of the performance measurement modules, to learn more refer to the links below.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/timeit.html#module-timeit&#34;&gt;timeit module&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/library/profile.html&#34;&gt;cProfile and pstats&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi/memory_profiler&#34;&gt;memory_profiler&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/rkern/line_profiler&#34;&gt;line_profiler&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Code for today&amp;rsquo;s plog:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/performance.py&#34;&gt;performance.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/mem.py&#34;&gt;mem.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/line.py&#34;&gt;line.py&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/requirements.txt&#34;&gt;requirements.txt has been updated&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1764,113 +338,7 @@ print(list2)
 [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;List comprehension using an &lt;code&gt;if&lt;/code&gt; condition:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;list3 = [x for x in range(10) if x%2 != 0]
-print(list3)
-#output
-[1, 3, 5, 7, 9]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Only odd numbers are printed in the above example.&lt;/p&gt;
-
-&lt;p&gt;Nested list comprehensions allow us to emulate nested &lt;code&gt;for&lt;/code&gt; loops in some way.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;matrix = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9],
-    [10,11,12]
-]
-
-transposed = [[row[i] for row in matrix] for i in range(3)]
-print(transposed)
-#output
-[[1, 4, 7, 10], [2, 5, 8, 11], [3, 6, 9, 12]]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The equivalent using nested &lt;code&gt;for&lt;/code&gt; loops would be:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;for i in range(3):
-    transposed.append([row[i] for row in matrix])
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Moving on to iterators. Iterators let us iterate over container objects using &lt;code&gt;for&lt;/code&gt; loops. How to create an iterator: create a class which defines &lt;code&gt;__iter__()&lt;/code&gt; and &lt;code&gt;__next__()&lt;/code&gt;. &lt;code&gt;__iter__()&lt;/code&gt; returns an object with a &lt;code&gt;__next__()&lt;/code&gt; method. The &lt;code&gt;__next__()&lt;/code&gt; method which is used to retrieve the next object in the container. The &lt;code&gt;__next__()&lt;/code&gt; method will also need to raise a &lt;code&gt;StopIteration&lt;/code&gt; exception when there are no more elements to iterate over.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class Squared:
-    &amp;quot;&amp;quot;&amp;quot;Square all the numbers&amp;quot;&amp;quot;&amp;quot;
-
-    def __init__(self, data):
-        self.data = data
-        self.index = 0
-    
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.index == len(self.data):
-            raise StopIteration
-        val = self.data[self.index] **2
-        self.index += 1
-
-        return val
-
-values = Squared([1,2,3,10])
-
-for i in values:
-    print(i)
-
-#output
-1
-4
-9
-100
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generators are a way to create iterators. There is no need to explicitly define the &lt;code&gt;__iter__()&lt;/code&gt; and &lt;code&gt;__next__()&lt;/code&gt; methods, they are created automatically. Generators are functions that use the &lt;code&gt;yield&lt;/code&gt; statement to return data. When &lt;code&gt;__next__()&lt;/code&gt; is called, the function resumes where it left off and remembers the state of the program. The &lt;code&gt;StopIteration&lt;/code&gt; exception is also automatically raised.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def double_values(data):
-    &amp;quot;&amp;quot;&amp;quot;Doubles all the values&amp;quot;&amp;quot;&amp;quot;
-    for val in data:
-        yield val*2
-
-for i in double_values([4,5,3]):
-    print(i)
-
-#output
-8
-10
-6
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generator expressions are a simple but limited way to create generators and used in cases where the return value of the generator expression is used immediately. They have a syntax similar to list comprehensions, but use parantheses instead of brackets.&lt;/p&gt;
-
-&lt;p&gt;Since generator expressions &lt;em&gt;generate&lt;/em&gt; the values on the fly instead of storing all the values in memory like list comprehensions do, they tend to be more memory efficient than the equivalent list comprehension but also tend to be a little slower. This is an important tradeoff to keep in mind.&lt;/p&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;exp = sum(i for i in range(5))
-print(exp)
-
-#output
-10
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/generators.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/datastructures.html#more-on-lists&#34;&gt;List comprehensions&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/classes.html#iterators&#34;&gt;Generators, iterators and generator expressions&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1891,161 +359,7 @@ print(exp)
 
 &lt;p&gt;Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons each partial candidate &lt;em&gt;c&lt;/em&gt; (&amp;ldquo;backtracks&amp;rdquo;) as soon as it determines that &lt;em&gt;c&lt;/em&gt; cannot possibly be completed to a valid solution.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;A high level overview of how to use backtracking to solve the N queens problem:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;place a queen in the first column and first row&lt;/li&gt;
-&lt;li&gt;place a queen in the second column such that it does not attack the queen in the first column&lt;/li&gt;
-&lt;li&gt;continue placing non-attacking queens in the remaining columns&lt;/li&gt;
-&lt;li&gt;if all N queens have been placed, a solution has been found. Remove the queen in the Nth column, and try incrementing the row of the queen in the (N-1)th column&lt;/li&gt;
-&lt;li&gt;if it&amp;rsquo;s a dead end, remove the queen, increment the row of the queen in the previous column&lt;/li&gt;
-&lt;li&gt;continue doing this until the queen in the 1st column exhausts all options and is in the row N&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The above explanation starts counting at 1, not 0 based counting.&lt;/p&gt;
-
-&lt;p&gt;To see a visualization of backtracking, refer &lt;a href=&#34;https://en.wikipedia.org/wiki/Eight_queens_puzzle#Exercise_in_algorithm_design&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The solution:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import copy
-
-def take_input():
-    &amp;quot;&amp;quot;&amp;quot;Accepts the size of the chess board&amp;quot;&amp;quot;&amp;quot;
-
-    while True:
-        try:
-            size = int(input(&#39;What is the size of the chessboard? n = \n&#39;))
-            if size == 1:
-                print(&amp;quot;Trivial solution, choose a board size of atleast 4&amp;quot;)
-            if size &amp;lt;= 3:
-                print(&amp;quot;Enter a value such that size&amp;gt;=4&amp;quot;)
-                continue
-            return size
-        except ValueError:
-            print(&amp;quot;Invalid value entered. Enter again&amp;quot;)
-
-def get_board(size):
-    &amp;quot;&amp;quot;&amp;quot;Returns an n by n board&amp;quot;&amp;quot;&amp;quot;
-    board = [0]*size
-    for ix in range(size):
-        board[ix] = [0]*size
-    return board
-
-def print_solutions(solutions, size):
-    &amp;quot;&amp;quot;&amp;quot;Prints all the solutions in user friendly way&amp;quot;&amp;quot;&amp;quot;
-    for sol in solutions:
-        for row in sol:
-            print(row)
-        print()
-            
-def is_safe(board, row, col, size):
-    &amp;quot;&amp;quot;&amp;quot;Check if it&#39;s safe to place a queen at board[x][y]&amp;quot;&amp;quot;&amp;quot;
-
-    #check row on left side
-    for iy in range(col):
-        if board[row][iy] == 1:
-            return False
-    
-    ix, iy = row, col
-    while ix &amp;gt;= 0 and iy &amp;gt;= 0:
-        if board[ix][iy] == 1:
-            return False
-        ix-=1
-        iy-=1
-    
-    jx, jy = row,col
-    while jx &amp;lt; size and jy &amp;gt;= 0:
-        if board[jx][jy] == 1:
-            return False
-        jx+=1
-        jy-=1
-    
-    return True
-
-def solve(board, col, size):
-    &amp;quot;&amp;quot;&amp;quot;Use backtracking to find all solutions&amp;quot;&amp;quot;&amp;quot;
-    #base case
-    if col &amp;gt;= size:
-        return
-    
-    for i in range(size):
-        if is_safe(board, i, col, size):
-            board[i][col] = 1
-            if col == size-1:
-                add_solution(board)
-                board[i][col] = 0
-                return
-            solve(board, col+1, size)
-            #backtrack
-            board[i][col] = 0
-
-def add_solution(board):
-    &amp;quot;&amp;quot;&amp;quot;Saves the board state to the global variable &#39;solutions&#39;&amp;quot;&amp;quot;&amp;quot;
-    global solutions
-    saved_board = copy.deepcopy(board)
-    solutions.append(saved_board)
-
-size = take_input()
-
-board = get_board(size)
-
-solutions = []
-
-solve(board, 0, size)
-
-print_solutions(solutions, size)
-
-print(&amp;quot;Total solutions = {}&amp;quot;.format(len(solutions)))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Output of the program when N=4:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;What is the size of the chessboard? n = 
-4
-[0, 0, 1, 0]
-[1, 0, 0, 0]
-[0, 0, 0, 1]
-[0, 1, 0, 0]
-
-[0, 1, 0, 0]
-[0, 0, 0, 1]
-[1, 0, 0, 0]
-[0, 0, 1, 0]
-
-Total solutions = 2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Some important takeaways from coding the solution:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;To make an NxM list use:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;A = [0] * N
-for i in range(N):
-    A[i] = [0] * M
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I tried, &lt;code&gt;A = [[0] * M] * N&lt;/code&gt; initially, which is wrong. More info &lt;a href=&#34;https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;When saving the contents of a multidimensional list, use &lt;code&gt;copy.deepcopy(to_save)&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Testing is hard! More so when dealing with complicated outputs from a function. I will update this blog with tests soon.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Source code available &lt;a href=&#34;https://github.com/ploggingdev/n-queens&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Eight_queens_puzzle&#34;&gt;Eight queens problem on Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Backtracking&#34;&gt;Backtracking on Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -2090,107 +404,481 @@ Is (0.1 + 0.1 + 0.1 == 0.3) ?
 False
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Unit testing in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/</link>
+      <pubDate>Sun, 27 Nov 2016 01:57:31 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/</guid>
+      <description>&lt;p&gt;Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.&lt;/p&gt;
 
-&lt;p&gt;In the above examples, notice that some decimal numbers can be represented accurately in base 2 while others cannot be represented accurately.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;unittest&lt;/code&gt; framework is a built-in unit testing framework in Python.&lt;/p&gt;
 
-&lt;p&gt;I won&amp;rsquo;t pretend that I understand the intricate details behind why this happens, so I will link to some resources if you are interested to learn more: &lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt; and &lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;How can we overcome this issue in Python? Some solutions are:&lt;/p&gt;
+&lt;p&gt;Some terminology:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;using &lt;code&gt;round()&lt;/code&gt; function&lt;/li&gt;
-&lt;li&gt;using the &lt;code&gt;decimal&lt;/code&gt; module&lt;/li&gt;
-&lt;li&gt;using the &lt;code&gt;fractions&lt;/code&gt; module&lt;/li&gt;
+&lt;li&gt;test fixture: the preparation needed to perform one or more tests, and any associate cleanup actions&lt;/li&gt;
+&lt;li&gt;test case: individual unit of testing which checks for the correct response for a given input&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Let me explain each of these solutions a little more:&lt;/p&gt;
+&lt;p&gt;I will be covering a minimal subset of &lt;code&gt;unittest&lt;/code&gt; that will be enough to understand what unit testing is and how to go about writing test cases. To learn more, refer to the &lt;a href=&#34;https://docs.python.org/3/library/unittest.html&#34;&gt;official docs&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Using &lt;code&gt;round()&lt;/code&gt;, floating point numbers can be rounded to a specified number of decimal places. If it&amp;rsquo;s used for post rounding a result (round after performing all operations on floats), working with floats will work as expected. Example:&lt;/p&gt;
+&lt;p&gt;A simple example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;print(&amp;quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&amp;quot;)
-print(round(0.1 + 0.1 + 0.1, 5) == round(0.3, 5))
+&lt;pre&gt;&lt;code&gt;import unittest
+
+class Test2(unittest.TestCase):
+    
+    def test_simple(self):
+        self.assertEqual(2+2,4)
+
+if __name__ == &#39;__main__&#39;:
+    unittest.main()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Errors and exceptions in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/</link>
+      <pubDate>Thu, 24 Nov 2016 23:42:14 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/</guid>
+      <description>&lt;p&gt;There are two kinds of errors:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Syntax errors, where the program contains invalid syntax&lt;/li&gt;
+&lt;li&gt;Exceptions, errors that occur during runtime, though the syntax is valid&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The list of built-in exceptions can be found &lt;a href=&#34;https://docs.python.org/3/library/exceptions.html#bltin-exceptions&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Syntax errors can be avoided by writing valid code and exceptions can be handled using &lt;code&gt;try&lt;/code&gt; and &lt;code&gt;except&lt;/code&gt;. An example of handling an exception:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def division(num1, num2):
+    &amp;quot;&amp;quot;&amp;quot;Return num1/num2&amp;quot;&amp;quot;&amp;quot;
+    return num1/num2
+
+try:
+    print(division(10,0))
+except ZeroDivisionError:
+    print(&amp;quot;You can&#39;t divide by zero&amp;quot;)
 #output
-Is (0.1 + 0.1 + 0.1 == 0.3) ?
+You can&#39;t divide by zero
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>File IO and JSON in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/</link>
+      <pubDate>Tue, 22 Nov 2016 17:20:29 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/</guid>
+      <description>&lt;p&gt;Before discussing file IO and json, let&amp;rsquo;s talk about accepting input from the user using &lt;code&gt;input()&lt;/code&gt;. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;name = input(&amp;quot;What&#39;s your name?\n&amp;quot;)
+age = int(input(&amp;quot;Age?\n&amp;quot;))
+print(&amp;quot;Name : {}  Age : {}&amp;quot;.format(name,age))
+#output
+What&#39;s your name?
+plog
+Age?
+42
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reading and writing files involves the following three steps:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Open the file using &lt;code&gt;open(filename, mode)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Read or write from or to the file using &lt;code&gt;read()&lt;/code&gt; or &lt;code&gt;write()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Close the file using &lt;code&gt;close()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Virtual environments and package management in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/</link>
+      <pubDate>Mon, 21 Nov 2016 21:46:23 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/</guid>
+      <description>&lt;p&gt;A virtual environment is a directory containing a Python installation and any additional packages. Since a virtual environment is isolated, any changes made will not affect the global installation of Python. It also enables the usage of different versions of the same package in multiple virtual environments.&lt;/p&gt;
+
+&lt;p&gt;To create a virtual environment, the &lt;code&gt;venv&lt;/code&gt; module will be used. The &lt;code&gt;virtualenv&lt;/code&gt; module also can be used, but &lt;code&gt;venv&lt;/code&gt; is the officially recommended solution so that&amp;rsquo;s what I will be using. The current Python 3 documentation recommends the usage of &lt;code&gt;pyvenv&lt;/code&gt;, which is a wrapper around &lt;code&gt;venv&lt;/code&gt;. Since &lt;code&gt;pyvenv&lt;/code&gt; will be deprecated soon, avoid using &lt;code&gt;pyvenv&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Installation of &lt;code&gt;venv&lt;/code&gt; on Ubuntu 16.04:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt install python3-venv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To create a new virtual environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;python3 -m venv python_learn_venv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Classes and inheritance in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</link>
+      <pubDate>Sat, 19 Nov 2016 07:38:24 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</guid>
+      <description>&lt;p&gt;From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).&lt;/p&gt;
+
+&lt;p&gt;Features of classes in Python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Multiple inheritance permitted&lt;/li&gt;
+&lt;li&gt;Derived class can override base class methods&lt;/li&gt;
+&lt;li&gt;Base class methods can be called using &lt;code&gt;super().method_name()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Class members are dynamic, can be modified at runtime&lt;/li&gt;
+&lt;li&gt;Class members are public, methods are virtual (can be overridden)&lt;/li&gt;
+&lt;li&gt;The first parameter in a method is a reference to the calling object, usually &lt;code&gt;self&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Operator overloading is supported&lt;/li&gt;
+&lt;li&gt;Aliasing of objects is supported&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modules and packages in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</link>
+      <pubDate>Wed, 16 Nov 2016 14:13:24 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</guid>
+      <description>&lt;p&gt;A module is a file that contains Python definitions and statements with a &lt;code&gt;.py&lt;/code&gt; extension. So technically,
+all the code that I posted so far has been in the form of modules. Modules are a way to organize code
+in Python so that closely related functions and definitions are grouped together into a module.
+It makes code reusable.&lt;/p&gt;
+
+&lt;p&gt;A related concept is packages. Packages are just a way to organize modules into a namespace. A package
+can be thought of as a directory that contains modules and subpackages. For Python to treat a directory as
+a package, a file named &lt;code&gt;__init__.py&lt;/code&gt; is required in the directory. The &lt;code&gt;__init__.py&lt;/code&gt; can also contain
+code that will be executed when the package is first imported, typically initialization code.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Functions in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/functions-in-python-3/</link>
+      <pubDate>Sun, 13 Nov 2016 10:30:06 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/functions-in-python-3/</guid>
+      <description>&lt;p&gt;A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
+example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def hello_function():
+    &#39;&#39;&#39;This is where the function documentation goes&#39;&#39;&#39;
+    print(&#39;Hello from function&#39;)
+
+hello_function()
+print(hello_function)
+#output
+Hello from function
+&amp;lt;function hello_function at 0x7f34bc7db378&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;def&lt;/code&gt; keyword is used to define a function.&lt;/li&gt;
+&lt;li&gt;It is followed by the function name, argument list(if any), and a
+colon &lt;code&gt;:&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The function body is indented by 4 spaces.&lt;/li&gt;
+&lt;li&gt;The first line of a function body is a
+&lt;a href=&#34;https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings&#34;&gt;docstring&lt;/a&gt;,
+which is documentation for the function. It&amp;rsquo;s a good practice to always include the docstring.&lt;/li&gt;
+&lt;li&gt;The statements that constitute the function are placed after the docstring.&lt;/li&gt;
+&lt;li&gt;A function is an object, notice the output of &lt;code&gt;print(hello_function)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Control flow tools in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</link>
+      <pubDate>Sat, 12 Nov 2016 11:28:34 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</guid>
+      <description>&lt;p&gt;Before I start with control flow tools, here are a few definitions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Value:&lt;/strong&gt; Basic units of data. Eg- &lt;code&gt;10&lt;/code&gt;,&lt;code&gt;&#39;string&#39;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Variable:&lt;/strong&gt; A name that refers to a value. Eg- &lt;code&gt;var=10&lt;/code&gt;, &lt;code&gt;var&lt;/code&gt; is the variable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statement:&lt;/strong&gt; A section of code that represents a command or action.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operator:&lt;/strong&gt; A symbol that performs operations on operands. Eg- &lt;code&gt;*&lt;/code&gt; is for multiplication&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expression&lt;/strong&gt; A combination of variables, operators, and values to perform a task.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To learn about operators in Python refer
+&lt;a href=&#34;https://www.tutorialspoint.com/python3/python_basic_operators.htm&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some of the control flow tools are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;if&lt;/code&gt; statement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;while&lt;/code&gt; statement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;for&lt;/code&gt; statement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;break&lt;/code&gt;, &lt;code&gt;continue&lt;/code&gt; and &lt;code&gt;pass&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Dictionaries in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/</link>
+      <pubDate>Fri, 11 Nov 2016 13:27:42 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/</guid>
+      <description>&lt;p&gt;A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
+strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
+associative arrays from other programming languages.&lt;/p&gt;
+
+&lt;p&gt;A dictionary can be created in multiple ways, using &lt;code&gt;{}&lt;/code&gt; or the &lt;code&gt;dict()&lt;/code&gt; function. The following are
+some examples of ways to create dictionaries:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;a=dict(one=1,two=2)
+b={&#39;one&#39;:1,&#39;two&#39;:2}
+c=dict(zip([&#39;one&#39;,&#39;two&#39;],[1,2]))
+d=dict([(&#39;one&#39;,1),(&#39;two&#39;,2)])
+e=dict({&#39;one&#39;:1,&#39;two&#39;:2})
+print(a==b==c==d==e)
 True
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;code&gt;round()&lt;/code&gt; function accepts a number as the first parameter and another number to specify the precision after the decimal point as the second parameter. Example:&lt;/p&gt;
+&lt;p&gt;As you can see, all the variables hold the same dictionary. To create an empty dictionary, use &lt;code&gt;{}&lt;/code&gt; or
+ &lt;code&gt;dict()&lt;/code&gt;.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;print(round(10.33333, 3))
-#output
-10.333
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Sets in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/sets-in-python-3/</link>
+      <pubDate>Thu, 10 Nov 2016 09:21:40 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/sets-in-python-3/</guid>
+      <description>&lt;p&gt;A set is an unordered collection with no duplicate elements. Sets are used for membership testing, removing
+duplicate entries and performing set operations such as intersection, union and difference.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Edit:&lt;/strong&gt; It has been pointed out to me that using &lt;code&gt;round()&lt;/code&gt; may not be the best solution in certain cases where the rounded number will be used in calculations further in the program. Using &lt;code&gt;round()&lt;/code&gt; in such cases will lead to accuracy issues. An option is to use string formatting to display the required number of digits since this will not round the numbers. Syntax is as follows:&lt;/p&gt;
+&lt;p&gt;There are two built-in set types: set and frozenset. The set type is mutable and the frozenset type is
+immutable.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;print(&#39;{: .3f}&#39;.format(10.34123))
-#output
-10.341
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Another alternative is to use the &lt;code&gt;decimal&lt;/code&gt; module when dealing with decimal numbers and accuracy is very important. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from decimal import getcontext, Decimal
-from math import pi
-
-print(getcontext())
-
-getcontext().prec = 5
-print(Decimal(1)/Decimal(3))
-
-getcontext().prec = 30
-print(Decimal(pi))
-
-#output
-Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[], traps=
-[InvalidOperation, DivisionByZero, Overflow])
-0.33333
-3.141592653589793115997963468544185161590576171875
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;getcontext()&lt;/code&gt; allows us to specify the precision and the rounding technique to be used, The default rounding technique is &lt;code&gt;ROUND_HALF_EVEN&lt;/code&gt; which rounds to nearest with ties going to nearest even integer.&lt;/p&gt;
-
-&lt;p&gt;To deal directly with fractions, the &lt;code&gt;fractions&lt;/code&gt; module can be used which supports rational number arithmetic. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from fractions import Fraction
-
-num1 = Fraction(2,3)
-num2 = Fraction(1,3)
-
-print(&amp;quot;num1 = {} and num2 = {}&amp;quot;.format(num1,num2))
-
-print(num1 + num2)
-
-print(num1 - num2)
-
-print(num1*10)
-
-print(num1/num2)
-
-#output
-num1 = 2/3 and num2 = 1/3
-1
-1/3
-20/3
-2
-&amp;lt;class &#39;fractions.Fraction&#39;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There are multiple ways to construct fractions and the details can be found in the official documentation which is linked below.&lt;/p&gt;
-
-&lt;p&gt;Source code for today&amp;rsquo;s plog is &lt;a href=&#34;https://github.com/ploggingdev/python_learn/blob/master/funny_floats.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;References:&lt;/p&gt;
+&lt;p&gt;Set construction:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/tutorial/floatingpoint.html&#34;&gt;Official tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/functions.html#round&#34;&gt;round() documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/decimal.html#module-decimal&#34;&gt;decimal module&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/fractions.html#module-fractions&#34;&gt;fractions module&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.lahey.com/float.htm&#34;&gt;The Perils of Floating Point&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html&#34;&gt;What Every Computer Scientist Should Know About Floating-Point Arithmetic&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;li&gt;&lt;code&gt;set()&lt;/code&gt; for empty set. &lt;strong&gt;Note:&lt;/strong&gt; {} cannot be used&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set(values)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{value1,valuen}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Construction of frozenset is very similar and uses &lt;code&gt;frozenset()&lt;/code&gt; instead of &lt;code&gt;set()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ranges in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</link>
+      <pubDate>Wed, 09 Nov 2016 14:00:07 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</guid>
+      <description>&lt;p&gt;The range is an immutable sequence of numbers. The main advantage of using the range type is that the
+memory occupied is fixed irrespective of the size of the range. This is because the actual contents of
+the range are not stored, instead they are computed at runtime.&lt;/p&gt;
+
+&lt;p&gt;Ranges can be created using:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;range(stop)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;range(start,stop)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;range(start,stop,step)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Only the 1st and 3rd are constructors. In &lt;code&gt;range(start,stop,step)&lt;/code&gt;, step is an optional
+parameter. When step is not specified, what we end up with is &lt;code&gt;range(start,stop)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quick notes about the arguments passed to &lt;code&gt;range()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;start&lt;/code&gt; is not specified, the default value is 0.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;step&lt;/code&gt; is not specified, the default value is 1.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value cannot be zero, a runtime error will be thrown.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;step&lt;/code&gt; value &lt;em&gt;can&lt;/em&gt; be negative.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Stop&lt;/code&gt; is always required to be specified.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tuples in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</link>
+      <pubDate>Tue, 08 Nov 2016 10:48:13 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</guid>
+      <description>&lt;p&gt;Tuples are immutable sequences of values. The values can be heterogeneous.
+The values in a tuple are indexed by integers.&lt;/p&gt;
+
+&lt;p&gt;Tuple construction:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;()&lt;/code&gt; for empty tuple&lt;/li&gt;
+&lt;li&gt;Single value in a tuple requires a trailing comma: &lt;code&gt;1,&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Comma separated values: &lt;code&gt;1,2,3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;using &lt;code&gt;tuple()&lt;/code&gt; function&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;p&gt;Empty tuple.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t0=() 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Single value in a tuple(singleton). Notice the trailing comma.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t1=&#39;a&#39;,
+print(t1)
+(&#39;a&#39;,) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Comma separated values.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;t2=1,2,3
+print(t2)
+(1, 2, 3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Lists in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/lists-in-python-3/</link>
+      <pubDate>Mon, 07 Nov 2016 10:03:00 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/lists-in-python-3/</guid>
+      <description>&lt;p&gt;Lists are mutable sequences that are often used to store homogeneous items.&lt;/p&gt;
+
+&lt;p&gt;The items of a list are enclosed in square brackets. Eg: &lt;code&gt;[1,2,3]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The contents of a list can be printed using the &lt;code&gt;print()&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;mylist=[1,2,3]
+print(mylist)
+[1,2,3] 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The following example demonstrates that lists are mutable(can be changed).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mylist[0]=99
+print(mylist)
+[99,2,3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Strings in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/strings-in-python-3/</link>
+      <pubDate>Sun, 06 Nov 2016 07:35:00 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/strings-in-python-3/</guid>
+      <description>&lt;p&gt;Strings are sequences of characters.&lt;/p&gt;
+
+&lt;p&gt;Strings can be written in the following ways:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;lsquo;single quotes&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;double quotes&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;rdquo;&amp;lsquo;multi line&amp;rdquo;&amp;rsquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Escape sequences are used to display characters with a special meaning such as &lt;code&gt;&#39;&lt;/code&gt;, &lt;code&gt;&amp;quot;&lt;/code&gt; , &lt;code&gt;\&lt;/code&gt; within a string.&lt;/p&gt;
+
+&lt;p&gt;Some examples:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;\\&lt;/code&gt; displays &lt;code&gt;\&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\&amp;quot;&lt;/code&gt; displays &lt;code&gt;&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\&#39;&lt;/code&gt; displays &lt;code&gt;&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\n&lt;/code&gt; displays a new line (LF)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Data types in Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</link>
+      <pubDate>Sat, 05 Nov 2016 07:26:45 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</guid>
+      <description>&lt;p&gt;Python is a dynamically typed programming language, so you don&amp;rsquo;t need to explicitly specify the data type of a variable before usage. A variable can be rebound to objects of different data types at runtime and the Python interpreter will not complain.&lt;/p&gt;
+
+&lt;p&gt;An example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python3&#34;&gt;var=10
+print(var)
+10
+var=&#39;string&#39;
+print(var)
+string
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Beginning Python 3</title>
+      <link>https://www.ploggingdev.com/2016/11/beginning-python-3/</link>
+      <pubDate>Fri, 04 Nov 2016 15:09:38 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/beginning-python-3/</guid>
+      <description>&lt;p&gt;In this series of plogs, I will be sharing my journey of learning Python.&lt;/p&gt;
+
+&lt;p&gt;What are my motivations behind deciding to learn Python?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I plan to build web apps, so I was looking for a language which has a mature ecosystem around it. Coming from a Java and PHP background, Python seemed attractive.&lt;/li&gt;
+&lt;li&gt;A little later, I plan on getting into Machine Learning, and the most popular language in the industry seems to be Python. It&amp;rsquo;s actually Python 2.7 as of writing this, but Python 3 support is growing. Oh, I did not mention it, but this plog series is going to focus on Python 3 only.&lt;/li&gt;
+&lt;li&gt;Python can be used for web scraping with ease, which is of great interest to me.&lt;/li&gt;
+&lt;li&gt;It is respected among the hacker community. Just to be clear, hacker means an expert in their field, not the negative association that is triggered more often than not.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hello World</title>
+      <link>https://www.ploggingdev.com/2016/11/hello-world/</link>
+      <pubDate>Fri, 04 Nov 2016 14:37:53 +0530</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2016/11/hello-world/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Hi!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Why is it called Plogging Dev?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Plog is supposed to mean programming blog (it&amp;rsquo;s a real word with a made up meaning). The Dev part is for developer.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What is this blog about?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I will be sharing my programming related blogs here, mostly Python and Django to start with, then blogs about machine learning. You can expect the occasional non-tech blog post, mostly whatever I am interested in.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

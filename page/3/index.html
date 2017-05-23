@@ -14,7 +14,7 @@
 
   
 
-  <meta name="generator" content="Hugo 0.17" />
+  <meta name="generator" content="Hugo 0.21" />
 
   <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
 
@@ -108,6 +108,48 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           <div class="posts-list">
             
+            
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">
+          	  <h2 class="post-title">Scraping my website using requests and BeautifulSoup</h2>
+
+          	  
+              </a>
+
+              <p class="post-meta">
+                Posted on December 8, 2016
+              </p>
+
+              <div class="post-entry">
+                <p>Ok, I didn&rsquo;t use Scrapy because I am yet to go through it&rsquo;s documentation. I will explore Scrapy in an upcoming blog post.</p>
+
+<p>Before getting to write code to scrape my website, I will cover the basics of the following modules:</p>
+
+<ul>
+<li><p><code>webbrowser</code></p></li>
+
+<li><p><code>requests</code></p></li>
+
+<li><p><code>BeautifulSoup</code></p></li>
+</ul>
+
+<p>The <code>webbrowser</code> module is a builtin module in Python . There is not a lot to explore in this module, except the <code>open(url)</code> method. All it does is open the the default browser to a specified URL.</p>
+
+<p>Example:</p>
+
+<pre><code>import webbrowser
+
+urls = [&quot;https://automatetheboringstuff.com/&quot;, &quot;https://automatetheboringstuff.com/chapter11/&quot;]
+
+for link in urls:
+   webbrowser.open(link)
+</code></pre>
+
+<p></p>
+          	  <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+
+             </article>
             
             <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/">
@@ -252,60 +294,6 @@ print(list2)
 
              </article>
             
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/">
-          	  <h2 class="post-title">Floating point arithmetic issues in Python 3</h2>
-
-          	  
-              </a>
-
-              <p class="post-meta">
-                Posted on November 27, 2016
-              </p>
-
-              <div class="post-entry">
-                <p>By default, numbers having a decimal point are represented as floating point numbers.</p>
-
-<p>Verification:</p>
-
-<pre><code>print(type(1.5))
-#output
-&lt;class 'float'&gt;
-</code></pre>
-
-<p>Floating point numbers are represented in computer hardware in base 2. Floating point numbers are used to represent decimal (base 10) numbers in the most common use cases. But most decimal fractions cannot be represented exactly as binary fractions.</p>
-
-<p>To understand this problem, consider the conversion of a decimal fraction to a decimal number: <code>1/3</code> is equal to <code>0.333...</code> with repeating 3&rsquo;s. When represented as a decimal number, it will never be equal to <code>1/3</code>.</p>
-
-<p>Similarly, many decimal numbers cannot be represented accurately in base 2.</p>
-
-<p>Some examples:</p>
-
-<pre><code>print(&quot;0.1 + 0.2 = {}&quot;.format(0.1+0.2))
-#output
-0.1 + 0.2 = 0.30000000000000004
-
-print(&quot;0.1 + 0.4 = {}&quot;.format(0.1+0.4))
-#output
-0.1 + 0.4 = 0.5
-
-print(&quot;1/10 = {}&quot;.format(1/10))
-#output
-1/10 = 0.1
-
-print(&quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&quot;)
-print(0.1 + 0.1 + 0.1 == 0.3)
-#output
-Is (0.1 + 0.1 + 0.1 == 0.3) ?
-False
-</code></pre>
-
-<p></p>
-          	  <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/" class="post-read-more">[Read&nbsp;More]</a>
-              </div>
-
-             </article>
-            
           </div>
 
           
@@ -401,7 +389,7 @@ False
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-86436693-1 ', 'auto');
 ga('send', 'pageview');

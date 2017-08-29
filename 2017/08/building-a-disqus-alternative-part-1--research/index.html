@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Building a Disqus alternative Part 1 : Research</title>
+  <meta property="og:title" content="Building a Disqus alternative Part 1 : Research" />
+  <meta name="twitter:title" content="Building a Disqus alternative Part 1 : Research" />
+  <meta name="description" content="What is Disqus?
+
+It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.
+
+Some noteworthy features of Disqus:
+
+
+If you have a Disqus account, you can comment on any website that uses Disqus.
+
+Email notifications with the ability to reply to a comment directly from your email client.
+
+Analytics and moderation tools.
+
+Spam filters
+
+User profiles and ability to follow users
+
+Social network login
+
+
+">
+  <meta property="og:description" content="What is Disqus?
+
+It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.
+
+Some noteworthy features of Disqus:
+
+
+If you have a Disqus account, you can comment on any website that uses Disqus.
+
+Email notifications with the ability to reply to a comment directly from your email client.
+
+Analytics and moderation tools.
+
+Spam filters
+
+User profiles and ability to follow users
+
+Social network login
+
+
+">
+  <meta name="twitter:description" content="What is Disqus?
+
+It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.
+
+Some noteworthy features of Disqus:
+
+
+If you have a Disqus account, …">
+  <meta name="author" content="Plogging Dev"/>
+  <meta property="og:image" content="https://www.ploggingdev.com/img/avatar.png" />
+  <meta name="twitter:image" content="https://www.ploggingdev.com/img/avatar.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@ploggingdev" />
+  <meta name="twitter:creator" content="@ploggingdev" />
+  <meta property="og:url" content="https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Plogging Dev" />
+
+  <meta name="generator" content="Hugo 0.26" />
+  <link rel="canonical" href="https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/" />
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/highlight.min.css" />
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Building a Disqus alternative Part 1 : Research">
+
+  
+  <meta name="keywords" content="disqus, comment engine">
+  
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Archive" href="/archive/">Archive</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+            <img class="avatar-img" src="https://www.ploggingdev.com/img/avatar.png" alt="Plogging Dev" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>Building a Disqus alternative Part 1 : Research</h1>
+                
+                
+                  <span class="post-meta">
+  Posted on August 29, 2017
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>What is Disqus?</strong></p>
+
+<p>It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.</p>
+
+<p>Some noteworthy features of Disqus:</p>
+
+<ul>
+<li><p>If you have a Disqus account, you can comment on any website that uses Disqus.</p></li>
+
+<li><p>Email notifications with the ability to reply to a comment directly from your email client.</p></li>
+
+<li><p>Analytics and moderation tools.</p></li>
+
+<li><p>Spam filters</p></li>
+
+<li><p>User profiles and ability to follow users</p></li>
+
+<li><p>Social network login</p></li>
+</ul>
+
+<p></p>
+
+<p><strong>What are some of problems with Disqus?</strong></p>
+
+<ul>
+<li><p><em>Privacy</em> : Disqus makes 100 odd requests and sends tracking data to 20 odd domains according to this <a href="http://donw.io/post/github-comments/">blog post</a>.</p></li>
+
+<li><p><em>Bloated</em> : As a result of sending tracking data to their advertising partners, page requests that could be completed in 2 http request (one for loading the comment script and another request for retrieving all comments), require 100+ http requests and take between 2 and 10 seconds to load.</p></li>
+
+<li><p><em>Ads</em> : Disqus forces websites on the free plan to display ads, the &ldquo;Mom makes $4000 working from home&rdquo; variety&hellip;and six of those with pictures to accompany them. This was the case when I checked a few months ago, I&rsquo;ve since blocked the domain, so if anything has changed let me know <del>in the comments below</del>.</p></li>
+
+<li><p><em>Not open source</em> : This might not be an issue for most people, put I prefer products with open source code bases.</p></li>
+</ul>
+
+<p><strong>Why are you building a Disqus alternative?</strong></p>
+
+<ul>
+<li><p>The current state of adding hosted comments is either use ad/tracking infested Disqus or an open source self hosted option which doesn&rsquo;t work as well as Disqus for the core use case of comments and requires a separate login for each site. I think there&rsquo;s a happy middleground for a SaaS without ads/tracking scripts, an open source code base and having a Disqus like single login for all sites using it.</p></li>
+
+<li><p>I used to receive comments on my blog posts when I had Disqus enabled, so I need a commenting engine for my blog which does not have the above mentioned issues.</p></li>
+
+<li><p>Since there seems to be a lot of demand for a true Disqus alternative, based on the posts in forums and social media, I think a small portion of those users will be ready to pay for a SaaS.</p></li>
+
+<li><p>Even if I don&rsquo;t manage to turn it into a SaaS, the learning aspect of building out a commenting platform is exciting.</p></li>
+</ul>
+
+<p><strong>The user experience</strong></p>
+
+<p>Here&rsquo;s the flow that I plan to implement:</p>
+
+<ol>
+<li><p>User signs up for an account.</p></li>
+
+<li><p>Adds a domain and verifies ownership by adding a TXT record in their DNS settings.</p></li>
+
+<li><p>Adds a javascript snippet to website to enable the comments section.</p></li>
+
+<li><p>Pays $xx/month to subscribe to a plan.</p></li>
+</ol>
+
+<p><strong>Pricing</strong></p>
+
+<ol>
+<li><p>$20/month/domain upto 100,000 page views</p></li>
+
+<li><p>$300/month/domain upto 1,000,000 page views + priority support</p></li>
+
+<li><p>Custom pricing for websites with higher requirements</p></li>
+</ol>
+
+<p><strong>(Technical) questions/challenges</strong></p>
+
+<ol>
+<li><p>I recently built a site with a comments section (<a href="https://www.ploghub.com/">a blogging platform for developers</a>) and realized that representing the hierarchical nature of comments, traversing the comments tree and querying whether a user voted on a comment can be extremely expensive in terms of the number of database hits. I came across a neat django package <a href="http://django-mptt.github.io/django-mptt/">django-mptt</a> to represent the hierarchical relationship of comments using a Modified Preorder Traversal Tree. Long story short, most queries can be performed with 2 database queries to gather all the information required to display the comments section.</p></li>
+
+<li><p>Loading comments from a third party domain (cross origin) introduces certain challenges. The ways to retrieve data from a domain other than the website itself are :</p>
+
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a></p></li>
+
+<li><p><a href="https://en.wikipedia.org/wiki/HTML_element#Frames">Embedded iframe</a></p></li>
+</ul>
+
+<p>Disqus uses sandboxed iframes to display the comments section. This is an area I am still looking into and I am still exploring both the options along with the security implications of choosing one over the other. If you have any thoughts on this topic, let me know either via email or twitter.</p></li>
+
+<li><p><em>Free plan</em> : this is something that I just can&rsquo;t decide. I am considering providing a heavily limited free plan for websites with low traffic (less than 10,000 page views a month). To clarify, by heavily limited, I mean the number of websites on the free plan will be restricted, but the feature set will not be restricted.</p></li>
+
+<li><p><em>Spam</em> : For the initial version, the only anti-spam measure will be restricting the number of comments per account in a given timeframe. Eg- 10 comments per hour.</p></li>
+</ol>
+
+<p><strong>Misc</strong></p>
+
+<ul>
+<li><p>Comments will be written in markdown.</p></li>
+
+<li><p>No social login options will be available.</p></li>
+</ul>
+
+<p>Since I already built a comments section with voting in my previous project, the main challenge is going to be to figure out how to securely make cross origin requests and take measures to prevent the host website from having access to the cookies.</p>
+
+<p>I don&rsquo;t have an email list, but if you want to keep up with the developments regarding this project, you can follow me on <a href="https://twitter.com/ploggingdev">twitter</a>. I would love to hear your thoughts on this project either from a technical perspective or as a potential customer.</p>
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/" data-toggle="tooltip" data-placement="top" title="A model for a privacy oriented ad network that profiles content, not users">&larr; Previous Post</a>
+          </li>
+        
+        
+      </ul>
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:ploggingdev@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/ploggingdev" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/ploggingdev" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          Plogging Dev
+          &nbsp;&bull;&nbsp;
+          2017
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.26</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+<script src="https://www.ploggingdev.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+  </body>
+</html>
+

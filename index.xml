@@ -8,10 +8,39 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Mon, 22 May 2017 23:16:24 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 29 Aug 2017 03:42:39 -0800</lastBuildDate>
     
 	<atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building a Disqus alternative Part 1 : Research</title>
+      <link>https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/</link>
+      <pubDate>Tue, 29 Aug 2017 03:42:39 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;What is Disqus?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.&lt;/p&gt;
+
+&lt;p&gt;Some noteworthy features of Disqus:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;If you have a Disqus account, you can comment on any website that uses Disqus.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Email notifications with the ability to reply to a comment directly from your email client.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Analytics and moderation tools.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Spam filters&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;User profiles and ability to follow users&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Social network login&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>A model for a privacy oriented ad network that profiles content, not users</title>
@@ -912,7 +941,7 @@ string
 This is a blog about programming and tech related topics, though occasionally I might blog about other topics that I find fascinating.
 The site is hosted on Github Pages, behind Cloudflare and uses disqus comments and Google Analytics.
 The site is built with Hugo and uses the beautifulhugo theme which is a port of Beautiful-jekyll.
-Email address : ploggingdev@gmail.com
+Email address : ploggingdev at gmail
 Twitter and github handles in the footer.</description>
     </item>
     

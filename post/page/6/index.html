@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Plogging Dev" />
 
-  <meta name="generator" content="Hugo 0.21" />
+  <meta name="generator" content="Hugo 0.26" />
   <link rel="canonical" href="https://www.ploggingdev.com/post/" />
   <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -121,6 +121,46 @@ ga('send', 'pageview');
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         
         <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/">
+                <h2 class="post-title">Dictionaries in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on November 11, 2016
+              </p>
+              <div class="post-entry">
+                
+                  <p>A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
+strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
+associative arrays from other programming languages.</p>
+
+<p>A dictionary can be created in multiple ways, using <code>{}</code> or the <code>dict()</code> function. The following are
+some examples of ways to create dictionaries:</p>
+
+<pre><code>a=dict(one=1,two=2)
+b={'one':1,'two':2}
+c=dict(zip(['one','two'],[1,2]))
+d=dict([('one',1),('two',2)])
+e=dict({'one':1,'two':2})
+print(a==b==c==d==e)
+True
+</code></pre>
+
+<p>As you can see, all the variables hold the same dictionary. To create an empty dictionary, use <code>{}</code> or
+ <code>dict()</code>.</p>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+    
+              
+    
+            </article>
           
             <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/sets-in-python-3/">
@@ -298,48 +338,6 @@ print(mylist)
     
             </article>
           
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/strings-in-python-3/">
-                <h2 class="post-title">Strings in Python 3</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on November 6, 2016
-              </p>
-              <div class="post-entry">
-                
-                  <p>Strings are sequences of characters.</p>
-
-<p>Strings can be written in the following ways:</p>
-
-<ul>
-<li>&lsquo;single quotes&rsquo;</li>
-<li>&ldquo;double quotes&rdquo;</li>
-<li>&rdquo;&lsquo;multi line&rdquo;&rsquo;</li>
-</ul>
-
-<p>Escape sequences are used to display characters with a special meaning such as <code>'</code>, <code>&quot;</code> , <code>\</code> within a string.</p>
-
-<p>Some examples:</p>
-
-<ul>
-<li><code>\\</code> displays <code>\</code></li>
-<li><code>\&quot;</code> displays <code>&quot;</code></li>
-<li><code>\'</code> displays <code>'</code></li>
-<li><code>\n</code> displays a new line (LF)</li>
-</ul>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/strings-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
         </div>
         
           <ul class="pager main-pager">
@@ -403,7 +401,7 @@ print(mylist)
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.21</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.26</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Plogging Dev" />
 
-  <meta name="generator" content="Hugo 0.21" />
+  <meta name="generator" content="Hugo 0.26" />
   <link rel="canonical" href="https://www.ploggingdev.com/" />
   <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -136,6 +136,40 @@ ga('send', 'pageview');
 
         <div class="posts-list">
           
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2017/03/quicksort/">
+                <h2 class="post-title">Quicksort</h2>
+                
+              </a>
+
+              <span class="post-meta">
+  Posted on March 1, 2017
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p>Quicksort is a divide and conquer algorithm. Quicksort first divides a large array into two smaller sub-arrays: the low elements and the high elements can then recursively sorts the sub-arrays.</p>
+
+<p>Quicksort is considered to one of the fastest general purpose sorting algorithms even today.</p>
+
+<p>Time complexity:</p>
+
+<p>Average case : <strong>n log n</strong></p>
+
+<p>Best case : <strong>n log n</strong> with simple partition</p>
+
+<p>Worst case : <strong>n<sup>2</sup></strong></p>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2017/03/quicksort/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+            </article>
           
             <article class="post-preview">
               <a href="https://www.ploggingdev.com/2017/03/bubblesort/">
@@ -278,46 +312,6 @@ ga('send', 'pageview');
               
             </article>
           
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">
-                <h2 class="post-title">Analyzing programming language statistics of 100,000 Github repositories</h2>
-                
-              </a>
-
-              <span class="post-meta">
-  Posted on December 25, 2016
-  
-</span>
-
-
-              <div class="post-entry">
-                
-                  <p>The first step is to gather data about 100,000 repositories using the Github api. I used <code>scrapy</code> for this.</p>
-
-<p>A high level overview of how I did this:</p>
-
-<ol>
-<li><p>Start from the id of my <code>scrape_github</code> repo <code>https://api.github.com/repositories?since=76761293&amp;access_token=MY_TOKEN</code></p></li>
-
-<li><p>Save only the <code>id</code>, <code>name</code> and <code>languages_url</code> for each repo. The <code>languages_url</code> is the api endpoint which contains the programming language statistics of the current repo.</p></li>
-
-<li><p>Extract the link to the next page from the <code>Link</code> header and follow it repeating the above steps.</p></li>
-</ol>
-
-<p>Each api call returns a list of 100 repositories, so to retrieve data about 100,000 repositories, 1000 api calls are required.</p>
-
-<p>All the output is saved to a file called <code>all_repos.jsonl</code> which came to around 13MB.</p>
-
-<p>The next step is to follow the <code>languages_url</code> api endpoint for each repository and save the data.</p>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/" class="post-read-more">[Read More]</a>
-                
-              </div>
-
-              
-            </article>
-          
         </div>
 
         
@@ -382,7 +376,7 @@ ga('send', 'pageview');
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.21</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.26</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

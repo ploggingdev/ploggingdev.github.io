@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Plogging Dev" />
 
-  <meta name="generator" content="Hugo 0.21" />
+  <meta name="generator" content="Hugo 0.26" />
   <link rel="canonical" href="https://www.ploggingdev.com/post/" />
   <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -121,6 +121,41 @@ ga('send', 'pageview');
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         
         <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/">
+                <h2 class="post-title">Virtual environments and package management in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on November 21, 2016
+              </p>
+              <div class="post-entry">
+                
+                  <p>A virtual environment is a directory containing a Python installation and any additional packages. Since a virtual environment is isolated, any changes made will not affect the global installation of Python. It also enables the usage of different versions of the same package in multiple virtual environments.</p>
+
+<p>To create a virtual environment, the <code>venv</code> module will be used. The <code>virtualenv</code> module also can be used, but <code>venv</code> is the officially recommended solution so that&rsquo;s what I will be using. The current Python 3 documentation recommends the usage of <code>pyvenv</code>, which is a wrapper around <code>venv</code>. Since <code>pyvenv</code> will be deprecated soon, avoid using <code>pyvenv</code>.</p>
+
+<p>Installation of <code>venv</code> on Ubuntu 16.04:</p>
+
+<pre><code>sudo apt install python3-venv
+</code></pre>
+
+<p>To create a new virtual environment:</p>
+
+<pre><code>python3 -m venv python_learn_venv
+</code></pre>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+    
+              
+    
+            </article>
           
             <article class="post-preview">
               <a href="https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/">
@@ -279,46 +314,6 @@ which is documentation for the function. It&rsquo;s a good practice to always in
     
             </article>
           
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/">
-                <h2 class="post-title">Dictionaries in Python 3</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on November 11, 2016
-              </p>
-              <div class="post-entry">
-                
-                  <p>A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
-strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
-associative arrays from other programming languages.</p>
-
-<p>A dictionary can be created in multiple ways, using <code>{}</code> or the <code>dict()</code> function. The following are
-some examples of ways to create dictionaries:</p>
-
-<pre><code>a=dict(one=1,two=2)
-b={'one':1,'two':2}
-c=dict(zip(['one','two'],[1,2]))
-d=dict([('one',1),('two',2)])
-e=dict({'one':1,'two':2})
-print(a==b==c==d==e)
-True
-</code></pre>
-
-<p>As you can see, all the variables hold the same dictionary. To create an empty dictionary, use <code>{}</code> or
- <code>dict()</code>.</p>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
         </div>
         
           <ul class="pager main-pager">
@@ -382,7 +377,7 @@ True
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.21</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.26</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

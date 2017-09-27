@@ -5,97 +5,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Tuples in Python 3</title>
-  <meta property="og:title" content="Tuples in Python 3" />
-  <meta name="twitter:title" content="Tuples in Python 3" />
-  <meta name="description" content="Tuples are immutable sequences of values. The values can be heterogeneous.
-The values in a tuple are indexed by integers.
-
-Tuple construction:
-
-
-() for empty tuple
-Single value in a tuple requires a trailing comma: 1,
-Comma separated values: 1,2,3
-using tuple() function
-
-
-Examples:
-
-Empty tuple.
-
-t0=() 
-
-
-Single value in a tuple(singleton). Notice the trailing comma.
-
-t1=&#39;a&#39;,
-print(t1)
-(&#39;a&#39;,) 
-
-
-Comma separated values.
-
-t2=1,2,3
-print(t2)
-(1, 2, 3)
-
-
-">
-  <meta property="og:description" content="Tuples are immutable sequences of values. The values can be heterogeneous.
-The values in a tuple are indexed by integers.
-
-Tuple construction:
-
-
-() for empty tuple
-Single value in a tuple requires a trailing comma: 1,
-Comma separated values: 1,2,3
-using tuple() function
-
-
-Examples:
-
-Empty tuple.
-
-t0=() 
-
-
-Single value in a tuple(singleton). Notice the trailing comma.
-
-t1=&#39;a&#39;,
-print(t1)
-(&#39;a&#39;,) 
-
-
-Comma separated values.
-
-t2=1,2,3
-print(t2)
-(1, 2, 3)
-
-
-">
-  <meta name="twitter:description" content="Tuples are immutable sequences of values. The values can be heterogeneous.
-The values in a tuple are indexed by integers.
-
-Tuple construction:
-
-
-() for empty tuple
-Single value in a tuple requires a …">
+  <title>Building a Disqus alternative Part 2 : The launch</title>
+  <meta property="og:title" content="Building a Disqus alternative Part 2 : The launch" />
+  <meta name="twitter:title" content="Building a Disqus alternative Part 2 : The launch" />
+  <meta name="description" content="I finally launched Hosted Comments!
+After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.
+My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.">
+  <meta property="og:description" content="I finally launched Hosted Comments!
+After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.
+My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.">
+  <meta name="twitter:description" content="I finally launched Hosted Comments!
+After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.
+My initial plan was …">
   <meta name="author" content="Plogging Dev"/>
   <meta property="og:image" content="https://www.ploggingdev.com/img/avatar.png" />
   <meta name="twitter:image" content="https://www.ploggingdev.com/img/avatar.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@ploggingdev" />
   <meta name="twitter:creator" content="@ploggingdev" />
-  <meta property="og:url" content="https://www.ploggingdev.com/2016/11/tuples-in-python-3/" />
+  <meta property="og:url" content="https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Plogging Dev" />
 
   <meta name="generator" content="Hugo 0.29" />
-  <link rel="canonical" href="https://www.ploggingdev.com/2016/11/tuples-in-python-3/" />
+  <link rel="canonical" href="https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/" />
   <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -119,10 +52,10 @@ ga('send', 'pageview');
 <link rel="manifest" href="/manifest.json">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="theme-color" content="#ffffff">
-<meta name="description" content="Tuples in Python 3">
+<meta name="description" content="Building a Disqus alternative Part 2 : The launch">
 
   
-  <meta name="keywords" content="python 3, data types in python 3, datatypes in python 3, tuples in python 3">
+  <meta name="keywords" content="disqus, comment engine, disqus alternative">
   
 </head>
 
@@ -195,11 +128,11 @@ ga('send', 'pageview');
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
-              <h1>Tuples in Python 3</h1>
+              <h1>Building a Disqus alternative Part 2 : The launch</h1>
                 
                 
                   <span class="post-meta">
-  Posted on November 8, 2016
+  Posted on September 27, 2017
   
 </span>
 
@@ -218,101 +151,50 @@ ga('send', 'pageview');
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p>Tuples are immutable sequences of values. The values can be heterogeneous.
-The values in a tuple are indexed by integers.</p>
+        <p>I finally launched <a href="https://www.hostedcomments.com/">Hosted Comments</a>!</p>
 
-<p>Tuple construction:</p>
+<p>After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.</p>
+
+<p>My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.</p>
+
+<p>So what’s changed since the last post?</p>
+
+<p><strong>I launched!</strong> The basic functionality is up : adding a website, embedding a small code snippet to add comments to the website, and the actual commenting itself works pretty well. Adding, editing, deleting and replying to comments works. There is also a reddit style voting system. In terms of feature parity with Disqus, a few important pieces are missing : email alerts for comment related notifications, replying to comments by email, anonymous posting of comments and social login. There are also areas that I plan to significantly improve : the look and feel of the website, the moderation tools and optimizations for improved performance. Since this is just an MVP, I decided to leave out the mentioned features. There is also no payment processing built in and will only be added if I manage to get to a point where manually sending invoices becomes a pain.</p>
+
+<p><strong>Pricing</strong> I heard a lot of complaints about pricing while talking to potential customers and decided to make the plans more generous. $29/month for 1 million pageviews and $99/month for 5 million pageviews. I believe this is more palatable for potential cutomers. I am also planning to introduce a $10/month tier for 200,000 pageviews. Since a commenting system is not exactly viewed as a critical part of a website, I guess I have to lower the prices significantly.</p>
+
+<p><strong>Closed source code</strong> I’ve kept the code closed source. This is obviously a controversial topic, but weighing out the pros and cons in my specific case, I decided to keep it closed source.</p>
+
+<p><strong>Sales</strong> : No sales yet. No surprises here. I am in discussions with potential customers and learned a few interesting use cases of my platform. People want to integrate a commenting system into existing products using an api. Eg- Managing accounts for users of niche blogging software. I did not consider the possibility that people might want to integrate my comments system using an api!</p>
+
+<p><strong>Marketing activites</strong> : as of now it’s limited to personal outreach and blogging. I received an interesting suggestion about building a tool to compare performance vs Disqus. It’s something I’ll explore in the future. Paid advertising is also something I&rsquo;m exploring. Since I have no clue about how to run a campaign, I&rsquo;ll have to explore paid channels carefully and be prepared to not make any ROI in the beginning.</p>
+
+<p>I started using the commenting platform on this site and it works great so far. Reminder - scroll down and start commenting. I will also replace the commenting system on <a href="https://ploghub.com">ploghub.com</a> with Hosted Comments. It&rsquo;s slightly awkward since PlogHub will require the user to be signed into 2 accounts to be able to use the site effectively.</p>
+
+<p><strong>Important lessons that I learned</strong> :</p>
 
 <ul>
-<li><code>()</code> for empty tuple</li>
-<li>Single value in a tuple requires a trailing comma: <code>1,</code></li>
-<li>Comma separated values: <code>1,2,3</code></li>
-<li>using <code>tuple()</code> function</li>
+<li><p>Talking to users, I learned surprising things from them that I did not consider.</p></li>
+
+<li><p>Sending cold emails is hard since a majority of them go unanswered and the few responses are &ldquo;no thanks&rdquo;.</p></li>
+
+<li><p>I&rsquo;ve been in talks with potential customers and the turn around time is days to weeks.</p></li>
+
+<li><p>SaaS expectations : interacting with successful SaaS owners, there&rsquo;s been one truth that I found particularly brutal : building any SaaS to even a few hundred MRR takes atleast 6 months on average and along the way I might just find out that this project has no future. All the stories about some guy reaching $10k MRR with minimal effort are called outliers for a reason.</p></li>
 </ul>
 
-<p>Examples:</p>
+<p>Since I am in beta right now I am not yet charging users, feel free to try out the platform and let me know you think.</p>
 
-<p>Empty tuple.</p>
+<p>Hopefully a sale is not too far away!</p>
 
-<pre><code>t0=() 
-</code></pre>
-
-<p>Single value in a tuple(singleton). Notice the trailing comma.</p>
-
-<pre><code>t1='a',
-print(t1)
-('a',) 
-</code></pre>
-
-<p>Comma separated values.</p>
-
-<pre><code>t2=1,2,3
-print(t2)
-(1, 2, 3)
-</code></pre>
-
-<p></p>
-
-<p>Using the <code>tuple()</code> function. Note that it accepts only one argument.</p>
-
-<pre><code>t3=tuple()
-print(t3)
-()
-
-#trailing comma not required
-t4=tuple('a')
-print(t4)
-('a',)
-
-t5=tuple('abcd')
-print(t5)
-('a', 'b', 'c', 'd')
-
-t6=tuple(1234)
-TypeError: 'int' object is not iterable
-</code></pre>
-
-<p>The <code>tuple()</code> function does not accept integers as they are not iterable. To understand what iterables are,
-refer to the official <a href="https://docs.python.org/3/library/stdtypes.html#iterator-types">docs</a>.</p>
-
-<p>Tuples are immutable:</p>
-
-<pre><code>t2[0]=456
-TypeError: 'tuple' object does not support item assignment
-</code></pre>
-
-<p>Tuple packing is the process of packing values into a tuple.</p>
-
-<pre><code>t7=123,'abc',345
-print(t7)
-(123, 'abc', 345) 
-</code></pre>
-
-<p>Tuple unpacking is the opposite.</p>
-
-<pre><code>var1,var2,var3=t7
-print(var1)
-123
-print(var2)
-abc
-print(var3) 
-345
-</code></pre>
-
-<p>The source code for today&rsquo;s plog is available
-<a href="https://github.com/ploggingdev/python_learn/blob/master/tuples.py">here</a>.</p>
       </article>
 
       <ul class="pager blog-pager">
         
           <li class="previous">
-            <a href="https://www.ploggingdev.com/2016/11/lists-in-python-3/" data-toggle="tooltip" data-placement="top" title="Lists in Python 3">&larr; Previous Post</a>
+            <a href="https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/" data-toggle="tooltip" data-placement="top" title="Building a Disqus alternative Part 1 : Research">&larr; Previous Post</a>
           </li>
         
-        
-          <li class="next">
-            <a href="https://www.ploggingdev.com/2016/11/ranges-in-python-3/" data-toggle="tooltip" data-placement="top" title="Ranges in Python 3">Next Post &rarr;</a>
-          </li>
         
       </ul>
 

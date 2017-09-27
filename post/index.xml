@@ -8,10 +8,21 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Tue, 29 Aug 2017 03:42:39 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 27 Sep 2017 03:42:39 -0800</lastBuildDate>
     
 	<atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building a Disqus alternative Part 2 : The launch</title>
+      <link>https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/</link>
+      <pubDate>Wed, 27 Sep 2017 03:42:39 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/</guid>
+      <description>I finally launched Hosted Comments!
+After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.
+My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.</description>
+    </item>
     
     <item>
       <title>Building a Disqus alternative Part 1 : Research</title>

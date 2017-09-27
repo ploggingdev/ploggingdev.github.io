@@ -19,9 +19,15 @@
       <pubDate>Wed, 27 Sep 2017 03:42:39 -0800</pubDate>
       <author>ploggingdev@gmail.com (Plogging Dev)</author>
       <guid>https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/</guid>
-      <description>I finally launched Hosted Comments!
-After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.
-My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.</description>
+      <description>&lt;p&gt;I finally launched &lt;a href=&#34;https://www.hostedcomments.com/&#34;&gt;Hosted Comments&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.&lt;/p&gt;
+
+&lt;p&gt;My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.&lt;/p&gt;
+
+&lt;p&gt;So what’s changed since the last post?&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

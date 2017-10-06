@@ -8,10 +8,21 @@
     <language>en-us</language>
     <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
     <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
-    <lastBuildDate>Wed, 27 Sep 2017 03:42:39 -0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Oct 2017 03:44:39 -0800</lastBuildDate>
     
 	<atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Online accounts need a clearly defined lifecycle</title>
+      <link>https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/</link>
+      <pubDate>Fri, 06 Oct 2017 03:44:39 -0800</pubDate>
+      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      <guid>https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/</guid>
+      <description>&lt;p&gt;As part of a thought experiment, I was thinking about the implications of the internet becoming mainstream in a short time frame. One of the points that came up was the lifecycle of online accounts and their associated data. The lack of a clearly defined lifecycle means that users are at the mercy of each services&amp;rsquo; policies. Some services retain data indefinitely, some services sell user data to third parties for ad targeting and most services don&amp;rsquo;t allow deleting accounts. This is one area where the big tech companies seem reasonable : most allow deleting user accounts and the associated data, but it&amp;rsquo;s unclear what data deletion really means. What happens to the user data stored in the database backups? What happens to the data shared with third parties? Are they instructed to delete data once the upstream user deletes his account?&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Building a Disqus alternative Part 2 : The launch</title>
@@ -368,14 +379,14 @@ Decoration after function call
       <guid>https://www.ploggingdev.com/archive/</guid>
       <description>This page contains links to all posts on this site.
 Thought pieces A model for a privacy oriented ad network that profiles content, not users
+Online accounts need a clearly defined lifecycle
 Hosted Comments Building a Disqus alternative Part 1 : Research
 Building a Disqus alternative Part 2 : The launch
 Python Beginning Python 3
 Data types in Python 3
 Strings in Python 3
 Lists in Python 3
-Tuples in Python 3
-Ranges in Python 3</description>
+Tuples in Python 3</description>
     </item>
     
     <item>

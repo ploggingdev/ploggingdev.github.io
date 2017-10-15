@@ -123,35 +123,39 @@ ga('send', 'pageview');
         <div class="posts-list">
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/">
-                <h2 class="post-title">Performance measurement in Python 3</h2>
+              <a href="https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/">
+                <h2 class="post-title">File IO and JSON in Python 3</h2>
     
                 
               </a>
     
               <p class="post-meta">
-                Posted on December 3, 2016
+                Posted on November 22, 2016
               </p>
               <div class="post-entry">
                 
-                  <p>Performance measurement is the process of collecting and understanding information regarding the performance of some code.</p>
+                  <p>Before discussing file IO and json, let&rsquo;s talk about accepting input from the user using <code>input()</code>. Example:</p>
 
-<p>In this blog I will cover the basics of the following modules in Python:</p>
+<pre><code>name = input(&quot;What's your name?\n&quot;)
+age = int(input(&quot;Age?\n&quot;))
+print(&quot;Name : {}  Age : {}&quot;.format(name,age))
+#output
+What's your name?
+plog
+Age?
+42
+</code></pre>
+
+<p>Reading and writing files involves the following three steps:</p>
 
 <ul>
-<li><p><code>timeit</code></p></li>
-
-<li><p><code>cProfile</code></p></li>
-
-<li><p><code>pstats</code></p></li>
-
-<li><p><code>memory_profiler</code></p></li>
-
-<li><p><code>line_profiler</code></p></li>
+<li>Open the file using <code>open(filename, mode)</code></li>
+<li>Read or write from or to the file using <code>read()</code> or <code>write()</code></li>
+<li>Close the file using <code>close()</code></li>
 </ul>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
     
@@ -160,37 +164,33 @@ ga('send', 'pageview');
             </article>
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/">
-                <h2 class="post-title">List comprehensions, iterators, generators and generator expressions in Python 3</h2>
+              <a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/">
+                <h2 class="post-title">Virtual environments and package management in Python 3</h2>
     
                 
               </a>
     
               <p class="post-meta">
-                Posted on December 2, 2016
+                Posted on November 21, 2016
               </p>
               <div class="post-entry">
                 
-                  <p>A list comprehension is a concise way to create lists that would normally require <code>for</code> loops to build.</p>
+                  <p>A virtual environment is a directory containing a Python installation and any additional packages. Since a virtual environment is isolated, any changes made will not affect the global installation of Python. It also enables the usage of different versions of the same package in multiple virtual environments.</p>
 
-<p>Example:</p>
+<p>To create a virtual environment, the <code>venv</code> module will be used. The <code>virtualenv</code> module also can be used, but <code>venv</code> is the officially recommended solution so that&rsquo;s what I will be using. The current Python 3 documentation recommends the usage of <code>pyvenv</code>, which is a wrapper around <code>venv</code>. Since <code>pyvenv</code> will be deprecated soon, avoid using <code>pyvenv</code>.</p>
 
-<pre><code>list1 = [x**2 for x in range(10)]
-print(list1)
-#output
-[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+<p>Installation of <code>venv</code> on Ubuntu 16.04:</p>
+
+<pre><code>sudo apt install python3-venv
 </code></pre>
 
-<p>List comprehension to create a list of tuples:</p>
+<p>To create a new virtual environment:</p>
 
-<pre><code>list2 = [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
-print(list2)
-#output
-[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+<pre><code>python3 -m venv python_learn_venv
 </code></pre>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
     
@@ -199,135 +199,112 @@ print(list2)
             </article>
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/">
-                <h2 class="post-title">N queens solver in Python 3</h2>
+              <a href="https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/">
+                <h2 class="post-title">Classes and inheritance in Python 3</h2>
     
                 
               </a>
     
               <p class="post-meta">
-                Posted on November 30, 2016
+                Posted on November 19, 2016
               </p>
               <div class="post-entry">
                 
-                  <p>What is the N queens problem?</p>
+                  <p>From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).</p>
 
-<p>The N queens problem is the problem of placing N non-attacking queens on an NxN chessboard, for which solutions exist for all natural numbers N with the exception of N=2 and N=3.</p>
-
-<p>When N=1, the solution is trivial so the program will ask for a value of N such that <code>N &gt;= 4</code>.</p>
-
-<p>I will solve this problem using backtracking. There are more efficient ways to solve this problem, but I will use backtracking since it&rsquo;s the most intuitive way to arrive at the solution without getting into the mathematics of arriving at efficient solutions. Through solving these problems, I aim to better understand Python.</p>
-
-<p>What is backtracking?</p>
-
-<p>Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons each partial candidate <em>c</em> (&ldquo;backtracks&rdquo;) as soon as it determines that <em>c</em> cannot possibly be completed to a valid solution.</p>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/">
-                <h2 class="post-title">Floating point arithmetic issues in Python 3</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on November 27, 2016
-              </p>
-              <div class="post-entry">
-                
-                  <p>By default, numbers having a decimal point are represented as floating point numbers.</p>
-
-<p>Verification:</p>
-
-<pre><code>print(type(1.5))
-#output
-&lt;class 'float'&gt;
-</code></pre>
-
-<p>Floating point numbers are represented in computer hardware in base 2. Floating point numbers are used to represent decimal (base 10) numbers in the most common use cases. But most decimal fractions cannot be represented exactly as binary fractions.</p>
-
-<p>To understand this problem, consider the conversion of a decimal fraction to a decimal number: <code>1/3</code> is equal to <code>0.333...</code> with repeating 3&rsquo;s. When represented as a decimal number, it will never be equal to <code>1/3</code>.</p>
-
-<p>Similarly, many decimal numbers cannot be represented accurately in base 2.</p>
-
-<p>Some examples:</p>
-
-<pre><code>print(&quot;0.1 + 0.2 = {}&quot;.format(0.1+0.2))
-#output
-0.1 + 0.2 = 0.30000000000000004
-
-print(&quot;0.1 + 0.4 = {}&quot;.format(0.1+0.4))
-#output
-0.1 + 0.4 = 0.5
-
-print(&quot;1/10 = {}&quot;.format(1/10))
-#output
-1/10 = 0.1
-
-print(&quot;Is (0.1 + 0.1 + 0.1 == 0.3) ?&quot;)
-print(0.1 + 0.1 + 0.1 == 0.3)
-#output
-Is (0.1 + 0.1 + 0.1 == 0.3) ?
-False
-</code></pre>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/">
-                <h2 class="post-title">Unit testing in Python 3</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on November 27, 2016
-              </p>
-              <div class="post-entry">
-                
-                  <p>Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.</p>
-
-<p>The <code>unittest</code> framework is a built-in unit testing framework in Python.</p>
-
-<p>Some terminology:</p>
+<p>Features of classes in Python:</p>
 
 <ul>
-<li>test fixture: the preparation needed to perform one or more tests, and any associate cleanup actions</li>
-<li>test case: individual unit of testing which checks for the correct response for a given input</li>
+<li>Multiple inheritance permitted</li>
+<li>Derived class can override base class methods</li>
+<li>Base class methods can be called using <code>super().method_name()</code></li>
+<li>Class members are dynamic, can be modified at runtime</li>
+<li>Class members are public, methods are virtual (can be overridden)</li>
+<li>The first parameter in a method is a reference to the calling object, usually <code>self</code></li>
+<li>Operator overloading is supported</li>
+<li>Aliasing of objects is supported</li>
 </ul>
 
-<p>I will be covering a minimal subset of <code>unittest</code> that will be enough to understand what unit testing is and how to go about writing test cases. To learn more, refer to the <a href="https://docs.python.org/3/library/unittest.html">official docs</a>.</p>
-
-<p>A simple example:</p>
-
-<pre><code>import unittest
-
-class Test2(unittest.TestCase):
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
     
-    def test_simple(self):
-        self.assertEqual(2+2,4)
+              
+    
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/">
+                <h2 class="post-title">Modules and packages in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on November 16, 2016
+              </p>
+              <div class="post-entry">
+                
+                  <p>A module is a file that contains Python definitions and statements with a <code>.py</code> extension. So technically,
+all the code that I posted so far has been in the form of modules. Modules are a way to organize code
+in Python so that closely related functions and definitions are grouped together into a module.
+It makes code reusable.</p>
 
-if __name__ == '__main__':
-    unittest.main()
-</code></pre>
+<p>A related concept is packages. Packages are just a way to organize modules into a namespace. A package
+can be thought of as a directory that contains modules and subpackages. For Python to treat a directory as
+a package, a file named <code>__init__.py</code> is required in the directory. The <code>__init__.py</code> can also contain
+code that will be executed when the package is first imported, typically initialization code.</p>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+    
+              
+    
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/">
+                <h2 class="post-title">Functions in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on November 13, 2016
+              </p>
+              <div class="post-entry">
+                
+                  <p>A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
+example:</p>
+
+<pre><code>def hello_function():
+    '''This is where the function documentation goes'''
+    print('Hello from function')
+
+hello_function()
+print(hello_function)
+#output
+Hello from function
+&lt;function hello_function at 0x7f34bc7db378&gt;
+</code></pre>
+
+<ul>
+<li>The <code>def</code> keyword is used to define a function.</li>
+<li>It is followed by the function name, argument list(if any), and a
+colon <code>:</code>.</li>
+<li>The function body is indented by 4 spaces.</li>
+<li>The first line of a function body is a
+<a href="https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings">docstring</a>,
+which is documentation for the function. It&rsquo;s a good practice to always include the docstring.</li>
+<li>The statements that constitute the function are placed after the docstring.</li>
+<li>A function is an object, notice the output of <code>print(hello_function)</code>.</li>
+</ul>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
     

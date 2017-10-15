@@ -138,132 +138,39 @@ ga('send', 'pageview');
           
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/">
-                <h2 class="post-title">Functions in Python 3</h2>
+              <a href="https://www.ploggingdev.com/2016/11/lists-in-python-3/">
+                <h2 class="post-title">Lists in Python 3</h2>
                 
               </a>
 
               <span class="post-meta">
-  Posted on November 13, 2016
+  Posted on November 7, 2016
   
 </span>
 
 
               <div class="post-entry">
                 
-                  <p>A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
-example:</p>
+                  <p>Lists are mutable sequences that are often used to store homogeneous items.</p>
 
-<pre><code>def hello_function():
-    '''This is where the function documentation goes'''
-    print('Hello from function')
+<p>The items of a list are enclosed in square brackets. Eg: <code>[1,2,3]</code></p>
 
-hello_function()
-print(hello_function)
-#output
-Hello from function
-&lt;function hello_function at 0x7f34bc7db378&gt;
+<p>The contents of a list can be printed using the <code>print()</code> function.</p>
+
+<pre><code class="language-python3">mylist=[1,2,3]
+print(mylist)
+[1,2,3] 
 </code></pre>
 
-<ul>
-<li>The <code>def</code> keyword is used to define a function.</li>
-<li>It is followed by the function name, argument list(if any), and a
-colon <code>:</code>.</li>
-<li>The function body is indented by 4 spaces.</li>
-<li>The first line of a function body is a
-<a href="https://docs.python.org/3/tutorial/controlflow.html#tut-docstrings">docstring</a>,
-which is documentation for the function. It&rsquo;s a good practice to always include the docstring.</li>
-<li>The statements that constitute the function are placed after the docstring.</li>
-<li>A function is an object, notice the output of <code>print(hello_function)</code>.</li>
-</ul>
+<p>The following example demonstrates that lists are mutable(can be changed).</p>
 
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/functions-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-
-              
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/">
-                <h2 class="post-title">Control flow tools in Python 3</h2>
-                
-              </a>
-
-              <span class="post-meta">
-  Posted on November 12, 2016
-  
-</span>
-
-
-              <div class="post-entry">
-                
-                  <p>Before I start with control flow tools, here are a few definitions:</p>
-
-<ul>
-<li><strong>Value:</strong> Basic units of data. Eg- <code>10</code>,<code>'string'</code>.</li>
-<li><strong>Variable:</strong> A name that refers to a value. Eg- <code>var=10</code>, <code>var</code> is the variable.</li>
-<li><strong>Statement:</strong> A section of code that represents a command or action.</li>
-<li><strong>Operator:</strong> A symbol that performs operations on operands. Eg- <code>*</code> is for multiplication</li>
-<li><strong>Expression</strong> A combination of variables, operators, and values to perform a task.</li>
-</ul>
-
-<p>To learn about operators in Python refer
-<a href="https://www.tutorialspoint.com/python3/python_basic_operators.htm">here</a>.</p>
-
-<p>Some of the control flow tools are:</p>
-
-<ul>
-<li><code>if</code> statement</li>
-<li><code>while</code> statement</li>
-<li><code>for</code> statement</li>
-<li><code>break</code>, <code>continue</code> and <code>pass</code></li>
-</ul>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-
-              
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/">
-                <h2 class="post-title">Dictionaries in Python 3</h2>
-                
-              </a>
-
-              <span class="post-meta">
-  Posted on November 11, 2016
-  
-</span>
-
-
-              <div class="post-entry">
-                
-                  <p>A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
-strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
-associative arrays from other programming languages.</p>
-
-<p>A dictionary can be created in multiple ways, using <code>{}</code> or the <code>dict()</code> function. The following are
-some examples of ways to create dictionaries:</p>
-
-<pre><code>a=dict(one=1,two=2)
-b={'one':1,'two':2}
-c=dict(zip(['one','two'],[1,2]))
-d=dict([('one',1),('two',2)])
-e=dict({'one':1,'two':2})
-print(a==b==c==d==e)
-True
+<pre><code>mylist[0]=99
+print(mylist)
+[99,2,3]
 </code></pre>
 
-<p>As you can see, all the variables hold the same dictionary. To create an empty dictionary, use <code>{}</code> or
- <code>dict()</code>.</p>
-
 <p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/11/lists-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
 
@@ -271,37 +178,42 @@ True
             </article>
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/sets-in-python-3/">
-                <h2 class="post-title">Sets in Python 3</h2>
+              <a href="https://www.ploggingdev.com/2016/11/strings-in-python-3/">
+                <h2 class="post-title">Strings in Python 3</h2>
                 
               </a>
 
               <span class="post-meta">
-  Posted on November 10, 2016
+  Posted on November 6, 2016
   
 </span>
 
 
               <div class="post-entry">
                 
-                  <p>A set is an unordered collection with no duplicate elements. Sets are used for membership testing, removing
-duplicate entries and performing set operations such as intersection, union and difference.</p>
+                  <p>Strings are sequences of characters.</p>
 
-<p>There are two built-in set types: set and frozenset. The set type is mutable and the frozenset type is
-immutable.</p>
-
-<p>Set construction:</p>
+<p>Strings can be written in the following ways:</p>
 
 <ul>
-<li><code>set()</code> for empty set. <strong>Note:</strong> {} cannot be used</li>
-<li><code>set(values)</code></li>
-<li><code>{value1,valuen}</code></li>
+<li>&lsquo;single quotes&rsquo;</li>
+<li>&ldquo;double quotes&rdquo;</li>
+<li>&rdquo;&lsquo;multi line&rdquo;&rsquo;</li>
 </ul>
 
-<p>Construction of frozenset is very similar and uses <code>frozenset()</code> instead of <code>set()</code>.</p>
+<p>Escape sequences are used to display characters with a special meaning such as <code>'</code>, <code>&quot;</code> , <code>\</code> within a string.</p>
+
+<p>Some examples:</p>
+
+<ul>
+<li><code>\\</code> displays <code>\</code></li>
+<li><code>\&quot;</code> displays <code>&quot;</code></li>
+<li><code>\'</code> displays <code>'</code></li>
+<li><code>\n</code> displays a new line (LF)</li>
+</ul>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/sets-in-python-3/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/11/strings-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
 
@@ -309,46 +221,98 @@ immutable.</p>
             </article>
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/11/ranges-in-python-3/">
-                <h2 class="post-title">Ranges in Python 3</h2>
+              <a href="https://www.ploggingdev.com/2016/11/data-types-in-python-3/">
+                <h2 class="post-title">Data types in Python 3</h2>
                 
               </a>
 
               <span class="post-meta">
-  Posted on November 9, 2016
+  Posted on November 5, 2016
   
 </span>
 
 
               <div class="post-entry">
                 
-                  <p>The range is an immutable sequence of numbers. The main advantage of using the range type is that the
-memory occupied is fixed irrespective of the size of the range. This is because the actual contents of
-the range are not stored, instead they are computed at runtime.</p>
+                  <p>Python is a dynamically typed programming language, so you don&rsquo;t need to explicitly specify the data type of a variable before usage. A variable can be rebound to objects of different data types at runtime and the Python interpreter will not complain.</p>
 
-<p>Ranges can be created using:</p>
+<p>An example:</p>
+
+<pre><code class="language-python3">var=10
+print(var)
+10
+var='string'
+print(var)
+string
+</code></pre>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/11/data-types-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/beginning-python-3/">
+                <h2 class="post-title">Beginning Python 3</h2>
+                
+              </a>
+
+              <span class="post-meta">
+  Posted on November 4, 2016
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p>In this series of plogs, I will be sharing my journey of learning Python.</p>
+
+<p>What are my motivations behind deciding to learn Python?</p>
 
 <ul>
-<li><code>range(stop)</code></li>
-<li><code>range(start,stop)</code></li>
-<li><code>range(start,stop,step)</code></li>
-</ul>
-
-<p><strong>Note:</strong> Only the 1st and 3rd are constructors. In <code>range(start,stop,step)</code>, step is an optional
-parameter. When step is not specified, what we end up with is <code>range(start,stop)</code>.</p>
-
-<p>Quick notes about the arguments passed to <code>range()</code>:</p>
-
-<ul>
-<li>If <code>start</code> is not specified, the default value is 0.</li>
-<li>If <code>step</code> is not specified, the default value is 1.</li>
-<li>The <code>step</code> value cannot be zero, a runtime error will be thrown.</li>
-<li>The <code>step</code> value <em>can</em> be negative.</li>
-<li><code>Stop</code> is always required to be specified.</li>
+<li>I plan to build web apps, so I was looking for a language which has a mature ecosystem around it. Coming from a Java and PHP background, Python seemed attractive.</li>
+<li>A little later, I plan on getting into Machine Learning, and the most popular language in the industry seems to be Python. It&rsquo;s actually Python 2.7 as of writing this, but Python 3 support is growing. Oh, I did not mention it, but this plog series is going to focus on Python 3 only.</li>
+<li>Python can be used for web scraping with ease, which is of great interest to me.</li>
+<li>It is respected among the hacker community. Just to be clear, hacker means an expert in their field, not the negative association that is triggered more often than not.</li>
 </ul>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2016/11/ranges-in-python-3/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/11/beginning-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/11/hello-world/">
+                <h2 class="post-title">Hello World</h2>
+                
+              </a>
+
+              <span class="post-meta">
+  Posted on November 4, 2016
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  <p><strong>Hi!</strong></p>
+
+<p><strong>Why is it called Plogging Dev?</strong></p>
+
+<p>Plog is supposed to mean programming blog (it&rsquo;s a real word with a made up meaning). The Dev part is for developer.</p>
+
+<p><strong>What is this blog about?</strong></p>
+
+<p>I will be sharing my programming related blogs here, mostly Python and Django to start with, then blogs about machine learning. You can expect the occasional non-tech blog post, mostly whatever I am interested in.</p>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/11/hello-world/" class="post-read-more">[Read More]</a>
                 
               </div>
 
@@ -364,10 +328,6 @@ parameter. When step is not specified, what we end up with is <code>range(start,
                 <a href="/page/5">&larr; Newer Posts</a>
               </li>
             
-            
-              <li class="next">
-                <a href="/page/7">Older Posts &rarr;</a>
-              </li>
             
           </ul>
         

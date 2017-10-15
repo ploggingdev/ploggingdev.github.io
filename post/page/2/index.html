@@ -123,31 +123,35 @@ ga('send', 'pageview');
         <div class="posts-list">
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/03/insertion-sort/">
-                <h2 class="post-title">Insertion sort</h2>
+              <a href="https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/">
+                <h2 class="post-title">Multiprocessing and multithreading in Python 3</h2>
     
                 
               </a>
     
               <p class="post-meta">
-                Posted on March 12, 2017
+                Posted on January 9, 2017
               </p>
               <div class="post-entry">
                 
-                  <p>Insertion sort is an in-place sorting algorithm which builds the sorted list one item at a time.</p>
+                  <p>To begin with, let us clear up some terminlogy:</p>
 
-<p>Time complexity :</p>
+<ul>
+<li><p>Concurrency is when two or more tasks can start, run, and complete in overlapping time periods. It doesn&rsquo;t necessarily mean they&rsquo;ll ever both be running at the same instant. Eg. multitasking on a single-core machine.</p></li>
 
-<p>Average case : <strong>O(n<sup>2</sup>)</strong></p>
+<li><p>Parallelism is when two or more tasks are executed simultaneously.</p></li>
 
-<p>Best case : <strong>O(n)</strong></p>
+<li><p>A thread is a sequence of instructions within a process. It can be thought of as a lightweight process. Threads share the same memory space.</p></li>
 
-<p>Worst case : <strong>O(n<sup>2</sup>)</strong></p>
+<li><p>A process is an instance of a program running in a computer which can contain one or more threads. A process has its independant memory space.</p></li>
+</ul>
 
-<p>Worst case space complexity : <strong>O(n)</strong></p>
+<p>The <code>threading</code> module is used for working with threads in Python.</p>
+
+<p>The CPython implementation has a Global Interpreter Lock (GIL) which allows only one thread to be active in the interpreter at once. This means that threads cannot be used for parallel execution of Python code. While parallel CPU computation is not possible, parallel IO operations are possible using threads. This is because performing IO operations releases the GIL. To learn more about the GIL refer <a href="http://www.dabeaz.com/python/UnderstandingGIL.pdf">here</a>.</p>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2017/03/insertion-sort/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
     
@@ -156,31 +160,37 @@ ga('send', 'pageview');
             </article>
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/03/selection-sort/">
-                <h2 class="post-title">Selection sort</h2>
+              <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">
+                <h2 class="post-title">Analyzing programming language statistics of 100,000 Github repositories</h2>
     
                 
               </a>
     
               <p class="post-meta">
-                Posted on March 12, 2017
+                Posted on December 25, 2016
               </p>
               <div class="post-entry">
                 
-                  <p>Selection sort is an in-place sorting algorithm.</p>
+                  <p>The first step is to gather data about 100,000 repositories using the Github api. I used <code>scrapy</code> for this.</p>
 
-<p>Time complexity :</p>
+<p>A high level overview of how I did this:</p>
 
-<p>Average case : <strong>O(n<sup>2</sup>)</strong></p>
+<ol>
+<li><p>Start from the id of my <code>scrape_github</code> repo <code>https://api.github.com/repositories?since=76761293&amp;access_token=MY_TOKEN</code></p></li>
 
-<p>Best case : <strong>O(n<sup>2</sup>)</strong></p>
+<li><p>Save only the <code>id</code>, <code>name</code> and <code>languages_url</code> for each repo. The <code>languages_url</code> is the api endpoint which contains the programming language statistics of the current repo.</p></li>
 
-<p>Worst case : <strong>O(n<sup>2</sup>)</strong></p>
+<li><p>Extract the link to the next page from the <code>Link</code> header and follow it repeating the above steps.</p></li>
+</ol>
 
-<p>Worst case space complexity : <strong>O(n)</strong></p>
+<p>Each api call returns a list of 100 repositories, so to retrieve data about 100,000 repositories, 1000 api calls are required.</p>
+
+<p>All the output is saved to a file called <code>all_repos.jsonl</code> which came to around 13MB.</p>
+
+<p>The next step is to follow the <code>languages_url</code> api endpoint for each repository and save the data.</p>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2017/03/selection-sort/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/" class="post-read-more">[Read More]</a>
                 
               </div>
     
@@ -189,104 +199,126 @@ ga('send', 'pageview');
             </article>
           
             <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/03/quicksort/">
-                <h2 class="post-title">Quicksort</h2>
+              <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/">
+                <h2 class="post-title">Scraping my website using requests and BeautifulSoup</h2>
     
                 
               </a>
     
               <p class="post-meta">
-                Posted on March 1, 2017
+                Posted on December 8, 2016
               </p>
               <div class="post-entry">
                 
-                  <p>Quicksort is a divide and conquer algorithm. Quicksort first divides a large array into two smaller sub-arrays: the low elements and the high elements can then recursively sorts the sub-arrays.</p>
+                  <p>Ok, I didn&rsquo;t use Scrapy because I am yet to go through it&rsquo;s documentation. I will explore Scrapy in an upcoming blog post.</p>
 
-<p>Quicksort is considered to one of the fastest general purpose sorting algorithms even today.</p>
+<p>Before getting to write code to scrape my website, I will cover the basics of the following modules:</p>
 
-<p>Time complexity:</p>
+<ul>
+<li><p><code>webbrowser</code></p></li>
 
-<p>Average case : <strong>n log n</strong></p>
+<li><p><code>requests</code></p></li>
 
-<p>Best case : <strong>n log n</strong> with simple partition</p>
+<li><p><code>BeautifulSoup</code></p></li>
+</ul>
 
-<p>Worst case : <strong>n<sup>2</sup></strong></p>
+<p>The <code>webbrowser</code> module is a builtin module in Python . There is not a lot to explore in this module, except the <code>open(url)</code> method. All it does is open the the default browser to a specified URL.</p>
 
-<p></p>
-                  <a href="https://www.ploggingdev.com/2017/03/quicksort/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/03/bubblesort/">
-                <h2 class="post-title">Bubblesort</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on March 1, 2017
-              </p>
-              <div class="post-entry">
-                
-                  <p>Bubble sort is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted.</p>
+<p>Example:</p>
 
-<p>Time complexity:</p>
+<pre><code>import webbrowser
 
-<p>Average case : <strong>n<sup>2</sup></strong></p>
+urls = [&quot;https://automatetheboringstuff.com/&quot;, &quot;https://automatetheboringstuff.com/chapter11/&quot;]
 
-<p>Worst case : <strong>n<sup>2</sup></strong></p>
-
-<p>Best case : <strong>n</strong></p>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2017/03/bubblesort/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/02/fizzbuzz/">
-                <h2 class="post-title">FizzBuzz</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on February 26, 2017
-              </p>
-              <div class="post-entry">
-                
-                  <p>What is the Fizz-Buzz test?</p>
-
-<p>It&rsquo;s a programming interview question designed to filter out candidates who can&rsquo;t program.</p>
-
-<p>Problem statement : Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.</p>
-
-<p>Out of curiousity, I decided to solve this problem.</p>
-
-<p>My first attempt :</p>
-
-<pre><code>for ix in range(1,101):
-	if ix%3 == 0 and ix%5 == 0:
-		print(&quot;FizzBuzz&quot;)
-	elif ix%5 == 0:
-		print(&quot;Buzz&quot;)
-	elif ix%3 == 0:
-		print(&quot;Fizz&quot;)
-	else:
-		print(ix)
+for link in urls:
+   webbrowser.open(link)
 </code></pre>
 
 <p></p>
-                  <a href="https://www.ploggingdev.com/2017/02/fizzbuzz/" class="post-read-more">[Read More]</a>
+                  <a href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/" class="post-read-more">[Read More]</a>
+                
+              </div>
+    
+              
+    
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/">
+                <h2 class="post-title">Decorators in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on December 4, 2016
+              </p>
+              <div class="post-entry">
+                
+                  <p>A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.</p>
+
+<p>Example:</p>
+
+<pre><code>def my_decorator(func):
+    def inner():
+        print(&quot;Decoration before function call&quot;)
+        func()
+        print(&quot;Decoration after function call&quot;)
+
+    return inner
+
+@my_decorator
+def simple_print():
+    print(&quot;Hello from simple_print&quot;)
+
+simple_print()
+print()
+
+#output
+Decoration before function call
+Hello from simple_print
+Decoration after function call
+</code></pre>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+    
+              
+    
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/">
+                <h2 class="post-title">Performance measurement in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on December 3, 2016
+              </p>
+              <div class="post-entry">
+                
+                  <p>Performance measurement is the process of collecting and understanding information regarding the performance of some code.</p>
+
+<p>In this blog I will cover the basics of the following modules in Python:</p>
+
+<ul>
+<li><p><code>timeit</code></p></li>
+
+<li><p><code>cProfile</code></p></li>
+
+<li><p><code>pstats</code></p></li>
+
+<li><p><code>memory_profiler</code></p></li>
+
+<li><p><code>line_profiler</code></p></li>
+</ul>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
     

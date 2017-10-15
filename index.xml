@@ -829,12 +829,12 @@ string
       <pubDate>Fri, 04 Nov 2016 11:02:36 +0530</pubDate>
       <author>ploggingdev@gmail.com (Plogging Dev)</author>
       <guid>https://www.ploggingdev.com/about/</guid>
-      <description>plog = programming blog
-This is a blog about programming and tech related topics, though occasionally I might blog about other topics that I find fascinating.
-The site is hosted on Github Pages, behind Cloudflare and uses disqus comments and Google Analytics.
-The site is built with Hugo and uses the beautifulhugo theme which is a port of Beautiful-jekyll.
-Email address : ploggingdev at gmail
-Twitter and github handles in the footer.</description>
+      <description>Welcome to my blog!
+plog = programming blog
+I write about programming and tech related topics, though occasionally I might explore other topics I find interesting.
+Where is the site hosted?
+The site is hosted on Github Pages, behind Cloudflare. Comments are powered by disqus Hosted Comments, which I built as a privacy oriented alternative to disqus. The site also uses Google Analytics.
+This static site is built with Hugo and uses the beautifulhugo theme.</description>
     </item>
     
   </channel>

@@ -8,56 +8,19 @@
   <title>Building a Disqus alternative Part 1 : Research</title>
   <meta property="og:title" content="Building a Disqus alternative Part 1 : Research" />
   <meta name="twitter:title" content="Building a Disqus alternative Part 1 : Research" />
-  <meta name="description" content="What is Disqus?
+  <meta name="description" content="Update : I launched Hosted Comments!
 
-It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.
-
-Some noteworthy features of Disqus:
-
-
-If you have a Disqus account, you can comment on any website that uses Disqus.
-
-Email notifications with the ability to reply to a comment directly from your email client.
-
-Analytics and moderation tools.
-
-Spam filters
-
-User profiles and ability to follow users
-
-Social network login
-
+I&rsquo;ll start with a little back story : I started this blog around 9 months ago and managed to build up traffic to a few hundred hits every day. It might not seem like much, but it was and still is a big deal to me. Readers used to leave comments with suggestions for improvements, questions or just to say that they enjoyed reading a particular post. Comments were powered by Disqus and all was well. One day I received an email notification from Disqus informing me that someone had left a comment on my blog. A pretty routine notification, so I opened the post and scrolled down to the comments section and noticed&hellip;six shady ads with images to accompany them. Without any warning, Disqus enabled ads on my site. Until then I never really bothered with what Disqus was doing in the background, but the ads incident made me curious. I inspected the requests that Disqus was making and it turns out that 100&#43; http requests, sending tracking data to 10&#43; external advertisers and 2MB of data transfer was required to display a comments section with 5 comments! That was my breaking point and so I promptly removed Disqus from my blog and deleted my account as well.
 
 ">
-  <meta property="og:description" content="What is Disqus?
+  <meta property="og:description" content="Update : I launched Hosted Comments!
 
-It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.
-
-Some noteworthy features of Disqus:
-
-
-If you have a Disqus account, you can comment on any website that uses Disqus.
-
-Email notifications with the ability to reply to a comment directly from your email client.
-
-Analytics and moderation tools.
-
-Spam filters
-
-User profiles and ability to follow users
-
-Social network login
-
+I&rsquo;ll start with a little back story : I started this blog around 9 months ago and managed to build up traffic to a few hundred hits every day. It might not seem like much, but it was and still is a big deal to me. Readers used to leave comments with suggestions for improvements, questions or just to say that they enjoyed reading a particular post. Comments were powered by Disqus and all was well. One day I received an email notification from Disqus informing me that someone had left a comment on my blog. A pretty routine notification, so I opened the post and scrolled down to the comments section and noticed&hellip;six shady ads with images to accompany them. Without any warning, Disqus enabled ads on my site. Until then I never really bothered with what Disqus was doing in the background, but the ads incident made me curious. I inspected the requests that Disqus was making and it turns out that 100&#43; http requests, sending tracking data to 10&#43; external advertisers and 2MB of data transfer was required to display a comments section with 5 comments! That was my breaking point and so I promptly removed Disqus from my blog and deleted my account as well.
 
 ">
-  <meta name="twitter:description" content="What is Disqus?
+  <meta name="twitter:description" content="Update : I launched Hosted Comments!
 
-It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.
-
-Some noteworthy features of Disqus:
-
-
-If you have a Disqus account, …">
+I&rsquo;ll start with a little back story : I started this blog around 9 months ago and managed to build up traffic to a few hundred hits every day. It might not …">
   <meta name="author" content="Plogging Dev"/>
   <meta property="og:image" content="https://www.ploggingdev.com/img/avatar.png" />
   <meta name="twitter:image" content="https://www.ploggingdev.com/img/avatar.png" />
@@ -192,14 +155,20 @@ ga('send', 'pageview');
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p><strong>What is Disqus?</strong></p>
+        <p><strong>Update</strong> : I launched <a href="https://www.hostedcomments.com/">Hosted Comments</a>!</p>
 
-<p>It&rsquo;s a platform which lets you copy paste a javascript snippet into any webpage to add a comments section.</p>
+<p>I&rsquo;ll start with a little back story : I started this blog around 9 months ago and managed to build up traffic to a few hundred hits every day. It might not seem like much, but it was and still is a big deal to me. Readers used to leave comments with suggestions for improvements, questions or just to say that they enjoyed reading a particular post. Comments were powered by Disqus and all was well. One day I received an email notification from Disqus informing me that someone had left a comment on my blog. A pretty routine notification, so I opened the post and scrolled down to the comments section and noticed&hellip;six shady ads with images to accompany them. Without any warning, Disqus enabled ads on my site. Until then I never really bothered with what Disqus was doing in the background, but the ads incident made me curious. I inspected the requests that Disqus was making and it turns out that 100+ http requests, sending tracking data to 10+ external advertisers and 2MB of data transfer was required to display a comments section with 5 comments! That was my breaking point and so I promptly removed Disqus from my blog and deleted my account as well.</p>
 
-<p>Some noteworthy features of Disqus:</p>
+<p></p>
+
+<p>I did not spend time looking for an alternative until a week ago. I missed the engagement with readers, so I started searching for an alternative commenting platform. My search for an alternative turned up either ad supported Disqus clones or open source self hosted options which were hard to work with. The search for an alternative also made me realize that people were frustrated with Disqus and didn&rsquo;t want to take the trouble of self hosting and managing an open source alternative. Some were even ready to pay for an alternative. I sense a gap in the market! So I decided to build a Disqus alternative which will be as easy to use as Disqus but without any ads or tracking scripts.</p>
+
+<p>Great, I decided to build a Disqus alternative with a focus on privacy.</p>
+
+<p><strong>What are some of the important features in Disqus that I will include in my platform?</strong></p>
 
 <ul>
-<li><p>If you have a Disqus account, you can comment on any website that uses Disqus.</p></li>
+<li><p>Networked login : All users who have an account on my website have the ability to comment on any other site that uses my commenting system.</p></li>
 
 <li><p>Email notifications with the ability to reply to a comment directly from your email client.</p></li>
 
@@ -207,35 +176,19 @@ ga('send', 'pageview');
 
 <li><p>Spam filters</p></li>
 
-<li><p>User profiles and ability to follow users</p></li>
+<li><p>User profiles</p></li>
 
 <li><p>Social network login</p></li>
 </ul>
 
-<p></p>
-
-<p><strong>What are some of the problems with Disqus?</strong></p>
+<p><strong>What are some of the problems with Disqus that I will address in my commenting system?</strong></p>
 
 <ul>
-<li><p><em>Privacy</em> : Disqus makes 100 odd requests and sends tracking data to 20 odd domains according to this <a href="http://donw.io/post/github-comments/">blog post</a>.</p></li>
+<li><p><em>Privacy</em> : Disqus makes 100 odd requests and sends tracking data to 20 odd domains according to this <a href="http://donw.io/post/github-comments/">blog post</a>. The plan is to make my comments system fast by doing what a comments sytem is supposed to do : serve comments.</p></li>
 
-<li><p><em>Bloated</em> : As a result of sending tracking data to their advertising partners, page requests that could be completed in 2 http request (one for loading the comment script and another request for retrieving all comments), require 100+ http requests and take between 2 and 10 seconds to load.</p></li>
+<li><p><em>Bloated</em> : As a result of sending tracking data to their advertising partners, page requests that could be completed in 2 http request (one for loading the comment script and another request for retrieving all comments), require 100+ http requests and take between 2 and 10 seconds to load. Since I don&rsquo;t intend to serve ads or monetize user data, this problem will not arise.</p></li>
 
-<li><p><em>Ads</em> : Disqus forces websites on the free plan to display ads, the &ldquo;Mom makes $4000 working from home&rdquo; variety&hellip;and six of those with pictures to accompany them. This was the case when I checked a few months ago, I&rsquo;ve since blocked the domain, so if anything has changed let me know <del>in the comments below</del>.</p></li>
-
-<li><p><em>Not open source</em> : This might not be an issue for most people, put I prefer products with open source code bases.</p></li>
-</ul>
-
-<p><strong>Why are you building a Disqus alternative?</strong></p>
-
-<ul>
-<li><p>The current state of adding hosted comments is either to use ad supported Disqus or an open source self hosted option which doesn&rsquo;t work as well as Disqus for the core use case of comments and requires a separate login for each site. I think there&rsquo;s a happy middleground for a SaaS without ads/tracking scripts, an open source code base and having a Disqus like single login for all sites using it.</p></li>
-
-<li><p>I used to receive comments on my blog posts when I had Disqus enabled, so I need a commenting engine for my blog which does not have the above mentioned issues.</p></li>
-
-<li><p>Since there seems to be a lot of demand for a true Disqus alternative, based on the posts in forums and social media, I think a small portion of those users will be ready to pay for a SaaS.</p></li>
-
-<li><p>Even if I don&rsquo;t manage to turn it into a SaaS, the learning aspect of building out a commenting platform is exciting.</p></li>
+<li><p><em>Ads</em> : Disqus forces websites on the free plan to display ads, the &ldquo;Mom makes $4000 working from home&rdquo; variety&hellip;and six of those with pictures to accompany them. This was the case when I checked a few months ago, I&rsquo;ve since blocked the domain, so if anything has changed let me know <del>in the comments below</del>. Since I will charge website owners to use my commenting platform, my business model does not depend on ad revenue.</p></li>
 </ul>
 
 <p><strong>The user experience</strong></p>
@@ -245,14 +198,16 @@ ga('send', 'pageview');
 <ol>
 <li><p>User signs up for an account.</p></li>
 
-<li><p>Adds a domain and verifies ownership by adding a TXT record in their DNS settings.</p></li>
+<li><p>Adds a domain.</p></li>
 
-<li><p>Adds a javascript snippet to website to enable the comments section.</p></li>
+<li><p>Adds the generated javascript snippet to their website to enable the comments section.</p></li>
 
-<li><p>Pays $xx/month to subscribe to a plan.</p></li>
+<li><p>Pays $xx/month to subscribe to a plan after the free trial period.</p></li>
 </ol>
 
 <p><strong>Pricing</strong></p>
+
+<p>(Update : This is something that will change frequently in the initial days, visit <a href="https://www.hostedcomments.com/">Hosted Comments</a> for updated pricing.)</p>
 
 <ol>
 <li><p>$20/month/domain upto 100,000 page views</p></li>
@@ -265,7 +220,7 @@ ga('send', 'pageview');
 <p><strong>(Technical) questions/challenges</strong></p>
 
 <ol>
-<li><p>I recently built a site with a comments section (<a href="https://www.ploghub.com/">a blogging platform for developers</a>) and realized that representing the hierarchical nature of comments, traversing the comments tree and querying whether a user voted on a comment can be extremely expensive in terms of the number of database hits. I came across a neat django package <a href="http://django-mptt.github.io/django-mptt/">django-mptt</a> to represent the hierarchical relationship of comments using a Modified Preorder Traversal Tree. Long story short, most queries can be performed with 2 database queries to gather all the information required to display the comments section.</p></li>
+<li><p>I recently built a site with a comments section (<a href="https://github.com/ploggingdev/ploghub">a blogging platform for developers</a>) and realized that representing the hierarchical nature of comments, traversing the comments tree and querying whether a user voted on a comment can be extremely expensive in terms of the number of database hits. I came across a neat django package <a href="http://django-mptt.github.io/django-mptt/">django-mptt</a> to represent the hierarchical relationship of comments using a Modified Preorder Traversal Tree. Long story short, most queries can be performed with 2 database queries to gather all the information required to display the comments section.</p></li>
 
 <li><p>Loading comments from a third party domain (cross origin) introduces certain challenges. The ways to retrieve data from a domain other than the website itself are :</p>
 
@@ -287,10 +242,10 @@ ga('send', 'pageview');
 <ul>
 <li><p>Comments will be written in markdown.</p></li>
 
-<li><p>No social login options will be available.</p></li>
+<li><p>No social login options will be available. <strong>Update</strong> : I will include social media login since it&rsquo;s the most requested feature. I will include a non-tracking version of the social media login buttons.</p></li>
 </ul>
 
-<p>Since I already built a comments section with voting in my previous project, the main challenge is going to be to figure out how to securely make cross origin requests and take measures to prevent the host website from having access to the cookies.</p>
+<p>Since I already built a comments section with voting in my previous project, the main challenge is going to be to get to feature parity with Disqus and build the tooling to turn this into a SaaS.</p>
 
 <p>I don&rsquo;t have an email list, but if you want to keep up with the developments regarding this project, you can follow me on <a href="https://twitter.com/ploggingdev">twitter</a>. I would love to hear your thoughts on this project either from a technical perspective or as a potential customer.</p>
       </article>

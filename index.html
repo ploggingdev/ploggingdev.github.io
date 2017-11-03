@@ -138,6 +138,29 @@ ga('send', 'pageview');
           
           
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/">
+                <h2 class="post-title">Building a chat room using Django Channels</h2>
+                
+              </a>
+
+              <span class="post-meta">
+  Posted on November 1, 2017
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.
+                  <a href="https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+            </article>
+          
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/">
                 <h2 class="post-title">Online accounts need a clearly defined lifecycle</h2>
                 
@@ -233,34 +256,6 @@ ga('send', 'pageview');
                 
                   A few days ago I came across a talk by Maciej Ceglowski titled Notes from an Emergency. If you have not watched the talk, stop reading this and go watch it. In the talk, he makes a suggestion that the Government should regulate ads to target content instead of users. There was a discussion about the talk on Hacker News where Maciej said that he feels it&rsquo;s a regulatory argument and not a business argument, in response to a comment that implied ads targeting content will be worse than ads that target users.
                   <a href="https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/" class="post-read-more">[Read More]</a>
-                
-              </div>
-
-              
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/">
-                <h2 class="post-title">concurrent.futures in Python 3</h2>
-                
-              </a>
-
-              <span class="post-meta">
-  Posted on January 12, 2017
-  
-</span>
-
-
-              <div class="post-entry">
-                
-                  <p>The concurrent.futures module provides a common high level interface for asynchronously executing callables using pools of threads or processes.</p>
-
-<p>The <code>concurrent.futures.Executor</code> is a class to execute function calls asynchronously. The important methods are <code>submit(function, args)</code>, which calls the specified function passing in the given arguments, and <code>map(function, iterables)</code> which calls the specified function asynchronously passing in each iterable as an argument for a separate function call. This should not be used directly, but is used through its subclasses <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>.</p>
-
-<p>Let&rsquo;s jump into an example. The purpose of the following program is to find the sum of all prime numbers until the given number. There are two functions to demonstrate how to use a pool of threads and how to use a pool of processes. <code>sum_primes_thread(nums)</code> uses threads and <code>sum_primes_process(nums)</code> uses processes. Notice that the only difference between the two functions is that one uses <code>ThreadPoolExecutor</code> while the other uses <code>ProcessPoolExecutor</code>.</p>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
 

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/</loc>
+    <lastmod>2017-11-01T05:38:38-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/</loc>
     <lastmod>2017-10-06T03:44:39-08:00</lastmod>
   </url>
@@ -169,13 +174,13 @@
   
   <url>
     <loc>https://www.ploggingdev.com/</loc>
-    <lastmod>2017-10-06T03:44:39-08:00</lastmod>
+    <lastmod>2017-11-01T05:38:38-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.ploggingdev.com/post/</loc>
-    <lastmod>2017-10-06T03:44:39-08:00</lastmod>
+    <lastmod>2017-11-01T05:38:38-08:00</lastmod>
     <priority>0</priority>
   </url>
   

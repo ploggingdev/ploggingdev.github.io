@@ -123,6 +123,33 @@ ga('send', 'pageview');
         <div class="posts-list">
           
             <article class="post-preview">
+              <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/">
+                <h2 class="post-title">concurrent.futures in Python 3</h2>
+    
+                
+              </a>
+    
+              <p class="post-meta">
+                Posted on January 12, 2017
+              </p>
+              <div class="post-entry">
+                
+                  <p>The concurrent.futures module provides a common high level interface for asynchronously executing callables using pools of threads or processes.</p>
+
+<p>The <code>concurrent.futures.Executor</code> is a class to execute function calls asynchronously. The important methods are <code>submit(function, args)</code>, which calls the specified function passing in the given arguments, and <code>map(function, iterables)</code> which calls the specified function asynchronously passing in each iterable as an argument for a separate function call. This should not be used directly, but is used through its subclasses <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>.</p>
+
+<p>Let&rsquo;s jump into an example. The purpose of the following program is to find the sum of all prime numbers until the given number. There are two functions to demonstrate how to use a pool of threads and how to use a pool of processes. <code>sum_primes_thread(nums)</code> uses threads and <code>sum_primes_process(nums)</code> uses processes. Notice that the only difference between the two functions is that one uses <code>ThreadPoolExecutor</code> while the other uses <code>ProcessPoolExecutor</code>.</p>
+
+<p></p>
+                  <a href="https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/" class="post-read-more">[Read More]</a>
+                
+              </div>
+    
+              
+    
+            </article>
+          
+            <article class="post-preview">
               <a href="https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/">
                 <h2 class="post-title">Multiprocessing and multithreading in Python 3</h2>
     
@@ -282,43 +309,6 @@ Decoration after function call
 
 <p></p>
                   <a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" class="post-read-more">[Read More]</a>
-                
-              </div>
-    
-              
-    
-            </article>
-          
-            <article class="post-preview">
-              <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/">
-                <h2 class="post-title">Performance measurement in Python 3</h2>
-    
-                
-              </a>
-    
-              <p class="post-meta">
-                Posted on December 3, 2016
-              </p>
-              <div class="post-entry">
-                
-                  <p>Performance measurement is the process of collecting and understanding information regarding the performance of some code.</p>
-
-<p>In this blog I will cover the basics of the following modules in Python:</p>
-
-<ul>
-<li><p><code>timeit</code></p></li>
-
-<li><p><code>cProfile</code></p></li>
-
-<li><p><code>pstats</code></p></li>
-
-<li><p><code>memory_profiler</code></p></li>
-
-<li><p><code>line_profiler</code></p></li>
-</ul>
-
-<p></p>
-                  <a href="https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/" class="post-read-more">[Read More]</a>
                 
               </div>
     

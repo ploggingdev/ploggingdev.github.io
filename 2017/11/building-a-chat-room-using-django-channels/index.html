@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Building a chat room using Django Channels</title>
+  <meta property="og:title" content="Building a chat room using Django Channels" />
+  <meta name="twitter:title" content="Building a chat room using Django Channels" />
+  <meta name="description" content="TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.">
+  <meta property="og:description" content="TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.">
+  <meta name="twitter:description" content="TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+A standard Django application handles http requests using a request-response …">
+  <meta name="author" content="Plogging Dev"/>
+  <meta property="og:image" content="https://www.ploggingdev.com/img/avatar.png" />
+  <meta name="twitter:image" content="https://www.ploggingdev.com/img/avatar.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@ploggingdev" />
+  <meta name="twitter:creator" content="@ploggingdev" />
+  <meta property="og:url" content="https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Plogging Dev" />
+
+  <meta name="generator" content="Hugo 0.30.2" />
+  <link rel="canonical" href="https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/" />
+  <link rel="alternate" href="https://www.ploggingdev.com/index.xml" type="application/rss+xml" title="Plogging Dev">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://www.ploggingdev.com/css/highlight.min.css" />
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Building a chat room using Django Channels">
+
+  
+  <meta name="keywords" content="django, chat room, django channels">
+  
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.ploggingdev.com/">Plogging Dev</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Archive" href="/archive/">Archive</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Plogging Dev" href="https://www.ploggingdev.com/">
+            <img class="avatar-img" src="https://www.ploggingdev.com/img/avatar.png" alt="Plogging Dev" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>Building a chat room using Django Channels</h1>
+                
+                
+                  <span class="post-meta">
+  Posted on November 1, 2017
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><strong>TL;DR</strong> : Demo is <a href="https://chat.ploggingdev.com/">here</a> and the code is on <a href="https://github.com/ploggingdev/djangochat">Github</a>. In this post I explain how you can build a chat room using <a href="https://channels.readthedocs.io/en/stable/index.html">Django Channels</a>.</p>
+
+<p>A standard Django application handles <code>http</code> requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently. New standards such as websockets and HTTP2 address some of these shortcomings. WebSockets is a recent communications protocol which provides full-duplex communication channels over a single TCP connection and is well suited for realtime applications. Opening and maintaining a websocket connection with a server is very cheap in terms of memory and cpu resources required. To give you some real world numbers, Chris McCord was able to hold <a href="http://phoenixframework.org/blog/the-road-to-2-million-websocket-connections">2 million open websocket connections</a> on a single server with 40 cores and 128 GB of RAM. Though he used the Phoenix framework as the backend of choice instead of Django channels, the important takeaway is that websockets are extremely lightweight full-duplex communication channels.</p>
+
+<p>Channels extends Django and allows us to handle websocket connections in a way that&rsquo;s very similar to normal views. So, what is a channel? A channel is an ordered, first-in first-out queue with message expiry and at-most-once delivery to only one listener at a time. In simpler terms, a channel is a task queue which accepts messages from producers and delivers them to consumers.</p>
+
+<p>So how does Channels extend Django? It seperates Django into two processes :</p>
+
+<ul>
+<li><p>an interface server which handles the incoming HTTP and Websocket connection, eg- Daphne</p></li>
+
+<li><p>worker process that runs the views to process the websocket and http requests.</p></li>
+</ul>
+
+<p>They communicate over a protocol called <a href="https://channels.readthedocs.io/en/stable/asgi.html">ASGI</a> which is routed over Redis. What&rsquo;s interesting is that since the interface server and worker process are decoupled in Channels, it&rsquo;s possible to add and remove worker processes without closing websocket connections.</p>
+
+<p>The following representation gives you an idea of how Django serves requests the traditional way vs using Channels:</p>
+
+<p><strong>Django handling only HTTP</strong></p>
+
+<p>Browser &lt;&mdash;&mdash;&ndash;&gt; Web server &lt;&mdash;&mdash;&ndash;&gt; Django View function</p>
+
+<p><strong>Django with Channels</strong></p>
+
+<p>Browser &lt;&mdash;&mdash;&ndash;&gt; Interface server &lt;&mdash;&mdash;&ndash;&gt; Channel layer  &lt;&mdash;&mdash;&ndash;&gt; Django View function + Websocket Consumer</p>
+
+<p><em>Web server</em> - handles http connections.</p>
+
+<p><em>Interface server</em> - handles http and websocket connections.</p>
+
+<p><em>Channel layer</em> - transports http and websocket messages and delivers them to worker processes that run normal Django views as well as Channels specific consumer code.</p>
+
+<p>Note that this is a simplified representation. In production deployments it&rsquo;s likely to be different. Eg- Daphne is usually not exposed to the outside world directly and instead sits behind an ngnix server. As another example, it&rsquo;s possible to run a WSGI server alongside websocket specific workers to serve normal Django http requests.</p>
+
+<p>I will be explaining the code that is specific to running a chat room. I won&rsquo;t be covering topics as setting up a Django project from scratch, setting up an auth system etc.</p>
+
+<p>Channels installation instructions:</p>
+
+<ol>
+<li><p><code>pip install channels</code></p></li>
+
+<li><p>Add <code>channels</code> to <code>INSTALLED_APPS</code> setting</p></li>
+
+<li><p>Install redis using <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04">this guide</a> which is for Ubuntu 16.04</p></li>
+
+<li><p>Use redis as the channel by following <a href="https://channels.readthedocs.io/en/latest/backends.html#redis">this guide</a></p></li>
+</ol>
+
+<p>The chat room will be minimal :</p>
+
+<ul>
+<li><p>a single chat room where users can&hellip;chat</p></li>
+
+<li><p>a column to show the logged in users that are currently online as well as the number of onlookers i.e people who are watching the chat but are not logged in</p></li>
+</ul>
+
+<p>An often overlooked aspect of chat room demos is that the count of how many users are online is incorrect. To give you an example, check <a href="http://www.hnchat.com/">HN Chat</a> which shows that 68 users are online (as of this writing) even though that&rsquo;s not true. This happens because there are a varienty of events that cause clients to disconnect websocket connections without notifying the server of the same. The server has no easy way of updating the number of users connected to the chat room without a periodic pruning process. A Django package that helps out in this situation is <a href="https://django-channels-presence.readthedocs.io/en/latest/">django-channels-presence</a>. It allows us to prune stale websocket connections and keep an accurate count of the number of users currently connected to the chat room. How does this pruning work? In order to keep track of which websockets are actually still connected, we must regularly update the <code>last_seen</code> timestamp for all present connections, and periodically remove connections if they haven’t been seen in a while.</p>
+
+<p>So let&rsquo;s jump in to the code. We are going to have a single hardcoded room called <code>all</code> so there&rsquo;s no need to create a separate <code>Room</code> model. So how do we represent the actual chat message that users send? Take a look at the following model :</p>
+
+<pre><code class="language-python">class ChatMessage(models.Model):
+    &quot;&quot;&quot;
+    Model to represent a chat message
+    &quot;&quot;&quot;
+
+    #Fields
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField(max_length=3000)
+    message_html = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        &quot;&quot;&quot;
+        String to represent the message
+        &quot;&quot;&quot;
+
+        return self.message
+</code></pre>
+
+<p>The fields are straightforward:</p>
+
+<ul>
+<li><p><code>user</code> represents the user object</p></li>
+
+<li><p><code>message</code> is the raw text that the user types in to the chat box</p></li>
+
+<li><p><code>message_html</code> is the html rendered version of <code>message</code>. The html version will be escaped and only link tags will be allowed in the chat room. All other tags such as <code>&lt;script&gt;&lt;/script&gt;</code> won&rsquo;t work. The main reason to prerender the html version of each chat message is to save on processing resources by avoiding rendering the same html <em>everytime</em> a user requests it.</p></li>
+</ul>
+
+<p>Let&rsquo;s move on to designing the homepage view. This view is the chat room, so we need to retrieve the chat messages from the database and display them using a simple html template.</p>
+
+<pre><code>class IndexView(generic.View):
+
+    def get(self, request):
+        # We want to show the last 10 messages, ordered most-recent-last
+        chat_queryset = ChatMessage.objects.order_by(&quot;-created&quot;)[:10]
+        chat_message_count = len(chat_queryset)
+        if chat_message_count &gt; 0:
+            first_message_id = chat_queryset[len(chat_queryset)-1].id
+        else:
+            first_message_id = -1
+        previous_id = -1
+        if first_message_id != -1:
+            try:
+                previous_id = ChatMessage.objects.filter(pk__lt=first_message_id).order_by(&quot;-pk&quot;)[:1][0].id
+            except IndexError:
+                previous_id = -1
+        chat_messages = reversed(chat_queryset)
+        
+        return render(request, &quot;chatdemo/chatroom.html&quot;, {
+            'chat_messages': chat_messages,
+            'first_message_id' : previous_id,
+        })
+</code></pre>
+
+<p>The IndexView retrieves the last 10 messages, ordered most-recent-last i.e normal chat oder and sets the following variables :</p>
+
+<ul>
+<li><code>first_message</code> - The id of the first message in the chat scrollback. Eg- let&rsquo;s say our database contains the messages with id 4,3,2,1. We send 4,3,2 to be rendered in the chat window. When I hit &ldquo;Load previous messages&rdquo; from the chat room, I want all messages starting from the id that&rsquo;s just before what&rsquo;s currently in the chat room. In this case it will be 1.</li>
+</ul>
+
+<p>The chat room is rendered using the <a href="https://github.com/ploggingdev/djangochat/blob/master/chatdemo/templates/chatdemo/chatroom.html">chatroom.html</a> template.</p>
+
+<p>Now that we have a chat room page that displays the ten most recent messages, we can start designing the websocket endpoints that allow users to send a chat message as well as load previous chat messages. The file structure to enable this is simple : we define the routes in <code>routing.py</code> which is the Channels version of <code>urls.py</code>, and we define the consumers (views) in <code>consumers.py</code> which is the Channels version of <code>views.py</code>.</p>
+
+<p>Let&rsquo;s define 2 endpoints in <code>routing.py</code>:</p>
+
+<ul>
+<li><p><code>/ws/</code> will be the endpoint to which chat messages will be sent</p></li>
+
+<li><p><code>/loadhistory/</code> will be the endpoint which handles the requests for previous chat messages</p></li>
+</ul>
+
+<p>Each endpoint has 3 events :</p>
+
+<ul>
+<li><p><code>websocket.connect</code> is called when a new websocket connection is opened</p></li>
+
+<li><p><code>websocket.receive</code> handles the actual message which is either a chat message from the user or a request for chat history in this project.</p></li>
+
+<li><p><code>websocket.disconnect</code> is called when the client disconnects from the websocket connection</p></li>
+</ul>
+
+<p>Here&rsquo;s the code for <code>routing.py</code> where we define the mentioned websocket endpoints:</p>
+
+<pre><code>from channels.routing import route
+from channels import include
+from chatdemo.consumers import chat_connect, chat_disconnect, chat_receive, loadhistory_connect, loadhistory_disconnect, loadhistory_receive
+
+chat_routing = [
+    route(&quot;websocket.connect&quot;, chat_connect),
+    route(&quot;websocket.receive&quot;, chat_receive),
+    route(&quot;websocket.disconnect&quot;, chat_disconnect)
+]
+
+loadhistory_routing = [
+    route(&quot;websocket.connect&quot;, loadhistory_connect),
+    route(&quot;websocket.receive&quot;, loadhistory_receive),
+    route(&quot;websocket.disconnect&quot;, loadhistory_disconnect)
+]
+
+channel_routing = [
+    include(chat_routing, path=r&quot;^/ws/$&quot;),
+    include(loadhistory_routing, path=r&quot;^/loadhistory/$&quot;),
+]
+</code></pre>
+
+<p>Moving on to defining the views that process the websocket requests in the <code>consumers.py</code> file, we start by understanding how chat messages are handled by Django channels.</p>
+
+<p>When a user establishes a websocket connection to the <code>/ws/</code> endpoint, here&rsquo;s what happens :</p>
+
+<ul>
+<li><p>The <code>reply_channel</code> of the connection is added to the <code>all</code> group. Why is this required? All users will be part of the same group which allows us to send chat messages in a one-to-many fashion. Eg- when <em>User A</em> sends a message, all users connected in the <code>all</code> group will receive the message.</p></li>
+
+<li><p>The connection is also added to the <code>all</code> room. The <code>Room</code> here referes to a model in the <code>channels_presence</code> package. This is used to keep track of the number of users connected to the chat room.</p></li>
+
+<li><p>Finally the following response is sent to the user to confirm that the connection has been accepted : <code>{&quot;accept&quot;: True}</code>.</p></li>
+</ul>
+
+<p>Here&rsquo;s the code that we just discussed :</p>
+
+<pre><code>@channel_session_user_from_http
+def chat_connect(message):
+    Group(&quot;all&quot;).add(message.reply_channel)
+    Room.objects.add(&quot;all&quot;, message.reply_channel.name, message.user)
+    message.reply_channel.send({&quot;accept&quot;: True})
+</code></pre>
+
+<p>Let&rsquo;s move on to the code that handles the chat messages. Here&rsquo;s the outline of what happens inside the function:</p>
+
+<ul>
+<li><p>Receive and decode the json message</p></li>
+
+<li><p>Confirm that the json contains a <code>message</code> key which holds the content of the message</p></li>
+
+<li><p>Confirm that the user is authenticated since it does not make sense to accept chat messages from unathenticated users</p></li>
+
+<li><p>Escape the message using the <code>escape</code> function from <code>django.utils.html</code></p></li>
+
+<li><p>Check if the message contains any valid urls and convert the urls to links. Eg- <code>https://google.com</code> becomes <code>&lt;a href=&quot;https://google.com&quot;&gt;https://google.com&lt;/a&gt;</code></p></li>
+
+<li><p>Finally return a json containing the username and html message.</p></li>
+</ul>
+
+<p>Here&rsquo;s the implementation of the above flow</p>
+
+<pre><code>@touch_presence
+@channel_session_user
+def chat_receive(message):
+    data = json.loads(message['text'])
+    if not data['message']:
+        return
+    if not message.user.is_authenticated:
+        return
+    current_message = escape(data['message'])
+    urlRegex = re.compile(
+            u'(?isu)(\\b(?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)[^\\s()&lt;'
+            u'&gt;\\[\\]]+[^\\s`!()\\[\\]{};:\'&quot;.,&lt;&gt;?\xab\xbb\u201c\u201d\u2018\u2019])'
+        )
+    
+    processed_urls = list()
+    for obj in urlRegex.finditer(current_message):
+        old_url = obj.group(0)
+        if old_url in processed_urls:
+            continue
+        processed_urls.append(old_url)
+        new_url = old_url
+        if not old_url.startswith(('http://', 'https://')):
+            new_url = 'http://' + new_url
+        new_url = '&lt;a href=&quot;' + new_url + '&quot;&gt;' + new_url + &quot;&lt;/a&gt;&quot;
+        current_message = current_message.replace(old_url, new_url)
+    m = ChatMessage(user=message.user, message=data['message'], message_html=current_message)
+    m.save()
+
+    my_dict = {'user' : m.user.username, 'message' : current_message}
+    Group(&quot;all&quot;).send({'text': json.dumps(my_dict)})
+</code></pre>
+
+<p>The <code>@touch_presence</code> decorator is used to note the periodic beat sent from the users&rsquo; browser which ensures that users are not removed from the list of active users connected to the chat room.</p>
+
+<p>Finally, the <code>chat_disconnect</code> function just removes the user from the <code>all</code> group <em>and</em> room.</p>
+
+<pre><code>@channel_session_user
+def chat_disconnect(message):
+    Group(&quot;all&quot;).discard(message.reply_channel)
+    Room.objects.remove(&quot;all&quot;, message.reply_channel.name)
+</code></pre>
+
+<p>Let&rsquo;s look at the function that sends the latest list of users and the count of anonymous users. This function is called everytime a user connects or disconnects from the chat room.</p>
+
+<pre><code>@receiver(presence_changed)
+def broadcast_presence(sender, room, **kwargs):
+    # Broadcast the new list of present users to the room.
+    Group(room.channel_name).send({
+        'text': json.dumps({
+            'type': 'presence',
+            'payload': {
+                'channel_name': room.channel_name,
+                'members': [user.username for user in room.get_users()],
+                'lurkers': int(room.get_anonymous_count()),
+            }
+        })
+    })
+</code></pre>
+
+<p>The json data returned is :</p>
+
+<ul>
+<li><p><code>members</code> : the list of logged in users connected to the chat room</p></li>
+
+<li><p><code>lurkers</code> : an integer count representing how many anonymous users are connected to the chat</p></li>
+</ul>
+
+<p>Moving on to the second websocket endpoint, <code>/loadhistory/</code>, the <code>loadhistory_connect(message)</code> function just accepts the websocket connect by sends the standard response to indicate that the connection has been accepted : <code>{&quot;accept&quot;: True}</code>. On disonnecting the connection, we don&rsquo;t need to do anything.</p>
+
+<pre><code>@channel_session_user_from_http
+def loadhistory_connect(message):
+    message.reply_channel.send({&quot;accept&quot;: True})
+
+@channel_session_user
+def loadhistory_disconnect(message):
+    pass
+</code></pre>
+
+<p>Finally, here&rsquo;s how the <code>loadhistory_receive</code> returns previous messages:</p>
+
+<ul>
+<li><p>It decodes the json and extracts the <code>last_message_id</code> which represents the chat message id before the last message that has been rendered in the chat room for the current user.</p></li>
+
+<li><p>It makes a query to the database to retrieve 10 messages (if they exist) having an id less than or equal to <code>last_message_id</code> and returns the chat messages in json format.</p></li>
+</ul>
+
+<p>Here&rsquo;s the code:</p>
+
+<pre><code>@channel_session_user
+def loadhistory_receive(message):
+    data = json.loads(message['text'])
+    chat_queryset = ChatMessage.objects.filter(id__lte=data['last_message_id']).order_by(&quot;-created&quot;)[:10]
+    chat_message_count = len(chat_queryset)
+    if chat_message_count &gt; 0:
+        first_message_id = chat_queryset[len(chat_queryset)-1].id
+    else:
+        first_message_id = -1
+    previous_id = -1
+    if first_message_id != -1:
+        try:
+            previous_id = ChatMessage.objects.filter(pk__lt=first_message_id).order_by(&quot;-pk&quot;)[:1][0].id
+        except IndexError:
+            previous_id = -1
+
+    chat_messages = reversed(chat_queryset)
+    cleaned_chat_messages = list()
+    for item in chat_messages:
+        current_message = item.message_html
+        cleaned_item = {'user' : item.user.username, 'message' : current_message }
+        cleaned_chat_messages.append(cleaned_item)
+
+    my_dict = { 'messages' : cleaned_chat_messages, 'previous_id' : previous_id }
+    message.reply_channel.send({'text': json.dumps(my_dict)})
+</code></pre>
+
+<p>We now have the websocket endpoints, so let&rsquo;s move on to the the client side javascript which calls these endpoints.</p>
+
+<p>Before I explain the client side javascript that connects to the websocket endpoints, a quick note about the usage of <a href="https://github.com/joewalnes/reconnecting-websocket">Reconnecting websockets</a> : it&rsquo;s a javascript library that automatically reconnects if the connection is dropped and is used because by default, websockets do not automatically reconnect if the connection is closed.</p>
+
+<p>There are 2 clientside javascript files :</p>
+
+<ul>
+<li><p><a href="https://github.com/ploggingdev/djangochat/blob/master/chatdemo/static/chatdemo/realtime.js">realtime.js</a> handles the chat chat messages</p></li>
+
+<li><p><a href="https://github.com/ploggingdev/djangochat/blob/master/chatdemo/static/chatdemo/loadhistory.js">loadhistory.js</a> handles loading the previous chat messages</p></li>
+</ul>
+
+<p>I&rsquo;ll give you a high level overview of what happens inside the <code>realtime.js</code> file:</p>
+
+<ul>
+<li><p>Establish a <code>ReconnectingWebSocket</code> connection to the <code>/ws/</code> endpoint. Like <code>http</code> and <code>https</code>, websocket connections can be either <code>ws</code> or <code>wss</code> i.e unencrypted or encrypted. The code uses <code>wss</code> if the site is loaded over <code>https</code>, otherwise it uses the unencrypted <code>ws</code> mode.</p></li>
+
+<li><p>Send a periodic heartbeat to the <code>/ws</code> endpoint every 10 seconds to let the server know that the connection is active</p></li>
+
+<li><p>Convert the chat message text that the user submits into json format and send it to the server</p></li>
+
+<li><p>There are two types of server responses that this file handles:</p>
+
+<ol>
+<li><p>When the server sends a <code>presence</code> payload containing an updated list of active users along with a lurkers count. The javascript uses this data to update the users list and lurkers count.</p></li>
+
+<li><p>When a new message is posted, the server sends the username of the user who sent the message along with the rendered html. The javascript uses this data to update the user&rsquo;s chat room.</p></li>
+</ol></li>
+</ul>
+
+<p>Here&rsquo;s the javascript implementation of what we just discussed:</p>
+
+<pre><code>$(function() {
+    // When we're using HTTPS, use WSS too.
+    $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
+    var to_focus = $(&quot;#message&quot;);
+    var ws_scheme = window.location.protocol == &quot;https:&quot; ? &quot;wss&quot; : &quot;ws&quot;;
+    var chatsock = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + &quot;/ws/&quot;);
+
+    chatsock.onmessage = function(message) {
+
+        if($(&quot;#no_messages&quot;).length){
+            $(&quot;#no_messages&quot;).remove();
+        }
+
+        var data = JSON.parse(message.data);
+        if(data.type == &quot;presence&quot;){
+            //update lurkers count
+            lurkers = data.payload.lurkers;
+            lurkers_ele = document.getElementById(&quot;lurkers-count&quot;);
+            lurkers_ele.innerText = lurkers;
+
+            //update logged in users list
+            user_list = data.payload.members;
+            document.getElementById(&quot;loggedin-users-count&quot;).innerText = user_list.length;
+            user_list_obj = document.getElementById(&quot;user-list&quot;);
+            user_list_obj.innerText = &quot;&quot;;
+            
+            //alert(user_list);
+            for(var i = 0; i &lt; user_list.length; i++ ){
+                var user_ele = document.createElement('li');
+                user_ele.setAttribute('class', 'list-group-item');
+                user_ele.innerText = user_list[i];
+                user_list_obj.append(user_ele);
+            }
+
+            return;
+        }
+        var chat = $(&quot;#chat&quot;)
+        var ele = $('&lt;li class=&quot;list-group-item&quot;&gt;&lt;/li&gt;')
+        
+        ele.append(
+            '&lt;strong&gt;'+data.user+'&lt;/strong&gt; : ')
+        
+        ele.append(
+            data.message)
+        
+        chat.append(ele)
+        $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
+    };
+
+    $(&quot;#chatform&quot;).on(&quot;submit&quot;, function(event) {
+        var message = {
+            message: $('#message').val()
+        }
+        chatsock.send(JSON.stringify(message));
+        $(&quot;#message&quot;).val('').focus();
+        return false;
+    });
+
+    setInterval(function() {
+    chatsock.send(JSON.stringify(&quot;heartbeat&quot;));
+    }, 10000);
+});
+</code></pre>
+
+<p>The second javascript file handles the loading of previous chat messages. It works as follows:</p>
+
+<ul>
+<li><p>When the user clicks on the &ldquo;Load old messages&rdquo; button, the javascript sends the <code>last_message_id</code> variable to the <code>/loadhistory</code> endpoint.</p></li>
+
+<li><p>When the server responds with the previous messages, the javascript updates the client side chat room with the historical chat messages. If the server indicates that there are no more messages in the scrollback, the javascript removes the &ldquo;Load old messages&rdquo; button.</p></li>
+</ul>
+
+<p>Here is the <code>loadhistory.js</code> code:</p>
+
+<pre><code>$(function() {
+    // When we're using HTTPS, use WSS too.
+    var ws_scheme = window.location.protocol == &quot;https:&quot; ? &quot;wss&quot; : &quot;ws&quot;;
+
+    var loadhistorysock = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + &quot;/loadhistory/&quot;);
+
+    loadhistorysock.onmessage = function(message) {
+
+        var data = JSON.parse(message.data);
+
+        new_messages = data.messages
+
+        last_id = data.previous_id
+        
+        if(last_id == -1){
+            $(&quot;#load_old_messages&quot;).remove();
+            $(&quot;#last_message_id&quot;).text(last_id)
+            if(new_messages.length == 0){
+                return;
+            }
+        }
+        else{
+            $(&quot;#last_message_id&quot;).text(last_id)
+        }
+
+        var chat = $(&quot;#chat&quot;)
+
+        for(var i=new_messages.length - 1; i&gt;=0; i--){
+            var ele = $('&lt;li class=&quot;list-group-item&quot;&gt;&lt;/li&gt;')
+            
+            ele.append(
+                '&lt;strong&gt;'+new_messages[i]['user']+'&lt;/strong&gt; : '
+                )
+            
+            ele.append(
+                new_messages[i]['message'])
+            
+            chat.prepend(ele)
+        }
+
+    };
+
+    $(&quot;#load_old_messages&quot;).on(&quot;click&quot;, function(event) {
+        var message = {
+            last_message_id: $('#last_message_id').text()
+        }
+        loadhistorysock.send(JSON.stringify(message));
+        return false;
+    });
+});
+</code></pre>
+
+<p>We talked about pruning stale websocket connections earlier, but how do we implement the code? We use a <code>celery</code> task that runs every 10 seconds and prunes the stale websocket connections.</p>
+
+<p>The code to prune the websocket connections is very simple:</p>
+
+<pre><code>def prune():
+    from channels_presence.models import Room
+    Room.objects.prune_presences()
+</code></pre>
+
+<p>The <code>django-channels-presence</code> package makes this task easy. If you want to view the full code in the <code>celery.py</code> file, link is <a href="https://github.com/ploggingdev/djangochat/blob/master/chatdemo/celery.py">here</a>. If you are not familiar with celery, refer to the official <a href="http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html">documentation</a>.</p>
+
+<p>That&rsquo;s it! We went over the process of building a chat room using Django Channels. You can see the code for this project on <a href="https://github.com/ploggingdev/djangochat">Github</a> which has instructions to setup and run this project on your local machine.</p>
+
+<p>If you have any questions, comments or suggestions to improve this guide let me know in the comments section below (which I built as a Disqus alternative). You can contact me by email or Twitter and the links to them are in the footer.</p>
+
+<p>Here is a screenshot of the chat room for future reference. The demo page will be taken down a few days after this post is published.</p>
+
+<p><img src="/images/django_chat.png" alt="Chat room demo" /></p>
+
+<p><strong>References</strong>:</p>
+
+<ul>
+<li><p><a href="https://channels.readthedocs.io/en/stable/index.html">Django Channels docs</a></p></li>
+
+<li><p><a href="https://django-channels-presence.readthedocs.io/en/latest/">django-channels-presence docs</a></p></li>
+
+<li><p><a href="http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html">Celery periodic tasks</a></p></li>
+
+<li><p><a href="https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django">Heroku blog post by Jacob Kaplan Moss</a></p></li>
+</ul>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/" data-toggle="tooltip" data-placement="top" title="Online accounts need a clearly defined lifecycle">&larr; Previous Post</a>
+          </li>
+        
+        
+      </ul>
+
+      </br>
+</br>
+<div id="hosted_comments">
+</div>
+<script src="https://www.hostedcomments.com/static/js/iframeResizer.min.js">
+</script>
+<script>
+ var hc_config = function () {
+            page_url = window.location.href;
+            website_identifier = 'admin_PloggingDev';
+            };
+
+        (function() {  
+            var d = document, s = d.createElement('script');
+            s.src = 'https://www.hostedcomments.com/static/js/embed.js';
+            (d.head || d.body).appendChild(s);
+        })();
+</script>
+<noscript>
+ Please enable javascript to view the comments powered by
+ <a href="https://www.hostedcomments.com">
+  Hosted Comments
+ </a>
+ .
+</noscript>
+
+            
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:ploggingdev@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/ploggingdev" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/ploggingdev" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          Plogging Dev
+          &nbsp;&bull;&nbsp;
+          2017
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://www.ploggingdev.com/">Plogging Dev</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.30.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://www.ploggingdev.com/js/main.js"></script>
+<script src="https://www.ploggingdev.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+  </body>
+</html>
+

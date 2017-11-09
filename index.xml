@@ -19,7 +19,7 @@
       <pubDate>Wed, 01 Nov 2017 05:38:38 -0800</pubDate>
       <author>ploggingdev@gmail.com (Plogging Dev)</author>
       <guid>https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/</guid>
-      <description>TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+      <description>TL;DR : Code is on Github. In this post I explain how you can build a chat room using Django Channels.
 A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&amp;rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&amp;rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.</description>
     </item>
     

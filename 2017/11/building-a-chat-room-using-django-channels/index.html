@@ -8,12 +8,12 @@
   <title>Building a chat room using Django Channels</title>
   <meta property="og:title" content="Building a chat room using Django Channels" />
   <meta name="twitter:title" content="Building a chat room using Django Channels" />
-  <meta name="description" content="TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+  <meta name="description" content="TL;DR : Code is on Github. In this post I explain how you can build a chat room using Django Channels.
 A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.">
-  <meta property="og:description" content="TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
+  <meta property="og:description" content="TL;DR : Code is on Github. In this post I explain how you can build a chat room using Django Channels.
 A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.">
-  <meta name="twitter:description" content="TL;DR : Demo is here and the code is on Github. In this post I explain how you can build a chat room using Django Channels.
-A standard Django application handles http requests using a request-response …">
+  <meta name="twitter:description" content="TL;DR : Code is on Github. In this post I explain how you can build a chat room using Django Channels.
+A standard Django application handles http requests using a request-response lifecycle. A request …">
   <meta name="author" content="Plogging Dev"/>
   <meta property="og:image" content="https://www.ploggingdev.com/img/avatar.png" />
   <meta name="twitter:image" content="https://www.ploggingdev.com/img/avatar.png" />
@@ -148,7 +148,7 @@ ga('send', 'pageview');
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p><strong>TL;DR</strong> : Demo is <a href="https://chat.ploggingdev.com/">here</a> and the code is on <a href="https://github.com/ploggingdev/djangochat">Github</a>. In this post I explain how you can build a chat room using <a href="https://channels.readthedocs.io/en/stable/index.html">Django Channels</a>.</p>
+        <p><strong>TL;DR</strong> : Code is on <a href="https://github.com/ploggingdev/djangochat">Github</a>. In this post I explain how you can build a chat room using <a href="https://channels.readthedocs.io/en/stable/index.html">Django Channels</a>.</p>
 
 <p>A standard Django application handles <code>http</code> requests using a request-response lifecycle. A request is sent from the user&rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&rsquo;s not great for realtime applications which usually require communicating with the backend server frequently. New standards such as websockets and HTTP2 address some of these shortcomings. WebSockets is a recent communications protocol which provides full-duplex communication channels over a single TCP connection and is well suited for realtime applications. Opening and maintaining a websocket connection with a server is very cheap in terms of memory and cpu resources required. To give you some real world numbers, Chris McCord was able to hold <a href="http://phoenixframework.org/blog/the-road-to-2-million-websocket-connections">2 million open websocket connections</a> on a single server with 40 cores and 128 GB of RAM. Though he used the Phoenix framework as the backend of choice instead of Django channels, the important takeaway is that websockets are extremely lightweight full-duplex communication channels.</p>
 

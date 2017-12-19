@@ -6,8 +6,7 @@
     <description>Recent content in Posts on Plogging Dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>ploggingdev@gmail.com (Plogging Dev)</managingEditor>
-    <webMaster>ploggingdev@gmail.com (Plogging Dev)</webMaster>
+    <copyright>&amp;copy; Plogging Dev - Powered by &lt;a href=&#39;https://gohugo.io/&#39;&gt;Hugo&lt;/a&gt; and &lt;a href=&#39;https://github.com/ribice/kiss&#39;&gt;Kiss&lt;/a&gt;</copyright>
     <lastBuildDate>Wed, 01 Nov 2017 05:38:38 -0800</lastBuildDate>
     
 	<atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
@@ -17,17 +16,20 @@
       <title>Building a chat room using Django Channels</title>
       <link>https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/</link>
       <pubDate>Wed, 01 Nov 2017 05:38:38 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/</guid>
-      <description>TL;DR : Code is on Github. In this post I explain how you can build a chat room using Django Channels.
-A standard Django application handles http requests using a request-response lifecycle. A request is sent from the user&amp;rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&amp;rsquo;s not great for realtime applications which usually require communicating with the backend server frequently.</description>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; : Code is on &lt;a href=&#34;https://github.com/ploggingdev/djangochat&#34;&gt;Github&lt;/a&gt;. In this post I explain how you can build a chat room using &lt;a href=&#34;https://channels.readthedocs.io/en/stable/index.html&#34;&gt;Django Channels&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A standard Django application handles &lt;code&gt;http&lt;/code&gt; requests using a request-response lifecycle. A request is sent from the user&amp;rsquo;s browser, Django calls the relevant view which then returns a response to the user. The request-response lifecycle has certain limitations though : it&amp;rsquo;s not great for realtime applications which usually require communicating with the backend server frequently. New standards such as websockets and HTTP2 address some of these shortcomings. WebSockets is a recent communications protocol which provides full-duplex communication channels over a single TCP connection and is well suited for realtime applications. Opening and maintaining a websocket connection with a server is very cheap in terms of memory and cpu resources required. To give you some real world numbers, Chris McCord was able to hold &lt;a href=&#34;http://phoenixframework.org/blog/the-road-to-2-million-websocket-connections&#34;&gt;2 million open websocket connections&lt;/a&gt; on a single server with 40 cores and 128 GB of RAM. Though he used the Phoenix framework as the backend of choice instead of Django channels, the important takeaway is that websockets are extremely lightweight full-duplex communication channels.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Online accounts need a clearly defined lifecycle</title>
       <link>https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/</link>
       <pubDate>Fri, 06 Oct 2017 03:44:39 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/10/online-accounts-need-a-clearly-defined-lifecycle/</guid>
       <description>&lt;p&gt;As part of a thought experiment, I was thinking about the implications of the internet becoming mainstream in a short time frame. One of the points that came up was the lifecycle of online accounts and their associated data. The lack of a clearly defined lifecycle means that users are at the mercy of each services&amp;rsquo; policies. Some services retain data indefinitely, some services sell user data to third parties for ad targeting and most services don&amp;rsquo;t allow deleting accounts. This is one area where the big tech companies seem reasonable : most allow deleting user accounts and the associated data, but it&amp;rsquo;s unclear what data deletion really means. What happens to the user data stored in the database backups? What happens to the data shared with third parties? Are they instructed to delete data once the upstream user deletes his account?&lt;/p&gt;
 
@@ -38,7 +40,7 @@ A standard Django application handles http requests using a request-response lif
       <title>Building a Disqus alternative Part 2 : The launch</title>
       <link>https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/</link>
       <pubDate>Wed, 27 Sep 2017 03:42:39 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/</guid>
       <description>&lt;p&gt;I finally launched &lt;a href=&#34;https://www.hostedcomments.com/&#34;&gt;Hosted Comments&lt;/a&gt;!&lt;/p&gt;
 
@@ -55,7 +57,7 @@ A standard Django application handles http requests using a request-response lif
       <title>Building a Disqus alternative Part 1 : Research</title>
       <link>https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/</link>
       <pubDate>Tue, 29 Aug 2017 03:42:39 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/</guid>
       <description>&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt; : I launched &lt;a href=&#34;https://www.hostedcomments.com/&#34;&gt;Hosted Comments&lt;/a&gt;!&lt;/p&gt;
 
@@ -68,7 +70,7 @@ A standard Django application handles http requests using a request-response lif
       <title>A model for a privacy oriented ad network that profiles content, not users</title>
       <link>https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/</link>
       <pubDate>Mon, 22 May 2017 23:16:24 -0700</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/</guid>
       <description>A few days ago I came across a talk by Maciej Ceglowski titled Notes from an Emergency. If you have not watched the talk, stop reading this and go watch it. In the talk, he makes a suggestion that the Government should regulate ads to target content instead of users. There was a discussion about the talk on Hacker News where Maciej said that he feels it&amp;rsquo;s a regulatory argument and not a business argument, in response to a comment that implied ads targeting content will be worse than ads that target users.</description>
     </item>
@@ -77,7 +79,7 @@ A standard Django application handles http requests using a request-response lif
       <title>concurrent.futures in Python 3</title>
       <link>https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/</link>
       <pubDate>Thu, 12 Jan 2017 03:14:07 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/01/concurrent.futures-in-python-3/</guid>
       <description>&lt;p&gt;The concurrent.futures module provides a common high level interface for asynchronously executing callables using pools of threads or processes.&lt;/p&gt;
 
@@ -92,7 +94,7 @@ A standard Django application handles http requests using a request-response lif
       <title>Multiprocessing and multithreading in Python 3</title>
       <link>https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/</link>
       <pubDate>Mon, 09 Jan 2017 23:03:51 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/</guid>
       <description>&lt;p&gt;To begin with, let us clear up some terminlogy:&lt;/p&gt;
 
@@ -117,7 +119,7 @@ A standard Django application handles http requests using a request-response lif
       <title>Analyzing programming language statistics of 100,000 Github repositories</title>
       <link>https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/</link>
       <pubDate>Sun, 25 Dec 2016 23:03:21 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/</guid>
       <description>&lt;p&gt;The first step is to gather data about 100,000 repositories using the Github api. I used &lt;code&gt;scrapy&lt;/code&gt; for this.&lt;/p&gt;
 
@@ -144,7 +146,7 @@ A standard Django application handles http requests using a request-response lif
       <title>Scraping my website using requests and BeautifulSoup</title>
       <link>https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/</link>
       <pubDate>Thu, 08 Dec 2016 04:48:07 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/</guid>
       <description>&lt;p&gt;Ok, I didn&amp;rsquo;t use Scrapy because I am yet to go through it&amp;rsquo;s documentation. I will explore Scrapy in an upcoming blog post.&lt;/p&gt;
 
@@ -177,7 +179,7 @@ for link in urls:
       <title>Decorators in Python 3</title>
       <link>https://www.ploggingdev.com/2016/12/decorators-in-python-3/</link>
       <pubDate>Sun, 04 Dec 2016 22:29:11 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/12/decorators-in-python-3/</guid>
       <description>&lt;p&gt;A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.&lt;/p&gt;
 
@@ -211,7 +213,7 @@ Decoration after function call
       <title>Performance measurement in Python 3</title>
       <link>https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/</link>
       <pubDate>Sat, 03 Dec 2016 21:13:22 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/12/performance-measurement-in-python-3/</guid>
       <description>&lt;p&gt;Performance measurement is the process of collecting and understanding information regarding the performance of some code.&lt;/p&gt;
 
@@ -236,7 +238,7 @@ Decoration after function call
       <title>List comprehensions, iterators, generators and generator expressions in Python 3</title>
       <link>https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/</link>
       <pubDate>Fri, 02 Dec 2016 20:54:31 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/12/list-comprehensions-iterators-generators-and-generator-expressions-in-python-3/</guid>
       <description>&lt;p&gt;A list comprehension is a concise way to create lists that would normally require &lt;code&gt;for&lt;/code&gt; loops to build.&lt;/p&gt;
 
@@ -263,7 +265,7 @@ print(list2)
       <title>N queens solver in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/</link>
       <pubDate>Wed, 30 Nov 2016 04:14:07 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/</guid>
       <description>&lt;p&gt;What is the N queens problem?&lt;/p&gt;
 
@@ -284,7 +286,7 @@ print(list2)
       <title>Floating point arithmetic issues in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/</link>
       <pubDate>Sun, 27 Nov 2016 21:54:01 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/floating-point-arithmetic-issues-in-python-3/</guid>
       <description>&lt;p&gt;By default, numbers having a decimal point are represented as floating point numbers.&lt;/p&gt;
 
@@ -329,7 +331,7 @@ False
       <title>Unit testing in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/</link>
       <pubDate>Sun, 27 Nov 2016 01:57:31 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/unit-testing-in-python-3/</guid>
       <description>&lt;p&gt;Unit testing is a method through which the smallest testable units of source code are tested to determine that they behave as expected. The important benefit of writing unit tests is that it enables us to check for any unwanted side effects when we alter the code and correct them.&lt;/p&gt;
 
@@ -364,7 +366,7 @@ if __name__ == &#39;__main__&#39;:
       <title>Errors and exceptions in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/</link>
       <pubDate>Thu, 24 Nov 2016 23:42:14 -0800</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/errors-and-exceptions-in-python-3/</guid>
       <description>&lt;p&gt;There are two kinds of errors:&lt;/p&gt;
 
@@ -396,7 +398,7 @@ You can&#39;t divide by zero
       <title>File IO and JSON in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/</link>
       <pubDate>Tue, 22 Nov 2016 17:20:29 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/file-io-and-json-in-python-3/</guid>
       <description>&lt;p&gt;Before discussing file IO and json, let&amp;rsquo;s talk about accepting input from the user using &lt;code&gt;input()&lt;/code&gt;. Example:&lt;/p&gt;
 
@@ -425,7 +427,7 @@ Age?
       <title>Virtual environments and package management in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/</link>
       <pubDate>Mon, 21 Nov 2016 21:46:23 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/</guid>
       <description>&lt;p&gt;A virtual environment is a directory containing a Python installation and any additional packages. Since a virtual environment is isolated, any changes made will not affect the global installation of Python. It also enables the usage of different versions of the same package in multiple virtual environments.&lt;/p&gt;
 
@@ -448,7 +450,7 @@ Age?
       <title>Classes and inheritance in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</link>
       <pubDate>Sat, 19 Nov 2016 07:38:24 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/classes-and-inheritance-in-python-3/</guid>
       <description>&lt;p&gt;From Wikipedia: In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).&lt;/p&gt;
 
@@ -472,7 +474,7 @@ Age?
       <title>Modules and packages in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</link>
       <pubDate>Wed, 16 Nov 2016 14:13:24 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/modules-and-packages-in-python-3/</guid>
       <description>&lt;p&gt;A module is a file that contains Python definitions and statements with a &lt;code&gt;.py&lt;/code&gt; extension. So technically,
 all the code that I posted so far has been in the form of modules. Modules are a way to organize code
@@ -491,7 +493,7 @@ code that will be executed when the package is first imported, typically initial
       <title>Functions in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/functions-in-python-3/</link>
       <pubDate>Sun, 13 Nov 2016 10:30:06 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/functions-in-python-3/</guid>
       <description>&lt;p&gt;A function is a named sequence of statements. Since a function is named, it is reusable. A simple function
 example:&lt;/p&gt;
@@ -526,7 +528,7 @@ which is documentation for the function. It&amp;rsquo;s a good practice to alway
       <title>Control flow tools in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</link>
       <pubDate>Sat, 12 Nov 2016 11:28:34 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/control-flow-tools-in-python-3/</guid>
       <description>&lt;p&gt;Before I start with control flow tools, here are a few definitions:&lt;/p&gt;
 
@@ -557,7 +559,7 @@ which is documentation for the function. It&amp;rsquo;s a good practice to alway
       <title>Dictionaries in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/</link>
       <pubDate>Fri, 11 Nov 2016 13:27:42 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/dictionaries-in-python-3/</guid>
       <description>&lt;p&gt;A dictionary is an unordered set of key-value pairs. A dictionary is indexed by keys, which can be
 strings, integers or tuples. A dictionary is like an associative array, if you are familiar with
@@ -585,7 +587,7 @@ True
       <title>Sets in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/sets-in-python-3/</link>
       <pubDate>Thu, 10 Nov 2016 09:21:40 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/sets-in-python-3/</guid>
       <description>&lt;p&gt;A set is an unordered collection with no duplicate elements. Sets are used for membership testing, removing
 duplicate entries and performing set operations such as intersection, union and difference.&lt;/p&gt;
@@ -610,7 +612,7 @@ immutable.&lt;/p&gt;
       <title>Ranges in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</link>
       <pubDate>Wed, 09 Nov 2016 14:00:07 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/ranges-in-python-3/</guid>
       <description>&lt;p&gt;The range is an immutable sequence of numbers. The main advantage of using the range type is that the
 memory occupied is fixed irrespective of the size of the range. This is because the actual contents of
@@ -644,7 +646,7 @@ parameter. When step is not specified, what we end up with is &lt;code&gt;range(
       <title>Tuples in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</link>
       <pubDate>Tue, 08 Nov 2016 10:48:13 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/tuples-in-python-3/</guid>
       <description>&lt;p&gt;Tuples are immutable sequences of values. The values can be heterogeneous.
 The values in a tuple are indexed by integers.&lt;/p&gt;
@@ -686,7 +688,7 @@ print(t2)
       <title>Lists in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/lists-in-python-3/</link>
       <pubDate>Mon, 07 Nov 2016 10:03:00 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/lists-in-python-3/</guid>
       <description>&lt;p&gt;Lists are mutable sequences that are often used to store homogeneous items.&lt;/p&gt;
 
@@ -713,7 +715,7 @@ print(mylist)
       <title>Strings in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/strings-in-python-3/</link>
       <pubDate>Sun, 06 Nov 2016 07:35:00 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/strings-in-python-3/</guid>
       <description>&lt;p&gt;Strings are sequences of characters.&lt;/p&gt;
 
@@ -743,7 +745,7 @@ print(mylist)
       <title>Data types in Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</link>
       <pubDate>Sat, 05 Nov 2016 07:26:45 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/data-types-in-python-3/</guid>
       <description>&lt;p&gt;Python is a dynamically typed programming language, so you don&amp;rsquo;t need to explicitly specify the data type of a variable before usage. A variable can be rebound to objects of different data types at runtime and the Python interpreter will not complain.&lt;/p&gt;
 
@@ -764,7 +766,7 @@ string
       <title>Beginning Python 3</title>
       <link>https://www.ploggingdev.com/2016/11/beginning-python-3/</link>
       <pubDate>Fri, 04 Nov 2016 15:09:38 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/beginning-python-3/</guid>
       <description>&lt;p&gt;In this series of plogs, I will be sharing my journey of learning Python.&lt;/p&gt;
 
@@ -784,7 +786,7 @@ string
       <title>Hello World</title>
       <link>https://www.ploggingdev.com/2016/11/hello-world/</link>
       <pubDate>Fri, 04 Nov 2016 14:37:53 +0530</pubDate>
-      <author>ploggingdev@gmail.com (Plogging Dev)</author>
+      
       <guid>https://www.ploggingdev.com/2016/11/hello-world/</guid>
       <description>&lt;p&gt;&lt;strong&gt;Hi!&lt;/strong&gt;&lt;/p&gt;
 

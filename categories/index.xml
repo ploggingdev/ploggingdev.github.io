@@ -8,7 +8,7 @@
     <language>en-us</language>
     <copyright>&amp;copy; Plogging Dev - Powered by &lt;a href=&#39;https://gohugo.io/&#39;&gt;Hugo&lt;/a&gt; and &lt;a href=&#39;https://github.com/ribice/kiss&#39;&gt;Kiss&lt;/a&gt;</copyright>
     
-	<atom:link href="https://www.ploggingdev.com/categories/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://www.ploggingdev.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

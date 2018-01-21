@@ -7,10 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Plogging Dev - Powered by &lt;a href=&#39;https://gohugo.io/&#39;&gt;Hugo&lt;/a&gt; Theme by &lt;a href=&#39;https://github.com/ribice/kiss&#39;&gt;Kiss&lt;/a&gt;</copyright>
-    <lastBuildDate>Wed, 01 Nov 2017 05:38:38 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jan 2018 01:04:38 -0800</lastBuildDate>
     
         <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The strange launch of Hackers Chat</title>
+      <link>https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/</link>
+      <pubDate>Sun, 21 Jan 2018 01:04:38 -0800</pubDate>
+      
+      <guid>https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/</guid>
+      <description>&lt;p&gt;I recently launched &lt;a href=&#34;https://www.hackerschat.net/&#34;&gt;Hackers Chat&lt;/a&gt; as an experiment to build the community site that I wish existed : public chat room based communites, pseudonymous users, transparent moderation logs, an open source code base and a site that is welcoming to non-technical users. I launched it as a single chat room for all discussions and support for user created chat rooms will be added shortly. An analogy might help : &lt;em&gt;Reddit for chat rooms&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;I originally launched the site under the name &lt;a href=&#34;https://www.boredhackers.com&#34;&gt;Bored Hackers&lt;/a&gt; , on the 1st of January, 2018 to an underwhelming response. The site didn&amp;rsquo;t get traction in any of the communities where I posted, yet what followed was an interesting series of events. Someone noticed that the chat room didn&amp;rsquo;t have basic anti-spam measures and posted a link to 4chan asking for help in spamming the chat room. Soon, the trolls and spammers showed up and started posting links to porn, messages about Hitler and other offensive content.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;It didn&amp;rsquo;t take long for the conversation to go downhill since they succeeded in provoking most of us. I started manually deleting the troll accounts but it didn&amp;rsquo;t help much since creating an account was as simple as entering a username, email id and password. There was no email verification or any rate limiting. They created new accounts, started the conversation with &amp;ldquo;You ban me [insert cuss word]&amp;rdquo; and continued doing what they do best.&lt;/p&gt;
+
+&lt;p&gt;While I was playing Whac-A-Mole with the trolls, something else happened, they started using scripts to automate spamming. The Bee Movie script is popular with trolls for some reason and the chat room was suddenly filled with thousands of spam messages and it was not possible to keep track of the messages legitimate users were sending. What didn&amp;rsquo;t help was that my javascript scrolled to the bottom everytime there was a new chat message (fixed now) so it wasn&amp;rsquo;t possible to scroll and read the chat history. After sending a few messages informing users to close this chat room and come back in a few hours once I fixed the situation, it was acknowledged by most of the users. But no one closed the chat room since it was fun to watch the train wreck in real time.&lt;/p&gt;
+
+&lt;p&gt;The spamming, trolling and Whac-A-Mole continued for another hour before I closed registration the dinosaur way : ssh&amp;rsquo;ed into the server, edited the code, killed the process running the application and started another process using &lt;code&gt;nohup python manage.py runserver &amp;amp;&lt;/code&gt;. I know, I know, I should never do this, but I guess&amp;hellip;MVP. I&amp;rsquo;ve since switched to running daphne, a worker process and celery using systemd.&lt;/p&gt;
+
+&lt;p&gt;Since it was launch day, there were quite a few users coming in every hour and idling for a few minutes. Unfortunately most of the legitimate users could not signup since I had closed registration. Soon, the normal conversations resumed and we discussed a lot of interesting topics ranging from moderation to 4chan to startups and cryptocurrencies. You can read a part of it &lt;a href=&#34;https://www.hackerschat.net/topics/general/chat/archive/?date=2018-01-02&#34;&gt;here&lt;/a&gt;. I interrupted these conversation periodically to inform the people watching the chat to send me an email if they want to join the conversation. I ended up receiving 7 emails asking for an invite. I&amp;rsquo;m guessing the trolls cost me quite a few missed signups. The chat room has presence, which shows how many users are connected to the chat room. At any given point over the 3 days after launching, there were 15 to 20 people connected to the chat room.&lt;/p&gt;
+
+&lt;p&gt;Registration remained closed and the conversations between users who already had an account continued. On the 6th of January, another spamming incident occured! A troll with the username &amp;ldquo;arnold&amp;rdquo; had an account before I closed registration. When no one was connected to the chat room, he decided to whip out his spamming script and sent over 5000 messages interspersed with messages such as &amp;ldquo;Oh this chat room hasn&amp;rsquo;t crashed&amp;rdquo;, &amp;ldquo;You&amp;rsquo;re still up&amp;rdquo;. Well, 5700 messages over 30 minutes is not even close to a DoS attack. Once I noticed what was happening, I promptly deleted his account along with all the spam messages.&lt;/p&gt;
+
+&lt;p&gt;A few minutes after this incident, I received an email from Google Cloud informing me that my account had been suspended because of billing related issues! Can the day get any better? It would take a few days to get the situation sorted so I switched to Digital Ocean where the card that Google declined was working perfectly. Anyway, I frantically setup a server on Digital Ocean and lost over 500 of the most recent chat messages since it was restored from an older backup. Finally, the site was back up.&lt;/p&gt;
+
+&lt;p&gt;Since I had closed registration and the launch day traffic started it&amp;rsquo;s journey towards the x axis, things became quiet in the chat room. Over the next few days, I implemented some basic anti-spam measures :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;recaptcha on the signup and login forms&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;rate limiting : each user can send a maximum of 10 messages per minute&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;automated deactivation of accounts that use offensive language. Ironically, I used a Google API for this.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Once I implemented these changes, I reopened registration. On the 19th of January, a spammer noticed this and created an account with a username that had racist terms. He used his automated script to start spamming but ran into the rate limit of 10 messages per minute. Once the rate limit was reset after a minute, he continued spamming racial slurs before his account was automatically banned and I received an email with the subject line &amp;ldquo;User [****] banned&amp;rdquo;. The anti-spam measures worked! I logged in to the chat room to find that he had created another account with the username &amp;ldquo;bee_movie_ama&amp;rdquo;. Since his username had &amp;ldquo;ama&amp;rdquo;, I decided to ask him a few questions. We had an interesting conversation and it turns out that he was also the &amp;ldquo;bee_movie&amp;rdquo; user from launch day and he was also the user &amp;ldquo;arnold&amp;rdquo;. I asked him a few questions about 4chan, trolling and a few other topics. It was an interesting conversation, read it &lt;a href=&#34;https://www.hackerschat.net/topics/general/chat/archive/?date=2018-01-19&#34;&gt;here&lt;/a&gt;. I also asked him about the spamming tools he uses and it turned to be a simple bash script that works as follows : manually create an account on the site and keep it open on the browser, then run xdotool to read from the beemovie script and enter it into the input form. That&amp;rsquo;s it, nothing fancy.&lt;/p&gt;
+
+&lt;p&gt;So what was the point of this blog post? It&amp;rsquo;s mostly an interesting story to me since this is the first time being targeted by spammers. If there&amp;rsquo;s something to be learned from this story, it&amp;rsquo;s that don&amp;rsquo;t build spammable websites! At the very least implement recaptcha and rate limiting for all websites with user generated content such as chat rooms and forums.&lt;/p&gt;
+
+&lt;p&gt;If you enjoyed this post, you might want to check out my chat room &lt;a href=&#34;https://www.hackerschat.net/&#34;&gt;Hackers Chat&lt;/a&gt; where we discuss topics related to programming and technology. I&amp;rsquo;m exploring the idea of public chat rooms with this project, and have a lot of plans in the works! Join the chat room and let me know what you think.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Building a chat room using Django Channels</title>
@@ -2091,6 +2132,10 @@ st2)))
       <description>
 
 &lt;p&gt;This page contains links to all posts on this site.&lt;/p&gt;
+
+&lt;h2 id=&#34;hackers-chat&#34;&gt;Hackers Chat&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/&#34;&gt;The strange launch of Hackers Chat&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;thought-pieces&#34;&gt;Thought pieces&lt;/h2&gt;
 

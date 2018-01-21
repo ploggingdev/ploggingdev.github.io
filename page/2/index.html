@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.31.1" />
+	<meta name="generator" content="Hugo 0.33" />
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -38,6 +38,24 @@
 <section class="section">
   <div class="container">
     
+    
+    <article>
+      <h2 class="subtitle is-6">May 22, 2017</h2>
+      <h1 class="title"><a href="https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/">A model for a privacy oriented ad network that profiles content, not users</a></h1>
+      <div class="content">
+        <p>A few days ago I came across a talk by Maciej Ceglowski titled <a href="https://www.youtube.com/watch?v=rSrLjb3k1II">Notes from an Emergency</a>. If you have not watched the talk, stop reading this and go watch it. In the talk, he makes a suggestion that the Government should regulate ads to target content instead of users. There was a <a href="https://news.ycombinator.com/item?id=14383006">discussion</a> about the talk on Hacker News where Maciej said that he feels it&rsquo;s a regulatory argument and not a business argument, in response to a comment that implied ads targeting content will be worse than ads that target users. That got me thinking, are ads that target content worse than ads that target users, looking at it purely from a business perspective? I don&rsquo;t think so, and in fact feel that ads targetting content will be <em>better</em> from a business perspective. In this post, I propose a model for a privacy oriented ad network that targets content instead of users. This is not a novel proposal and it&rsquo;s likely that people have thought about this over the years.</p>
+
+<p></p>
+        
+        <a class="button is-link" href="https://www.ploggingdev.com/2017/05/a-model-for-a-privacy-oriented-ad-network-that-profiles-content-not-users/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
+        
+      </div>
+    </article>
     
     <article>
       <h2 class="subtitle is-6">January 12, 2017</h2>
@@ -158,47 +176,6 @@ for link in urls:
 <p></p>
         
         <a class="button is-link" href="https://www.ploggingdev.com/2016/12/scraping-my-website-using-requests-and-beautifulsoup/" style="height:28px">
-          Read more
-          <span class="icon is-small">
-            <i class="fa fa-angle-double-right"></i>
-          </span>
-        </a>
-        
-      </div>
-    </article>
-    
-    <article>
-      <h2 class="subtitle is-6">December 4, 2016</h2>
-      <h1 class="title"><a href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/">Decorators in Python 3</a></h1>
-      <div class="content">
-        <p>A Python decorator is a specific change to the Python syntax that allows us to conveniently alter functions and methods. In simpler words, a decorator takes in a function, adds some functionality and returns it.</p>
-
-<p>Example:</p>
-
-<pre><code>def my_decorator(func):
-    def inner():
-        print(&quot;Decoration before function call&quot;)
-        func()
-        print(&quot;Decoration after function call&quot;)
-
-    return inner
-
-@my_decorator
-def simple_print():
-    print(&quot;Hello from simple_print&quot;)
-
-simple_print()
-print()
-
-#output
-Decoration before function call
-Hello from simple_print
-Decoration after function call
-</code></pre>
-
-<p></p>
-        
-        <a class="button is-link" href="https://www.ploggingdev.com/2016/12/decorators-in-python-3/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>

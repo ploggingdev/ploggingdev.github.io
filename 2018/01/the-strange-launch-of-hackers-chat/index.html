@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>The strange launch of Hackers Chat | Plogging Dev</title>
+
+
+<link rel="stylesheet" href="https://www.ploggingdev.com//css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+<meta name="keywords" content="django, chat room, django channels, hackers chat">
+
+</head>
+<body>
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://www.ploggingdev.com/"><h1 class="title is-4">Plogging Dev</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item">
+          <a href="https://www.ploggingdev.com/about">About</a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="https://www.ploggingdev.com/archive">Archive</a>
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">January 21, 2018</h2>
+    <h1 class="title">The strange launch of Hackers Chat</h1> 
+    <div class="content">
+      <p>I recently launched <a href="https://www.hackerschat.net/">Hackers Chat</a> as an experiment to build the community site that I wish existed : public chat room based communites, pseudonymous users, transparent moderation logs, an open source code base and a site that is welcoming to non-technical users. I launched it as a single chat room for all discussions and support for user created chat rooms will be added shortly. An analogy might help : <em>Reddit for chat rooms</em>.</p>
+
+<p>I originally launched the site under the name <a href="https://www.boredhackers.com">Bored Hackers</a> , on the 1st of January, 2018 to an underwhelming response. The site didn&rsquo;t get traction in any of the communities where I posted, yet what followed was an interesting series of events. Someone noticed that the chat room didn&rsquo;t have basic anti-spam measures and posted a link to 4chan asking for help in spamming the chat room. Soon, the trolls and spammers showed up and started posting links to porn, messages about Hitler and other offensive content.</p>
+
+<p></p>
+
+<p>It didn&rsquo;t take long for the conversation to go downhill since they succeeded in provoking most of us. I started manually deleting the troll accounts but it didn&rsquo;t help much since creating an account was as simple as entering a username, email id and password. There was no email verification or any rate limiting. They created new accounts, started the conversation with &ldquo;You ban me [insert cuss word]&rdquo; and continued doing what they do best.</p>
+
+<p>While I was playing Whac-A-Mole with the trolls, something else happened, they started using scripts to automate spamming. The Bee Movie script is popular with trolls for some reason and the chat room was suddenly filled with thousands of spam messages and it was not possible to keep track of the messages legitimate users were sending. What didn&rsquo;t help was that my javascript scrolled to the bottom everytime there was a new chat message (fixed now) so it wasn&rsquo;t possible to scroll and read the chat history. After sending a few messages informing users to close this chat room and come back in a few hours once I fixed the situation, it was acknowledged by most of the users. But no one closed the chat room since it was fun to watch the train wreck in real time.</p>
+
+<p>The spamming, trolling and Whac-A-Mole continued for another hour before I closed registration the dinosaur way : ssh&rsquo;ed into the server, edited the code, killed the process running the application and started another process using <code>nohup python manage.py runserver &amp;</code>. I know, I know, I should never do this, but I guess&hellip;MVP. I&rsquo;ve since switched to running daphne, a worker process and celery using systemd.</p>
+
+<p>Since it was launch day, there were quite a few users coming in every hour and idling for a few minutes. Unfortunately most of the legitimate users could not signup since I had closed registration. Soon, the normal conversations resumed and we discussed a lot of interesting topics ranging from moderation to 4chan to startups and cryptocurrencies. You can read a part of it <a href="https://www.hackerschat.net/topics/general/chat/archive/?date=2018-01-02">here</a>. I interrupted these conversation periodically to inform the people watching the chat to send me an email if they want to join the conversation. I ended up receiving 7 emails asking for an invite. I&rsquo;m guessing the trolls cost me quite a few missed signups. The chat room has presence, which shows how many users are connected to the chat room. At any given point over the 3 days after launching, there were 15 to 20 people connected to the chat room.</p>
+
+<p>Registration remained closed and the conversations between users who already had an account continued. On the 6th of January, another spamming incident occured! A troll with the username &ldquo;arnold&rdquo; had an account before I closed registration. When no one was connected to the chat room, he decided to whip out his spamming script and sent over 5000 messages interspersed with messages such as &ldquo;Oh this chat room hasn&rsquo;t crashed&rdquo;, &ldquo;You&rsquo;re still up&rdquo;. Well, 5700 messages over 30 minutes is not even close to a DoS attack. Once I noticed what was happening, I promptly deleted his account along with all the spam messages.</p>
+
+<p>A few minutes after this incident, I received an email from Google Cloud informing me that my account had been suspended because of billing related issues! Can the day get any better? It would take a few days to get the situation sorted so I switched to Digital Ocean where the card that Google declined was working perfectly. Anyway, I frantically setup a server on Digital Ocean and lost over 500 of the most recent chat messages since it was restored from an older backup. Finally, the site was back up.</p>
+
+<p>Since I had closed registration and the launch day traffic started it&rsquo;s journey towards the x axis, things became quiet in the chat room. Over the next few days, I implemented some basic anti-spam measures :</p>
+
+<ul>
+<li><p>recaptcha on the signup and login forms</p></li>
+
+<li><p>rate limiting : each user can send a maximum of 10 messages per minute</p></li>
+
+<li><p>automated deactivation of accounts that use offensive language. Ironically, I used a Google API for this.</p></li>
+</ul>
+
+<p>Once I implemented these changes, I reopened registration. On the 19th of January, a spammer noticed this and created an account with a username that had racist terms. He used his automated script to start spamming but ran into the rate limit of 10 messages per minute. Once the rate limit was reset after a minute, he continued spamming racial slurs before his account was automatically banned and I received an email with the subject line &ldquo;User [****] banned&rdquo;. The anti-spam measures worked! I logged in to the chat room to find that he had created another account with the username &ldquo;bee_movie_ama&rdquo;. Since his username had &ldquo;ama&rdquo;, I decided to ask him a few questions. We had an interesting conversation and it turns out that he was also the &ldquo;bee_movie&rdquo; user from launch day and he was also the user &ldquo;arnold&rdquo;. I asked him a few questions about 4chan, trolling and a few other topics. It was an interesting conversation, read it <a href="https://www.hackerschat.net/topics/general/chat/archive/?date=2018-01-19">here</a>. I also asked him about the spamming tools he uses and it turned to be a simple bash script that works as follows : manually create an account on the site and keep it open on the browser, then run xdotool to read from the beemovie script and enter it into the input form. That&rsquo;s it, nothing fancy.</p>
+
+<p>So what was the point of this blog post? It&rsquo;s mostly an interesting story to me since this is the first time being targeted by spammers. If there&rsquo;s something to be learned from this story, it&rsquo;s that don&rsquo;t build spammable websites! At the very least implement recaptcha and rate limiting for all websites with user generated content such as chat rooms and forums.</p>
+
+<p>If you enjoyed this post, you might want to check out my chat room <a href="https://www.hackerschat.net/">Hackers Chat</a> where we discuss topics related to programming and technology. I&rsquo;m exploring the idea of public chat rooms with this project, and have a lot of plans in the works! Join the chat room and let me know what you think.</p>
+    </div>
+    <section class="section">
+      <div class="container">
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item">
+              
+                  <a class="button" href="https://www.ploggingdev.com/2017/11/building-a-chat-room-using-django-channels/" title="Building a chat room using Django Channels">
+                    <span class="icon is-small is-marginless">
+                      <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <polyline points="15 18 9 12 15 6"/>
+    
+  </svg>
+                    </span>
+                    Previous
+                  </a>
+                       
+            </div>
+          </div>
+          <div class="level-right is-marginless">
+            <div class="level-item">
+              
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+    </br>
+</br>
+<div id="hosted_comments">
+</div>
+<script src="https://www.hostedcomments.com/static/js/iframeResizer.min.js">
+</script>
+<script>
+ var hc_config = function () {
+            page_url = window.location.href;
+            spa = false;
+            website_identifier = 'admin_PloggingDev';
+            };
+
+        (function() {  
+            var d = document, s = d.createElement('script');
+            s.src = 'https://www.hostedcomments.com/static/js/embed.js';
+            (d.head || d.body).appendChild(s);
+        })();
+</script>
+<noscript>
+ Please enable javascript to view the comments powered by
+ <a href="https://www.hostedcomments.com">
+  Hosted Comments
+ </a>
+ .
+</noscript>
+  </div>
+</section>
+<section class="section">
+  <div class="container has-text-centered">
+    <p><a class="level-item" href='mailto:ploggingdev@gmail.com' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;<a class="level-item" href='https://github.com/ploggingdev' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;<a class="level-item" href='https://twitter.com/ploggingdev' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;</p>
+    <br />
+    <p>&copy; Plogging Dev - Powered by <a href='https://gohugo.io/'>Hugo</a> Theme by <a href='https://github.com/ribice/kiss'>Kiss</a></p>
+    
+  </div>
+</section>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-86436693-1 ', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+</html>

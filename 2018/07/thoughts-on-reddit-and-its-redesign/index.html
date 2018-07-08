@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Thoughts on Reddit and it&#39;s redesign | Plogging Dev</title>
+
+
+<link rel="stylesheet" href="https://www.ploggingdev.com//css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+<meta name="keywords" content="reddit, reddit redesign, hackers chat">
+
+</head>
+<body>
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://www.ploggingdev.com/"><h1 class="title is-4">Plogging Dev</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item">
+          <a href="https://www.ploggingdev.com/about">About</a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="https://www.ploggingdev.com/archive">Archive</a>
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">July 8, 2018</h2>
+    <h1 class="title">Thoughts on Reddit and it&#39;s redesign</h1> 
+    <div class="content">
+      <p>I opted in to reddit&rsquo;s redesign and used it for an entire month to see how it compares to the existing design. After a month of using the redesigned site, I went back to the old design. I wanted to share my experience using the redesigned site, what works, what doesn&rsquo;t and try and understand some of the motivations for redesigning the entire site.</p>
+
+<p>A little context is required to understand why reddit is redesigning the entire site. Reddit CEO Steve Huffman was asked about the goals of the redesign and this what he had to <a href="https://www.reddit.com/r/announcements/comments/7a4bjo/time_for_my_quarterly_inquisition_reddit_ceo_here/dp70sul/">say</a> :</p>
+
+<p></p>
+
+<blockquote>
+<p>There are a variety of goals, but chief among them is decreasing the bounce rate of first-time visitors and increasing time on site for everyone.</p>
+
+<p>More generally, Reddit grows primarily through word of mouth. Many of us evangelize Reddit and tell people how awesome it is, what an impact it&rsquo;s made in their life, how much it makes them laugh, etc, and then when those new people decide to check out Reddit for the first time they&rsquo;re greeted with dystopian Craigslist. We&rsquo;d like to fix that.</p>
+</blockquote>
+
+<p>It&rsquo;s important to point out that reddit is a venture backed company that raised <a href="https://redditblog.com/2014/09/30/fundraising-for-reddit/">$50 million in 2014</a> and <a href="https://www.recode.net/2017/7/31/16037126/reddit-funding-200-million-valuation-steve-huffman-alexis-ohanian">$200 million in 2017</a>. It&rsquo;s valued at $1.8 billion and makes <a href="https://www.cnbc.com/2018/06/29/how-reddit-plans-to-make-money-through-advertising.html">$100 million</a> in annual revenue. Reddit is slowly turning into an ad business. While there&rsquo;s nothing wrong being an ad supported business, the circumstances of taking on a lot of VC money, having a lot of users and having relatively low revenue can only mean we will start seeing more invasive user tracking (going closed source does not help), targeted ads and eventually video ads. As a VC backed business, the end goal is to reach a liquidity event : either IPO or get acquired. Based on the Recode post, they seem to be leaning towards an IPO, though not in the near future. With this context in mind, the redesign will make a lot more sense, so let&rsquo;s start exploring the redesign.</p>
+
+<p>You can opt in to the redesign by going to your <em>Preferences</em> page and selecting the <em>Use the redesign as my default experience</em> option.</p>
+
+<p>There are 3 different views to choose from :</p>
+
+<ul>
+<li><p><em>Classic view</em> : This was the default view when I was logged in. As the name suggests, it looks similar to the old design and the thumbnail previews are of a similar size. The content density is lower in the redesign. On my 1366*768 laptop display, the old design displays 9 posts on the home page, while the <code>Classic</code> view displays 6 posts.</p></li>
+
+<li><p><em>Compact view</em> : There are no thumbnail previews in this view and 11 posts are visible on the homepage, so it&rsquo;s better than the old design in terms of content density.</p></li>
+
+<li><p><em>Card view</em> : This looks a lot like Facebook&rsquo;s News Feed. Images, gifs and video previews often occupy the entire page so it requires a lot of scrolling. This is the default view for users who are logged out. Here&rsquo;s an <a href="https://imgur.com/TtVAiMN">example</a>.</p></li>
+</ul>
+
+<p>Speaking of scrolling, the redesign uses infinite scrolling, so once you reach the bottom of the page, the next set of posts are automatically loaded. The redesign also uses a modern looking font. Inspecting the page reveals <code>font-family: IBMPlexSans, sans-serif;</code> on my GNU/linux based system. Keeping in mind reddit&rsquo;s goals to decrease bounce rate of first time users and to increase the time spent on the site for everyone, the default card view for first time visitors and infinite scrolling make sense.</p>
+
+<p>Once I started scrolling, I noticed that the navbar is now fixed, on desktop and mobile displays. I personally don&rsquo;t like a fixed navbar since it occupies precious screen real estate, especially on small screens. There is also no option to turn off the fixed navbar. Having reread the previous sentence, it occured to me that I haven&rsquo;t ever come across such an option. Let me know in the comments if you have come across such an option on other websites.</p>
+
+<p>I&rsquo;ll go over some of the issues with the redesign in no particular order. There are a lot of smaller issues and bugs in the software that I won&rsquo;t cover, I&rsquo;ll focus on what I feel are the important ones.</p>
+
+<p><strong>Download the app!</strong> This is the single most annoying part of using reddit while I am logged out on mobile. The popups and buttons come in a number of designs, but they have one thing in common : they are extremely annoying, almost as if an engineer decided to troll all users who don&rsquo;t have the app.</p>
+
+<p>Here&rsquo;s an example:</p>
+
+<p>I opened reddit.com on my phone</p>
+
+<p><img src="/images/reddit1.jpg" alt="reddit initial load on mobile" /></p>
+
+<p>I scrolled down and clicked on a link</p>
+
+<p><img src="/images/reddit2.jpg" alt="reddit I clicked on a link" /></p>
+
+<p>I clicked on <em>Not now</em> and the link opens</p>
+
+<p><img src="/images/reddit3.jpg" alt="reddit annoying popup after link loads" /></p>
+
+<p>Annoying right? There are many variations of this, but I don&rsquo;t currently have screenshots for them. I&rsquo;ll describe another variant : there&rsquo;s a popup which links to the app that is fixed to the bottom part of the screen with an <em>x</em> button to dismiss it. This popup has to be dismissed for <em>every</em> single page that I open on mobile. It does not remember that I have clicked the dismiss button. There&rsquo;s another variant where there&rsquo;s a banner ad before the comments load. This ad persists even after clicking on the button to dismiss the link to the app. And did you notice that the navbar has a link to download the app?</p>
+
+<p>My take on this : don&rsquo;t push your app in such an annoying way. It&rsquo;s annoying and actively prevents me from using the mobile website. It&rsquo;s possible to let users know that the app exists and that they should use it without being annoying about it. As an example : once I dismiss the prompt to download the app, remember my preference for 24 hours before displaying another prompt. Besides, there&rsquo;s a prominent link in the navbar, so users know that the app exists.</p>
+
+<p><strong>Dark patterns</strong> : In the images above, did you notice that the button to download the app is massive while the link to dismissive is tiny? The design makes it very easy to accidentally click on the large button.</p>
+
+<p>There&rsquo;s another dark pattern in the signup flow :</p>
+
+<p><img src="/images/dark_login.png" alt="reddit annoying popup after link loads" /></p>
+
+<p>The first screen makes users think that an email address is mandatory to sign up, but clicking <em>Next</em> without entering an email address works and takes you to a screen to enter a username and password. I am slightly embarrassed to admit that I fell for the dark pattern. So good job to whoever decided to implement it, it&rsquo;s incredibly effective.</p>
+
+<p>Here are a few links that made it to the top of r/assholedesign (comment <a href="https://news.ycombinator.com/item?id=17446841">source</a>) :</p>
+
+<ul>
+<li><p><a href="https://www.reddit.com/r/assholedesign/comments/85liof/how_reddit_tries_making_ads_look_like_any_other/">How Reddit tries making ads look like any other post is so infuriating</a></p></li>
+
+<li><p><a href="https://www.reddit.com/r/assholedesign/comments/8k10c7/not_gonna_download_the_reddit_app_artificial_load/">Not gonna download the reddit app? Artificial load times for you! it never ends</a></p></li>
+
+<li><p><a href="https://www.reddit.com/r/assholedesign/comments/8m53bi/reddit_mobile_now_notifies_me_about_subreddits_im/">Reddit mobile now notifies me about subreddits I’m not following. Thanks guys!</a></p></li>
+</ul>
+
+<p><strong>Performance</strong> : This is not going to be a rigorous test, mostly just my subjective experience. The redesign makes 103 requests and loads 732 KB of data while the old design makes 51 requests and loads 184 KB of data to load the home page while I&rsquo;m logged in. The exact requests and data loaded will be different each time, but it should give you a rough idea of what to expect in terms of performance.</p>
+
+<p>If you are on a reasonably fast network connection, you might notice that initial page loads take a little longer but navigating between pages is faster because it&rsquo;s now an SPA. Where the performance hit is noticable, is on slower connections and high latency connections such as 3g/4g. As an example : when I started using the redesign, the list of subscribed subreddits were loaded on demand, so when I was on a slow network connection it sometimes took a couple of seconds to go from clicking on the button to bring up the subreddits and the list of subreddits appearing on the page. It was a bad user experience. Thankfully, this has now been changed and the list of subreddits are preloaded. The performance is getting a lot better over time. Here is one such <a href="https://www.reddit.com/r/redesign/comments/8smbob/an_update_on_performance/">post</a> going over some of the changes.</p>
+
+<p>Here is another post that talks about the performance of the redesign and the old design : <a href="https://www.reddit.com/r/redesign/comments/8mkou1/performance_results_loading_rredesign_with_old/">link</a>.</p>
+
+<p>The entire post and comments are worth reading, quoting a portion of the top comment :</p>
+
+<blockquote>
+<p>Another key thing is unless you&rsquo;re just hitting one page and leaving, there is a <em>huge</em> reduction in bytes going from page-to-page in the redesign:</p>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="right">new.reddit.com</th>
+<th>old.reddit.com</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Page 1 Bytes</td>
+<td align="right">3.2KB</td>
+<td>40.5KB</td>
+</tr>
+
+<tr>
+<td>Back to /r/redesign index</td>
+<td align="right">0.7KB</td>
+<td>56.8KB</td>
+</tr>
+
+<tr>
+<td>Page 2 Bytes</td>
+<td align="right">3.5KB</td>
+<td>42.4KB</td>
+</tr>
+
+<tr>
+<td>Back to /r/redesign index</td>
+<td align="right">0.5KB</td>
+<td>56.2KB</td>
+</tr>
+
+<tr>
+<td>Page 3 Bytes</td>
+<td align="right">3.4KB</td>
+<td>43.7KB</td>
+</tr>
+</tbody>
+</table>
+
+<p>So the benefits of an SPA are evident if you primarily navigate within a single tab. But if you instead open links in a new tab and quickly cycle through them (like I do), the redesign loads more data and makes more http requests.</p>
+
+<p><strong>Suggested posts</strong> : During the month of using the redesign, I came across suggested posts when I was logged out. Example : when I visit a subreddit <em>r/test</em> and open a link, after the top comment, there were 5-10 suggested posts which are links to other discussion threads on the same subreddit, and after this the remaining comments followed. I did not like the suggested posts as it was mostly a distraction while reading the comments. I tried to open a subreddit post while logged out to capture a screenshot, but it looks like reddit does not display suggested posts too often. Hopefully they stop with the suggested posts experiment.</p>
+
+<p><strong>Following users</strong> : I think the option to follow users was introduced when they introduced the new profile pages. While it seems like a harmless extra feature at this point, I hope they don&rsquo;t pursue this direction. I&rsquo;m struggling for words here, but it essentially turns reddit into a social network. Following users, profile pictures, bios and slowly building a personal brand on reddit will become a thing, like twitter and facebook. One of the reasons I really like reddit is it&rsquo;s somewhat pseudonymous user base and a focus on shared interests through subreddits instead of focusing on individuals. Turning it into a pseudo social network puts me off.</p>
+
+<p><strong>Privacy</strong> : When the new user profiles were first introduced, it was possible to see the list of subreddits a user was subscribed to and there was no option to turn it off. Thankfully this is no longer the case.</p>
+
+<p>There have been at least 3 reported instances on r/privacy of reddit resetting the tracking preferences of users. My privacy preferences were reset once and I had to opt out of tracking in the settings page. While the reasons behind these incidents are not known, this is not something that should ever happen.</p>
+
+<p>While I have not looked into this much, many users are reporting that the new UI uses session replay tracking everywhere with no option to disable it unless you use an extension to block this behaviour. <a href="https://old.reddit.com/r/privacy/comments/8mmybp/psa_the_reddit_redesigned_ui_is_worse_for_privacy/">Here</a> is one such post.</p>
+
+<p><strong>Comment collapsing</strong> : I was not able to find a button to collapse comment threads in the redesign. Collapsing comments is an incredibly useful feature for hiding threads I&rsquo;m not interesting in, quickly scanning the top level comments and so on. Here&rsquo;s hoping it&rsquo;s just a missing feature and not a design choice.</p>
+
+<p>I tried to cover some of the issues with the redesign that matter most to me, an an end user. There are quite a few more issues, missing features and bugs that are expected in a beta release, but I won&rsquo;t be going over them.</p>
+
+<p>So, what&rsquo;s my takeaway having used the redesign for a month? Given the goals of the redesign stated by Steve Huffman, they have done a pretty good job. Here are my suggestions :</p>
+
+<ul>
+<li><p>Do not push your app so hard. Constantly reminding users that your app exists is reasonable (maybe once a day?), but making me dismiss the popup for the app on every page load is a little too much to take, so I&rsquo;ve stopped visiting reddit from my phone.</p></li>
+
+<li><p>Do not employ dark patterns in reddit&rsquo;s UI. While they might be very effective at increasing the percentage of new users who give their email during signup, it makes users lose a little trust in reddit the company and that can&rsquo;t be a good thing.</p></li>
+
+<li><p>Don&rsquo;t push too hard for engagement with the suggested posts. It makes the experience of browsing the comments terrible. Try and stick to a no nonsense design as much as possible.</p></li>
+
+<li><p>Do not try and turn reddit into a pseudo social network. Let the focus remain on communities with a shared interest, not individual users.</p></li>
+
+<li><p>Dial down the tracking and session replay scripts, or at least offer a way to opt out. And please don&rsquo;t reset my privacy settings without informing me. Ever.</p></li>
+</ul>
+
+<p>I still prefer the old design though, mainly because of better performance (given that I open new tabs instead of navigating back and forth), better content density, maybe a little familiarity with the old design and just the general straight forward experience.</p>
+
+<p>Let me know your thoughts on this topic in the comments section below! You can also find me in my chat room <a href="https://www.hackerschat.net/">Hackers Chat</a>.</p>
+    </div>
+    <section class="section">
+      <div class="container">
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item">
+              
+                  <a class="button" href="https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/" title="The strange launch of Hackers Chat">
+                    <span class="icon is-small is-marginless">
+                      <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <polyline points="15 18 9 12 15 6"/>
+    
+  </svg>
+                    </span>
+                    Previous
+                  </a>
+                       
+            </div>
+          </div>
+          <div class="level-right is-marginless">
+            <div class="level-item">
+              
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+    </br>
+</br>
+<div id="hosted_comments">
+</div>
+<script src="https://www.hostedcomments.com/static/js/iframeResizer.min.js">
+</script>
+<script>
+ var hc_config = function () {
+            page_url = window.location.href;
+            spa = false;
+            website_identifier = 'admin_PloggingDev';
+            };
+
+        (function() {  
+            var d = document, s = d.createElement('script');
+            s.src = 'https://www.hostedcomments.com/static/js/embed.js';
+            (d.head || d.body).appendChild(s);
+        })();
+</script>
+<noscript>
+ Please enable javascript to view the comments powered by
+ <a href="https://www.hostedcomments.com">
+  Hosted Comments
+ </a>
+ .
+</noscript>
+  </div>
+</section>
+<section class="section">
+  <div class="container has-text-centered">
+    <p><a class="level-item" href='mailto:ploggingdev@gmail.com' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;<a class="level-item" href='https://github.com/ploggingdev' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;<a class="level-item" href='https://twitter.com/ploggingdev' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;</p>
+    <br />
+    <p>&copy; Plogging Dev - Powered by <a href='https://gohugo.io/'>Hugo</a> Theme by <a href='https://github.com/ribice/kiss'>Kiss</a></p>
+    
+  </div>
+</section>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-86436693-1 ', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+</html>

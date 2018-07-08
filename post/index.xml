@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Plogging Dev - Powered by &lt;a href=&#39;https://gohugo.io/&#39;&gt;Hugo&lt;/a&gt; Theme by &lt;a href=&#39;https://github.com/ribice/kiss&#39;&gt;Kiss&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 21 Jan 2018 01:04:38 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 08 Jul 2018 01:01:38 -0400</lastBuildDate>
     
 	<atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Thoughts on Reddit and it&#39;s redesign</title>
+      <link>https://www.ploggingdev.com/2018/07/thoughts-on-reddit-and-its-redesign/</link>
+      <pubDate>Sun, 08 Jul 2018 01:01:38 -0400</pubDate>
+      
+      <guid>https://www.ploggingdev.com/2018/07/thoughts-on-reddit-and-its-redesign/</guid>
+      <description>&lt;p&gt;I opted in to reddit&amp;rsquo;s redesign and used it for an entire month to see how it compares to the existing design. After a month of using the redesigned site, I went back to the old design. I wanted to share my experience using the redesigned site, what works, what doesn&amp;rsquo;t and try and understand some of the motivations for redesigning the entire site.&lt;/p&gt;
+
+&lt;p&gt;A little context is required to understand why reddit is redesigning the entire site. Reddit CEO Steve Huffman was asked about the goals of the redesign and this what he had to &lt;a href=&#34;https://www.reddit.com/r/announcements/comments/7a4bjo/time_for_my_quarterly_inquisition_reddit_ceo_here/dp70sul/&#34;&gt;say&lt;/a&gt; :&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>The strange launch of Hackers Chat</title>

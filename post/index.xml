@@ -120,7 +120,7 @@
 
 &lt;li&gt;&lt;p&gt;A thread is a sequence of instructions within a process. It can be thought of as a lightweight process. Threads share the same memory space.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;A process is an instance of a program running in a computer which can contain one or more threads. A process has its independant memory space.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;A process is an instance of a program running in a computer which can contain one or more threads. A process has its independent memory space.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;The &lt;code&gt;threading&lt;/code&gt; module is used for working with threads in Python.&lt;/p&gt;

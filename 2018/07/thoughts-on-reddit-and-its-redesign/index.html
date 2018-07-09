@@ -46,7 +46,7 @@
     <div class="content">
       <p>I opted in to reddit&rsquo;s redesign and used it for an entire month to see how it compares to the existing design. After a month of using the redesigned site, I went back to the old design. I wanted to share my experience using the redesigned site, what works, what doesn&rsquo;t and try and understand some of the motivations for redesigning the entire site.</p>
 
-<p>A little context is required to understand why reddit is redesigning the entire site. Reddit CEO Steve Huffman was asked about the goals of the redesign and this what he had to <a href="https://www.reddit.com/r/announcements/comments/7a4bjo/time_for_my_quarterly_inquisition_reddit_ceo_here/dp70sul/">say</a> :</p>
+<p>A little context is required to understand why reddit is redesigning the entire site. Reddit CEO Steve Huffman was asked about the goals of the redesign and this is what he had to <a href="https://www.reddit.com/r/announcements/comments/7a4bjo/time_for_my_quarterly_inquisition_reddit_ceo_here/dp70sul/">say</a> :</p>
 
 <p></p>
 
@@ -56,7 +56,19 @@
 <p>More generally, Reddit grows primarily through word of mouth. Many of us evangelize Reddit and tell people how awesome it is, what an impact it&rsquo;s made in their life, how much it makes them laugh, etc, and then when those new people decide to check out Reddit for the first time they&rsquo;re greeted with dystopian Craigslist. We&rsquo;d like to fix that.</p>
 </blockquote>
 
-<p>It&rsquo;s important to point out that reddit is a venture backed company that raised <a href="https://redditblog.com/2014/09/30/fundraising-for-reddit/">$50 million in 2014</a> and <a href="https://www.recode.net/2017/7/31/16037126/reddit-funding-200-million-valuation-steve-huffman-alexis-ohanian">$200 million in 2017</a>. It&rsquo;s valued at $1.8 billion and makes <a href="https://www.cnbc.com/2018/06/29/how-reddit-plans-to-make-money-through-advertising.html">$100 million</a> in annual revenue. Reddit is slowly turning into an ad business. While there&rsquo;s nothing wrong being an ad supported business, the circumstances of taking on a lot of VC money, having a lot of users and having relatively low revenue can only mean we will start seeing more invasive user tracking (going closed source does not help), targeted ads and eventually video ads. As a VC backed business, the end goal is to reach a liquidity event : either IPO or get acquired. Based on the Recode post, they seem to be leaning towards an IPO, though not in the near future. With this context in mind, the redesign will make a lot more sense, so let&rsquo;s start exploring the redesign.</p>
+<p>It&rsquo;s important to point out that reddit is a venture backed company that raised <a href="https://redditblog.com/2014/09/30/fundraising-for-reddit/">$50 million in 2014</a> and <a href="https://www.recode.net/2017/7/31/16037126/reddit-funding-200-million-valuation-steve-huffman-alexis-ohanian">$200 million in 2017</a>. It&rsquo;s valued at $1.8 billion and makes <a href="https://www.cnbc.com/2018/06/29/how-reddit-plans-to-make-money-through-advertising.html">$100 million</a> in annual revenue. Reddit is slowly turning into an ad business. While there&rsquo;s nothing wrong being an ad supported business, the circumstances of taking on a lot of VC money, having a lot of users and having relatively low revenue can only mean we will start seeing more invasive user tracking (going closed source does not help), targeted ads and eventually video ads. As a VC backed business, the end goal is to reach a liquidity event : either IPO or get acquired. Based on the Recode post, they seem to be leaning towards an IPO, though not in the near future.</p>
+
+<p>So how does redesign help with the goals of growing the userbase and reaching a liquidity event?</p>
+
+<ol>
+<li><p>Makes the site approachable for first time visitors</p></li>
+
+<li><p>The redesign lends itself well for native ads design wise</p></li>
+
+<li><p>By introducing native video support, there&rsquo;s a clear path to video ads which have much higher revenue potential and at that point a liquidity event becomes a logical next step.</p></li>
+</ol>
+
+<p>With this context in mind, the redesign will make a lot more sense, so let&rsquo;s start exploring the new site.</p>
 
 <p>You can opt in to the redesign by going to your <em>Preferences</em> page and selecting the <em>Use the redesign as my default experience</em> option.</p>
 
@@ -96,13 +108,13 @@
 
 <p>My take on this : don&rsquo;t push your app in such an annoying way. It&rsquo;s annoying and actively prevents me from using the mobile website. It&rsquo;s possible to let users know that the app exists and that they should use it without being annoying about it. As an example : once I dismiss the prompt to download the app, remember my preference for 24 hours before displaying another prompt. Besides, there&rsquo;s a prominent link in the navbar, so users know that the app exists.</p>
 
-<p><strong>Dark patterns</strong> : In the images above, did you notice that the button to download the app is massive while the link to dismissive is tiny? The design makes it very easy to accidentally click on the large button.</p>
+<p><strong>Dark patterns</strong> : In the images above, did you notice that the button to download the app is massive while the link to dismissive it is tiny? The design makes it very easy to accidentally click on the large button.</p>
 
 <p>There&rsquo;s another dark pattern in the signup flow :</p>
 
 <p><img src="/images/dark_login.png" alt="reddit annoying popup after link loads" /></p>
 
-<p>The first screen makes users think that an email address is mandatory to sign up, but clicking <em>Next</em> without entering an email address works and takes you to a screen to enter a username and password. I am slightly embarrassed to admit that I fell for the dark pattern. So good job to whoever decided to implement it, it&rsquo;s incredibly effective.</p>
+<p>The first screen makes users think that an email address is mandatory to sign up, but clicking <em>Next</em> without entering an email address works and takes you to a screen to enter a username and password. I am slightly embarrassed to admit that I fell for the dark pattern, so good job to whoever decided to implement it, it&rsquo;s incredibly effective.</p>
 
 <p>Here are a few links that made it to the top of r/assholedesign (comment <a href="https://news.ycombinator.com/item?id=17446841">source</a>) :</p>
 
@@ -172,7 +184,7 @@
 
 <p><strong>Suggested posts</strong> : During the month of using the redesign, I came across suggested posts when I was logged out. Example : when I visit a subreddit <em>r/test</em> and open a link, after the top comment, there were 5-10 suggested posts which are links to other discussion threads on the same subreddit, and after this the remaining comments followed. I did not like the suggested posts as it was mostly a distraction while reading the comments. I tried to open a subreddit post while logged out to capture a screenshot, but it looks like reddit does not display suggested posts too often. Hopefully they stop with the suggested posts experiment.</p>
 
-<p><strong>Following users</strong> : I think the option to follow users was introduced when they introduced the new profile pages. While it seems like a harmless extra feature at this point, I hope they don&rsquo;t pursue this direction. I&rsquo;m struggling for words here, but it essentially turns reddit into a social network. Following users, profile pictures, bios and slowly building a personal brand on reddit will become a thing, like twitter and facebook. One of the reasons I really like reddit is it&rsquo;s somewhat pseudonymous user base and a focus on shared interests through subreddits instead of focusing on individuals. Turning it into a pseudo social network puts me off.</p>
+<p><strong>Following users</strong> : I think the option to follow users was introduced when they introduced the new profile pages. While it seems like a harmless extra feature at this point, I hope they don&rsquo;t pursue this direction. I&rsquo;m struggling for words here, but it essentially turns reddit into a social network. Following users, profile pictures, bios and slowly building a personal brand on reddit will become a thing, like twitter and facebook. One of the reasons I like reddit is it&rsquo;s somewhat pseudonymous user base and a focus on shared interests through subreddits instead of focusing on individuals. Turning it into a pseudo social network puts me off.</p>
 
 <p><strong>Privacy</strong> : When the new user profiles were first introduced, it was possible to see the list of subreddits a user was subscribed to and there was no option to turn it off. Thankfully this is no longer the case.</p>
 
@@ -180,7 +192,7 @@
 
 <p>While I have not looked into this much, many users are reporting that the new UI uses session replay tracking everywhere with no option to disable it unless you use an extension to block this behaviour. <a href="https://old.reddit.com/r/privacy/comments/8mmybp/psa_the_reddit_redesigned_ui_is_worse_for_privacy/">Here</a> is one such post.</p>
 
-<p><strong>Comment collapsing</strong> : I was not able to find a button to collapse comment threads in the redesign. Collapsing comments is an incredibly useful feature for hiding threads I&rsquo;m not interesting in, quickly scanning the top level comments and so on. Here&rsquo;s hoping it&rsquo;s just a missing feature and not a design choice.</p>
+<p><strong>Comment collapsing</strong> : I was not able to find a button to collapse comment threads in the redesign. Collapsing comments is an incredibly useful feature for hiding threads I&rsquo;m not interested in, quickly scanning the top level comments and so on. Here&rsquo;s hoping it&rsquo;s just a missing feature and not a design choice.</p>
 
 <p>I tried to cover some of the issues with the redesign that matter most to me, an an end user. There are quite a few more issues, missing features and bugs that are expected in a beta release, but I won&rsquo;t be going over them.</p>
 
@@ -198,7 +210,7 @@
 <li><p>Dial down the tracking and session replay scripts, or at least offer a way to opt out. And please don&rsquo;t reset my privacy settings without informing me. Ever.</p></li>
 </ul>
 
-<p>I still prefer the old design though, mainly because of better performance (given that I open new tabs instead of navigating back and forth), better content density, maybe a little familiarity with the old design and just the general straight forward experience.</p>
+<p>I still prefer the old design, mainly because of better performance (given that I open new tabs instead of navigating back and forth), better content density, maybe a little familiarity with the old design and just the general straight forward experience.</p>
 
 <p>Let me know your thoughts on this topic in the comments section below! You can also find me in my chat room <a href="https://www.hackerschat.net/">Hackers Chat</a>.</p>
     </div>

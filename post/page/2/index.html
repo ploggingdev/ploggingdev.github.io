@@ -39,6 +39,30 @@
     
     
     <article>
+      <h2 class="subtitle is-6">September 27, 2017</h2>
+      <h1 class="title"><a href="https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/">Building a Disqus alternative Part 2 : The launch</a></h1>
+      <div class="content">
+        <p>I finally launched <a href="https://www.hostedcomments.com/">Hosted Comments</a>!</p>
+
+<p>After 3 weeks of development, I finally have the first version up and running. You can scroll to the bottom of this page and see it in action.</p>
+
+<p>My initial plan was to blog about the process of building Hosted Comments, but I think I am going to skip the part 1, part 2 style in favour of standalone posts talking about specific challenges of building this software.</p>
+
+<p>So what’s changed since the last post?</p>
+
+<p></p>
+        
+        <a class="button is-link" href="https://www.ploggingdev.com/2017/09/building-a-disqus-alternative-part-2--the-launch/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
+        
+      </div>
+    </article>
+    
+    <article>
       <h2 class="subtitle is-6">August 29, 2017</h2>
       <h1 class="title"><a href="https://www.ploggingdev.com/2017/08/building-a-disqus-alternative-part-1--research/">Building a Disqus alternative Part 1 : Research</a></h1>
       <div class="content">
@@ -121,40 +145,6 @@
 <p></p>
         
         <a class="button is-link" href="https://www.ploggingdev.com/2017/01/multiprocessing-and-multithreading-in-python-3/" style="height:28px">
-          Read more
-          <span class="icon is-small">
-            <i class="fa fa-angle-double-right"></i>
-          </span>
-        </a>
-        
-      </div>
-    </article>
-    
-    <article>
-      <h2 class="subtitle is-6">December 25, 2016</h2>
-      <h1 class="title"><a href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/">Analyzing programming language statistics of 100,000 Github repositories</a></h1>
-      <div class="content">
-        <p>The first step is to gather data about 100,000 repositories using the Github api. I used <code>scrapy</code> for this.</p>
-
-<p>A high level overview of how I did this:</p>
-
-<ol>
-<li><p>Start from the id of my <code>scrape_github</code> repo <code>https://api.github.com/repositories?since=76761293&amp;access_token=MY_TOKEN</code></p></li>
-
-<li><p>Save only the <code>id</code>, <code>name</code> and <code>languages_url</code> for each repo. The <code>languages_url</code> is the api endpoint which contains the programming language statistics of the current repo.</p></li>
-
-<li><p>Extract the link to the next page from the <code>Link</code> header and follow it repeating the above steps.</p></li>
-</ol>
-
-<p>Each api call returns a list of 100 repositories, so to retrieve data about 100,000 repositories, 1000 api calls are required.</p>
-
-<p>All the output is saved to a file called <code>all_repos.jsonl</code> which came to around 13MB.</p>
-
-<p>The next step is to follow the <code>languages_url</code> api endpoint for each repository and save the data.</p>
-
-<p></p>
-        
-        <a class="button is-link" href="https://www.ploggingdev.com/2016/12/analyzing-programming-language-statistics-of-100000-github-repositories/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>
@@ -247,7 +237,7 @@
 <script>hljs.initHighlightingOnLoad();</script>
 
 
-<script>
+<script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;

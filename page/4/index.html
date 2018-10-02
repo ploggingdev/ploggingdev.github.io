@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.44" />
+	<meta name="generator" content="Hugo 0.49" />
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -38,6 +38,34 @@
 <section class="section">
   <div class="container">
     
+    
+    <article>
+      <h2 class="subtitle is-6">November 30, 2016</h2>
+      <h1 class="title"><a href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/">N queens solver in Python 3</a></h1>
+      <div class="content">
+        <p>What is the N queens problem?</p>
+
+<p>The N queens problem is the problem of placing N non-attacking queens on an NxN chessboard, for which solutions exist for all natural numbers N with the exception of N=2 and N=3.</p>
+
+<p>When N=1, the solution is trivial so the program will ask for a value of N such that <code>N &gt;= 4</code>.</p>
+
+<p>I will solve this problem using backtracking. There are more efficient ways to solve this problem, but I will use backtracking since it&rsquo;s the most intuitive way to arrive at the solution without getting into the mathematics of arriving at efficient solutions. Through solving these problems, I aim to better understand Python.</p>
+
+<p>What is backtracking?</p>
+
+<p>Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons each partial candidate <em>c</em> (&ldquo;backtracks&rdquo;) as soon as it determines that <em>c</em> cannot possibly be completed to a valid solution.</p>
+
+<p></p>
+        
+        <a class="button is-link" href="https://www.ploggingdev.com/2016/11/n-queens-solver-in-python-3/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
+        
+      </div>
+    </article>
     
     <article>
       <h2 class="subtitle is-6">November 27, 2016</h2>
@@ -208,36 +236,6 @@ Age?
       </div>
     </article>
     
-    <article>
-      <h2 class="subtitle is-6">November 21, 2016</h2>
-      <h1 class="title"><a href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/">Virtual environments and package management in Python 3</a></h1>
-      <div class="content">
-        <p>A virtual environment is a directory containing a Python installation and any additional packages. Since a virtual environment is isolated, any changes made will not affect the global installation of Python. It also enables the usage of different versions of the same package in multiple virtual environments.</p>
-
-<p>To create a virtual environment, the <code>venv</code> module will be used. The <code>virtualenv</code> module also can be used, but <code>venv</code> is the officially recommended solution so that&rsquo;s what I will be using. The current Python 3 documentation recommends the usage of <code>pyvenv</code>, which is a wrapper around <code>venv</code>. Since <code>pyvenv</code> will be deprecated soon, avoid using <code>pyvenv</code>.</p>
-
-<p>Installation of <code>venv</code> on Ubuntu 16.04:</p>
-
-<pre><code>sudo apt install python3-venv
-</code></pre>
-
-<p>To create a new virtual environment:</p>
-
-<pre><code>python3 -m venv python_learn_venv
-</code></pre>
-
-<p></p>
-        
-        <a class="button is-link" href="https://www.ploggingdev.com/2016/11/virtual-environments-and-package-management-in-python-3/" style="height:28px">
-          Read more
-          <span class="icon is-small">
-            <i class="fa fa-angle-double-right"></i>
-          </span>
-        </a>
-        
-      </div>
-    </article>
-    
   </div>
 </section>
 <section class="section">
@@ -321,7 +319,7 @@ Age?
 <script>hljs.initHighlightingOnLoad();</script>
 
 
-<script>
+<script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;

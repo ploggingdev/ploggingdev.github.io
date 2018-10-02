@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Plogging Dev - Powered by &lt;a href=&#39;https://gohugo.io/&#39;&gt;Hugo&lt;/a&gt; Theme by &lt;a href=&#39;https://github.com/ribice/kiss&#39;&gt;Kiss&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 08 Jul 2018 01:01:38 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 30 Sep 2018 06:55:38 -0400</lastBuildDate>
     
 	<atom:link href="https://www.ploggingdev.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building the community site that I wished existed</title>
+      <link>https://www.ploggingdev.com/2018/09/building-the-community-site-that-i-wished-existed/</link>
+      <pubDate>Sun, 30 Sep 2018 06:55:38 -0400</pubDate>
+      
+      <guid>https://www.ploggingdev.com/2018/09/building-the-community-site-that-i-wished-existed/</guid>
+      <description>Hackers Chat is my attempt at building the community site that I wish existed.
+So what constitutes my dream community site? What are it&amp;rsquo;s properties and features?
+ A site focused on communities based around common interests and not specific users.
+ Discussion takes place in a forum and a chat room with both being first class citizens.
+ Community led moderation with public moderation logs.
+ Respect for users&amp;rsquo; privacy.</description>
+    </item>
     
     <item>
       <title>Thoughts on Reddit and it&#39;s redesign</title>

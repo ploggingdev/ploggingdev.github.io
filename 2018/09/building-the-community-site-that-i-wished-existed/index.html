@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Building the community site that I wished existed | Plogging Dev</title>
+
+
+<link rel="stylesheet" href="https://www.ploggingdev.com//css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+<meta name="keywords" content="hackers chat, community site, chat rooms, forum, reddit">
+
+</head>
+<body>
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://www.ploggingdev.com/"><h1 class="title is-4">Plogging Dev</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item">
+          <a href="https://www.ploggingdev.com/about">About</a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="https://www.ploggingdev.com/archive">Archive</a>
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">September 30, 2018</h2>
+    <h1 class="title">Building the community site that I wished existed</h1> 
+    <div class="content">
+      <p><a href="https://www.hackerschat.net/">Hackers Chat</a> is my attempt at building the community site that I wish existed.</p>
+
+<p>So what constitutes my dream community site? What are it&rsquo;s properties and features?</p>
+
+<ul>
+<li><p>A site focused on communities based around common interests and not specific users.</p></li>
+
+<li><p>Discussion takes place in a forum and a chat room with both being first class citizens.</p></li>
+
+<li><p>Community led moderation with public moderation logs.</p></li>
+
+<li><p>Respect for users&rsquo; privacy.</p></li>
+
+<li><p>An open source codebase.</p></li>
+
+<li><p>Interests of the site owners and the community are aligned.</p></li>
+
+<li><p>Miscellaneous : bots, api, advertising and monetization.</p></li>
+</ul>
+
+<p><strong>Focus on communities and not users</strong> : What is the difference between a site whose focus is on a shared topic of interest versus one whose focus is on individual users? Let&rsquo;s compare reddit and Twitter. Reddit is a community site based around common topics of interest known as subreddits. Users mostly have the same visibility in the forum and comments section. Compare this to Twitter which has the concept of followers. The more followers a person has, the wider the person&rsquo;s reach on the platform. This is an apples to oranges comparison but I think it illustrates one of the main differences between sites whose focus is on communities versus users. It&rsquo;s important to point out that one approach is not better than the other, they are just different approaches to building an online community and both have pros and cons. The type of community site that I am interested in, is one whose focus is shared interests. Such sites are not free from the phenomenon of power users or famous users, but it&rsquo;s more of an exception than the norm.</p>
+
+<p><strong>A forum and chat room</strong> : Many communities are primarily built around a forum and use a chat room hosted on IRC, discord or slack to host discussions better suited for chat rooms. This is incredibly common and it&rsquo;s surprising how few forums have support for chat built in. Reddit has started rolling out support for chat, but I feel like it has not been executed well. It feels like an afterthought and this is probably a safe choice since it wouldn&rsquo;t be wise on reddit&rsquo;s part to drastically change what works. I think there is room for a more well thought out implementation which gives users more control over the chat experience such as completely opting out of it and giving chat users fine grained control over the notifications and one that minimizes spam. Reddit also forces users to try out the chat by having an orange chat icon next to the username. While the idea of introducing chat is good, reddit&rsquo;s implementation leaves a lot to be desired.</p>
+
+<p><strong>Moderation</strong> : I like reddit&rsquo;s volunteer led moderation model but it could use a few improvements. The first is public moderation logs, which gives the community transparency into how the forum is being moderated. It functions as a check to prevent moderator capability misuse. Speaking of mod power abuse, I think the position of a moderator should not be a permanent one and instead should be subject to community re-approval every few months. This will hopefully act as a way to remove mods who abuse their power or frequently make questionable moderation decisions.</p>
+
+<p>A tangentially related topic is content policy. I think reddit has a good <a href="https://www.redditinc.com/policies/content-policy">content policy</a>, but the challenge is always enforcement of the content policy. There&rsquo;s a lot of room for interpretation and there is a lot of content that falls into a grey area and taking a call on such matters is not easy. One potential way to improve the content policy is to use learnings from past experience to further refine it and these learnings will hopefully set a precedent for future decisions.</p>
+
+<p><strong>Privacy</strong> : Respecting users&rsquo; privacy is a no brainer at this point and might actually turn into a competitive advantage for products in the near future as the general public and Governments around the world begin taking privacy seriously. Tracking should be minimal and should not be used for the purpose of advertising. A note about advertising in the context of a community site : I think Duckduckgo is a good example of ads done right where they don&rsquo;t depend on following users around the web and collecting user data. Showing ads relevent to the content instead of the user&rsquo;s browsing history is an approach that respects users&rsquo; privacy. It&rsquo;s likely that ads which involve user tracking will perform better than ads which respect users&rsquo; privacy, but I think this is a necessary choice to make to ensure that the site&rsquo;s interests and the users&rsquo; interests are aligned even if it means leaving money on the table.</p>
+
+<p><strong>Open source code base</strong> : Again a no brainer decision for a community site. Having an open source code base builds trust with the community and makes it easier for members of the community to get involved in the site&rsquo;s development by contributing code. It&rsquo;s straightforward for the community to verify the site&rsquo;s claims about respecting user privacy and making sure nothing unexpected is going on behind the scenes (How do users verify that the code on the servers has not been altered? A discussion for another day.). An open source code base also enables users to host their own instances and build their own communities.</p>
+
+<p><strong>Interests of the site owners and the community are aligned</strong> : and to pay attention to what users have to say about the site. This is one of the most important parts to get right from the beginning. Often when interests are not aligned, it does not matter in the short term, but inevitably the different interests of the site owners and users rears it&rsquo;s ugly head and often leads to the downfall of the site. One famous example was digg v4 when they shifted the focus of the site from user contributed content to a twitter like feed. They had other issues like frequent downtime, bugs etc.</p>
+
+<p><strong>Miscellaneous : bots, api, advertising and monetization</strong> : Bots can be incredibly useful tools when done right. All bots should be marked as being bots and users should have complete control over the presence of bots in the chat and comments. Users should be able to subscribe or unsubscribe from bots or turn off bots altogether. Bots should be opt in instead of opt out, save for a small number of default, useful bots.</p>
+
+<p><em>Api</em> : Having a fully functional api that enables third party applications is important. This is something that social media sites often discourage and cripple app developers to prevent them from building third party experiences. The main reason for limiting api access is often ad dollars. One solution to this problem is to have some sort of paywall for the api, so only people who pay for api access can use third party apps. There are a lot more topics to discuss on this tangent but I&rsquo;ll only briefly mention them for now since the site is very early in it&rsquo;s life : have a revenue sharing model with app developers? Allow a limited number of hours of free api access every month as a way to get users to upgrade?</p>
+
+<p><em>Monetization</em> : I mentioned ads and having a premium membership for api access and an ad free experience. In the far fetched scenario that Hackers Chat takes on VC funding, the natural next step (like what reddit seems to be doing) would be to introduce video support and eventually video ads all while respecting users&rsquo; privacy <em>and</em> offering a premium membership for an ad free experience.</p>
+
+<p>This post might sound very abstract and that&rsquo;s because I left out some context and specific examples that I had in mind while writing it to avoid shifting the focus to specific examples which could derail the conversation, so apologies for that.</p>
+
+<p><a href="https://www.hackerschat.net/">Hackers Chat</a> is very early in it&rsquo;s life and a lot of the features mentioned above have not been implemented. Subreddits are called topics on Hackers Chat and each topic has a functioning forum and chat room attached to it. If you are interested in getting involved, join the community by <a href="https://www.hackerschat.net/register/">signing up</a>. Let me know what you think about the idea and any other feedback that you may have.</p>
+
+<p>PS : You might be interested in reading <a href="https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/">The strange launch of Hackers Chat</a> which goes over some of the drama involving 4chan trolls during the initial launch. The initial idea was to build a discord like site, but I abondoned the project until recently, when I decided to explore the forum + chat in a single site idea.</p>
+
+    </div>
+    <section class="section">
+      <div class="container">
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item">
+              
+                  <a class="button" href="https://www.ploggingdev.com/2018/07/thoughts-on-reddit-and-its-redesign/" title="Thoughts on Reddit and it&#39;s redesign">
+                    <span class="icon is-small is-marginless">
+                      <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <polyline points="15 18 9 12 15 6"/>
+    
+  </svg>
+                    </span>
+                    Previous
+                  </a>
+                       
+            </div>
+          </div>
+          <div class="level-right is-marginless">
+            <div class="level-item">
+              
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+    </br>
+</br>
+<div id="hosted_comments">
+</div>
+<script src="https://www.hostedcomments.com/static/js/iframeResizer.min.js">
+</script>
+<script>
+ var hc_config = function () {
+            page_url = window.location.href;
+            spa = false;
+            website_identifier = 'admin_PloggingDev';
+            };
+
+        (function() {  
+            var d = document, s = d.createElement('script');
+            s.src = 'https://www.hostedcomments.com/static/js/embed.js';
+            (d.head || d.body).appendChild(s);
+        })();
+</script>
+<noscript>
+ Please enable javascript to view the comments powered by
+ <a href="https://www.hostedcomments.com">
+  Hosted Comments
+ </a>
+ .
+</noscript>
+  </div>
+</section>
+<section class="section">
+  <div class="container has-text-centered">
+    <p><a class="level-item" href='mailto:ploggingdev@gmail.com' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;<a class="level-item" href='https://github.com/ploggingdev' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;<a class="level-item" href='https://twitter.com/ploggingdev' target='_blank' rel='noopener'>
+          <span class="icon">
+            <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+          </span>
+        </a>
+        &nbsp;</p>
+    <br />
+    <p>&copy; Plogging Dev - Powered by <a href='https://gohugo.io/'>Hugo</a> Theme by <a href='https://github.com/ribice/kiss'>Kiss</a></p>
+    
+  </div>
+</section>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-86436693-1 ', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+</html>

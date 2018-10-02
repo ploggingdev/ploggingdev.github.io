@@ -7,10 +7,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Plogging Dev - Powered by &lt;a href=&#39;https://gohugo.io/&#39;&gt;Hugo&lt;/a&gt; Theme by &lt;a href=&#39;https://github.com/ribice/kiss&#39;&gt;Kiss&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 08 Jul 2018 01:01:38 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 30 Sep 2018 06:55:38 -0400</lastBuildDate>
     
         <atom:link href="https://www.ploggingdev.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building the community site that I wished existed</title>
+      <link>https://www.ploggingdev.com/2018/09/building-the-community-site-that-i-wished-existed/</link>
+      <pubDate>Sun, 30 Sep 2018 06:55:38 -0400</pubDate>
+      
+      <guid>https://www.ploggingdev.com/2018/09/building-the-community-site-that-i-wished-existed/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.hackerschat.net/&#34;&gt;Hackers Chat&lt;/a&gt; is my attempt at building the community site that I wish existed.&lt;/p&gt;
+
+&lt;p&gt;So what constitutes my dream community site? What are it&amp;rsquo;s properties and features?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A site focused on communities based around common interests and not specific users.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Discussion takes place in a forum and a chat room with both being first class citizens.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Community led moderation with public moderation logs.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Respect for users&amp;rsquo; privacy.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;An open source codebase.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Interests of the site owners and the community are aligned.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Miscellaneous : bots, api, advertising and monetization.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Focus on communities and not users&lt;/strong&gt; : What is the difference between a site whose focus is on a shared topic of interest versus one whose focus is on individual users? Let&amp;rsquo;s compare reddit and Twitter. Reddit is a community site based around common topics of interest known as subreddits. Users mostly have the same visibility in the forum and comments section. Compare this to Twitter which has the concept of followers. The more followers a person has, the wider the person&amp;rsquo;s reach on the platform. This is an apples to oranges comparison but I think it illustrates one of the main differences between sites whose focus is on communities versus users. It&amp;rsquo;s important to point out that one approach is not better than the other, they are just different approaches to building an online community and both have pros and cons. The type of community site that I am interested in, is one whose focus is shared interests. Such sites are not free from the phenomenon of power users or famous users, but it&amp;rsquo;s more of an exception than the norm.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A forum and chat room&lt;/strong&gt; : Many communities are primarily built around a forum and use a chat room hosted on IRC, discord or slack to host discussions better suited for chat rooms. This is incredibly common and it&amp;rsquo;s surprising how few forums have support for chat built in. Reddit has started rolling out support for chat, but I feel like it has not been executed well. It feels like an afterthought and this is probably a safe choice since it wouldn&amp;rsquo;t be wise on reddit&amp;rsquo;s part to drastically change what works. I think there is room for a more well thought out implementation which gives users more control over the chat experience such as completely opting out of it and giving chat users fine grained control over the notifications and one that minimizes spam. Reddit also forces users to try out the chat by having an orange chat icon next to the username. While the idea of introducing chat is good, reddit&amp;rsquo;s implementation leaves a lot to be desired.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Moderation&lt;/strong&gt; : I like reddit&amp;rsquo;s volunteer led moderation model but it could use a few improvements. The first is public moderation logs, which gives the community transparency into how the forum is being moderated. It functions as a check to prevent moderator capability misuse. Speaking of mod power abuse, I think the position of a moderator should not be a permanent one and instead should be subject to community re-approval every few months. This will hopefully act as a way to remove mods who abuse their power or frequently make questionable moderation decisions.&lt;/p&gt;
+
+&lt;p&gt;A tangentially related topic is content policy. I think reddit has a good &lt;a href=&#34;https://www.redditinc.com/policies/content-policy&#34;&gt;content policy&lt;/a&gt;, but the challenge is always enforcement of the content policy. There&amp;rsquo;s a lot of room for interpretation and there is a lot of content that falls into a grey area and taking a call on such matters is not easy. One potential way to improve the content policy is to use learnings from past experience to further refine it and these learnings will hopefully set a precedent for future decisions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Privacy&lt;/strong&gt; : Respecting users&amp;rsquo; privacy is a no brainer at this point and might actually turn into a competitive advantage for products in the near future as the general public and Governments around the world begin taking privacy seriously. Tracking should be minimal and should not be used for the purpose of advertising. A note about advertising in the context of a community site : I think Duckduckgo is a good example of ads done right where they don&amp;rsquo;t depend on following users around the web and collecting user data. Showing ads relevent to the content instead of the user&amp;rsquo;s browsing history is an approach that respects users&amp;rsquo; privacy. It&amp;rsquo;s likely that ads which involve user tracking will perform better than ads which respect users&amp;rsquo; privacy, but I think this is a necessary choice to make to ensure that the site&amp;rsquo;s interests and the users&amp;rsquo; interests are aligned even if it means leaving money on the table.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Open source code base&lt;/strong&gt; : Again a no brainer decision for a community site. Having an open source code base builds trust with the community and makes it easier for members of the community to get involved in the site&amp;rsquo;s development by contributing code. It&amp;rsquo;s straightforward for the community to verify the site&amp;rsquo;s claims about respecting user privacy and making sure nothing unexpected is going on behind the scenes (How do users verify that the code on the servers has not been altered? A discussion for another day.). An open source code base also enables users to host their own instances and build their own communities.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Interests of the site owners and the community are aligned&lt;/strong&gt; : and to pay attention to what users have to say about the site. This is one of the most important parts to get right from the beginning. Often when interests are not aligned, it does not matter in the short term, but inevitably the different interests of the site owners and users rears it&amp;rsquo;s ugly head and often leads to the downfall of the site. One famous example was digg v4 when they shifted the focus of the site from user contributed content to a twitter like feed. They had other issues like frequent downtime, bugs etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Miscellaneous : bots, api, advertising and monetization&lt;/strong&gt; : Bots can be incredibly useful tools when done right. All bots should be marked as being bots and users should have complete control over the presence of bots in the chat and comments. Users should be able to subscribe or unsubscribe from bots or turn off bots altogether. Bots should be opt in instead of opt out, save for a small number of default, useful bots.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Api&lt;/em&gt; : Having a fully functional api that enables third party applications is important. This is something that social media sites often discourage and cripple app developers to prevent them from building third party experiences. The main reason for limiting api access is often ad dollars. One solution to this problem is to have some sort of paywall for the api, so only people who pay for api access can use third party apps. There are a lot more topics to discuss on this tangent but I&amp;rsquo;ll only briefly mention them for now since the site is very early in it&amp;rsquo;s life : have a revenue sharing model with app developers? Allow a limited number of hours of free api access every month as a way to get users to upgrade?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Monetization&lt;/em&gt; : I mentioned ads and having a premium membership for api access and an ad free experience. In the far fetched scenario that Hackers Chat takes on VC funding, the natural next step (like what reddit seems to be doing) would be to introduce video support and eventually video ads all while respecting users&amp;rsquo; privacy &lt;em&gt;and&lt;/em&gt; offering a premium membership for an ad free experience.&lt;/p&gt;
+
+&lt;p&gt;This post might sound very abstract and that&amp;rsquo;s because I left out some context and specific examples that I had in mind while writing it to avoid shifting the focus to specific examples which could derail the conversation, so apologies for that.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.hackerschat.net/&#34;&gt;Hackers Chat&lt;/a&gt; is very early in it&amp;rsquo;s life and a lot of the features mentioned above have not been implemented. Subreddits are called topics on Hackers Chat and each topic has a functioning forum and chat room attached to it. If you are interested in getting involved, join the community by &lt;a href=&#34;https://www.hackerschat.net/register/&#34;&gt;signing up&lt;/a&gt;. Let me know what you think about the idea and any other feedback that you may have.&lt;/p&gt;
+
+&lt;p&gt;PS : You might be interested in reading &lt;a href=&#34;https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/&#34;&gt;The strange launch of Hackers Chat&lt;/a&gt; which goes over some of the drama involving 4chan trolls during the initial launch. The initial idea was to build a discord like site, but I abondoned the project until recently, when I decided to explore the forum + chat in a single site idea.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Thoughts on Reddit and it&#39;s redesign</title>
@@ -2311,6 +2365,8 @@ st2)))
 &lt;p&gt;This page contains links to all posts on this site.&lt;/p&gt;
 
 &lt;h2 id=&#34;hackers-chat&#34;&gt;Hackers Chat&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2018/09/building-the-community-site-that-i-wished-existed/&#34;&gt;Building the community site that I wished existed&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.ploggingdev.com/2018/01/the-strange-launch-of-hackers-chat/&#34;&gt;The strange launch of Hackers Chat&lt;/a&gt;&lt;/p&gt;
 
